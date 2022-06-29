@@ -1,5 +1,5 @@
 import styles from "../styles/Home.module.css";
-import SanityService from "../services/sanityService";
+import SanityService from "../services/SanityService";
 import Header from "../components/Header";
 import HeadLine from "../components/HeadLine";
 import Career from "../components/Career";

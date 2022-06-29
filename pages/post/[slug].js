@@ -1,4 +1,4 @@
-import SanityService from "../../services/sanityService";
+import SanityService from "../../services/SanityService";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import styles from "../../styles/Home.module.css";
