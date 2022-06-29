@@ -1,0 +1,14 @@
+.title {
+  font-size: 23px;
+  font-weight: bold;
+}
+.navWrapper.hide {
+  display: none;
+}
+.nav {
+  font-size: 18px;
+  font-weight: bold;
+}
+.nav.sel {
+  color: rgb(252, 231, 48);
+}

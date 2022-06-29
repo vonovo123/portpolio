@@ -1,0 +1,47 @@
+.headline {
+  padding-top: 120px;
+  margin-bottom: 90px;
+  max-height: 100vw;
+  color: white;
+  border-radius: 10px;
+  transition: max-height 0.5s;
+  overflow: hidden;
+}
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  transition: color 0.5s;
+}
+.title.unfold {
+  color: rgb(218, 39, 39);
+}
+.headline.fold {
+  max-height: 190px;
+}
+.logBoard {
+  padding-left: 20px;
+  padding-top: 20px;
+  background-color: black;
+  border-radius: 10px;
+}
+.logBoard_body {
+  margin-top: 10px;
+}
+.logBoard_body_content {
+  margin-bottom: 10px;
+}
+
+.headline h1 {
+  color: white;
+}
+
+.foldBtn {
+  width: 80px;
+  height: 30px;
+  padding-top: 3px;
+  text-align: center;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
+  cursor: pointer;
+}

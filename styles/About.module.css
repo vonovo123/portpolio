@@ -1,0 +1,107 @@
+.about {
+  min-height: 700px;
+}
+.titleWrapper {
+  width: 100px;
+  height: 50px;
+  position: relative;
+  margin-bottom: 30px;
+}
+.titleCover {
+  width: 10%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  border-radius: 5px;
+  transition: width 0.5s;
+}
+.titleCover.sel {
+  width: 100%;
+}
+.titleText {
+  position: absolute;
+  width: 100px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  top: 7px;
+  transition: color 0.5s;
+}
+.titleText.sel {
+  color: rgb(252, 231, 48);
+}
+
+.profileWrapper {
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.profile {
+  width: 100%;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.profileDesc {
+  width: 50%;
+  border: 3px dotted black;
+  border-radius: 10px;
+}
+
+.profileDescImageWrapper {
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 3px dotted black;
+  margin: 0 20px 0 20px;
+}
+.profileDescImage {
+  width: 280px;
+  height: 280x;
+  border-radius: 100%;
+}
+
+.profileDescInfo {
+  padding-top: 20px;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-bottom: 20px;
+}
+
+.profileDescInfo > div {
+  margin-bottom: 10px;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.profileDescInfo > div:hover:not(.name) {
+  font-weight: bold;
+  font-size: 16px;
+}
+.profileDescInfo > div > span {
+  margin-left: 10px;
+}
+.profileDescInfo .name {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.profileIntro {
+  width: 60%;
+  border: 3px dotted black;
+  border-left: none;
+  border-radius: 10px;
+}
+
+.profileIntro > .title {
+  font-size: 25px;
+  font-weight: bold;
+  height: 70px;
+  text-align: center;
+  margin: 30px;
+  padding-top: 15px;
+  border: 3pxs dotted black;
+  border-radius: 7px;
+}
