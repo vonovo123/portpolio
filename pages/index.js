@@ -109,6 +109,7 @@ export async function getStaticProps() {
   // const posts = await sanityService.getPosts();
   const portpolios = await sanityService.getPortpolio();
   const profile = await gitProfileService.getProfile();
+  console.log(profile);
   return {
     props: {
       //home,
