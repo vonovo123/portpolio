@@ -22,7 +22,7 @@ export default function About({ view, profile, intro }) {
           <div className={cx("profileDesc")}>
             <div className={cx("profileDescImageWrapper")}>
               <Image
-                src={profile.avatar_url}
+                src={profile.thumbnail.imageUrl}
                 alt={"profile_image"}
                 className={cx("profileDescImage")}
                 preview={false}
@@ -41,13 +41,13 @@ export default function About({ view, profile, intro }) {
               <div>
                 <GithubOutlined />
                 <span>
-                  <a href={profile.html_url} target={"_blank"} rel="noreferrer">
-                    {profile.html_url}
+                  <a href={profile.gitUrl} target={"_blank"} rel="noreferrer">
+                    {profile.gitUrl}
                   </a>
                 </span>
               </div>
               <div>
-                <MessageOutlined /> <span>{profile.bio}</span>
+                <MessageOutlined /> <span>{profile.intro}</span>
               </div>
             </div>
           </div>

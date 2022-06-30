@@ -1,4 +1,16 @@
 import sanityClient from "@sanity/client";
+const profileUrl = `
+*[_type == 'profile']{
+  company,
+  location,
+  gitUrl,
+  intro,
+  'thumbnail' : {
+    'alt' : thumbnail.alt,
+    'imageUrl' : thumbnail.asset  -> url,
+  }
+}
+`;
 const homeUrl = `*[_type == 'home']{
   title,
   'content':content[]{ 
@@ -112,5 +124,8 @@ export default class SanityService {
   }
   async getDevLog() {
     return await this._client.fetch(devLogUrl);
+  }
+  async getProfile() {
+    return await this._client.fetch(profileUrl);
   }
 }

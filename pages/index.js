@@ -13,6 +13,7 @@ import GitProfileService from "../services/GitProfileService";
 export default function Home({ home, devLog, profile, portpolios, career }) {
   const [view, setView] = useState("home");
   //const mainPost = posts.find((post) => post.slug === home.mainPostUrl);
+  profile = profile[0];
   const html = portpolios.filter(
     (portpolio) => portpolio.category.type === "html/css"
   );
@@ -109,9 +110,10 @@ export async function getStaticProps() {
   const home = await sanityService.getHome();
   // const posts = await sanityService.getPosts();
   const portpolios = await sanityService.getPortpolio();
-  const profile = await gitProfileService.getProfile();
+  //const profile = await gitProfileService.getProfile();
   const career = await sanityService.getCareer();
   const devLog = await sanityService.getDevLog();
+  const profile = await sanityService.getProfile();
   console.log(profile);
   return {
     props: {
