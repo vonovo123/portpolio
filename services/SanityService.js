@@ -1,5 +1,15 @@
 import sanityClient from "@sanity/client";
-const homeUrl = `*[_type == 'home'][0]{'mainPostUrl':mainPost-> slug.current}`;
+const homeUrl = `*[_type == 'home']{
+  title,
+  'content':content[]{ 
+  ...,
+  ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+  }
+}`;
+const devLogUrl = `*[_type == 'devLog']{
+  name,
+  createdAt
+}`;
 const postsUrl = `
 *[_type == 'post']{
   title,
@@ -56,6 +66,28 @@ const portpolioUrl = `
     }
   }
 `;
+
+const careerUrl = `
+*[_type == 'career']{
+  name,
+  from,
+  to,
+  'works': works[]{
+      _type == 'reference' => @ -> {
+        name,
+        from,
+        to,
+        description,
+        'skills': skills[]{
+          _type == 'reference' => @ -> {
+            name,
+            'iconUrl' : iconUrl.asset -> url
+          }
+        }
+      }
+    }
+  }
+`;
 export default class SanityService {
   _client = sanityClient({
     dataset: "production",
@@ -74,5 +106,11 @@ export default class SanityService {
   }
   async getPortpolio() {
     return await this._client.fetch(portpolioUrl);
+  }
+  async getCareer() {
+    return await this._client.fetch(careerUrl);
+  }
+  async getDevLog() {
+    return await this._client.fetch(devLogUrl);
   }
 }

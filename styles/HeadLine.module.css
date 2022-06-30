@@ -25,7 +25,9 @@
   border-radius: 10px;
 }
 .logBoard_body {
+  padding-left: 20px;
   margin-top: 10px;
+  margin-bottom: 20px;
 }
 .logBoard_body_content {
   margin-bottom: 10px;

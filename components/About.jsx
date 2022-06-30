@@ -8,8 +8,9 @@ import {
   MessageOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
+import BlogPostDetail from "./BlogPostDetail";
 const cx = classNames.bind(styles);
-export default function About({ view, profile }) {
+export default function About({ view, profile, intro }) {
   return (
     <div className={styles.about} id="about">
       <div className={styles.titleWrapper}>
@@ -24,6 +25,7 @@ export default function About({ view, profile }) {
                 src={profile.avatar_url}
                 alt={"profile_image"}
                 className={cx("profileDescImage")}
+                preview={false}
               ></Image>
             </div>
             <div className={cx("profileDescInfo")}>
@@ -50,7 +52,7 @@ export default function About({ view, profile }) {
             </div>
           </div>
           <div className={cx("profileIntro")}>
-            {/* <div className={cx("title")}>WHO AM I ?</div> */}
+            <BlogPostDetail blocks={intro.content} />
           </div>
         </div>
       </div>

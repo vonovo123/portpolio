@@ -23,7 +23,7 @@ const serializers = {
 export default function BlogPostDetail({ blocks }) {
   return (
     <Row>
-      <Col span={24}>
+      <Col span={24} style={{ fontSize: 18, fontWeight: "bold", padding: 20 }}>
         <BlockContent
           blocks={blocks}
           projectId={process.env.SANITY_PROJECT_ID}

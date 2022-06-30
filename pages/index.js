@@ -10,7 +10,7 @@ import About from "../components/About";
 import { useEffect, useMemo, useState } from "react";
 import { throttle } from "lodash";
 import GitProfileService from "../services/GitProfileService";
-export default function Home({ profile, portpolios }) {
+export default function Home({ home, devLog, profile, portpolios, career }) {
   const [view, setView] = useState("home");
   //const mainPost = posts.find((post) => post.slug === home.mainPostUrl);
   const html = portpolios.filter(
@@ -25,6 +25,7 @@ export default function Home({ profile, portpolios }) {
   const reactNext = portpolios.filter(
     (portpolio) => portpolio.category.type === "reactNext"
   );
+  const intro = home.find((content) => content.title === "Introduction");
   const moveScrollbyNav = (target) => {
     setView(target);
     if (target === "home") {
@@ -80,8 +81,8 @@ export default function Home({ profile, portpolios }) {
         <Header view={view} moveScrollbyNav={moveScrollbyNav} showNav={true} />
       </div>
       <div className={styles.container}>
-        <HeadLine />
-        <Career view={view} />
+        <HeadLine devLog={devLog} />
+        <Career view={view} career={career} />
         <PortPolio
           html={html}
           vanillaJs={vanillaJs}
@@ -94,7 +95,7 @@ export default function Home({ profile, portpolios }) {
           view={view}
           throttleGetView={throttleGetView}
         /> */}
-        <About view={view} profile={profile} />
+        <About view={view} profile={profile} intro={intro} />
         <Footer />
       </div>
     </div>
@@ -105,17 +106,21 @@ export async function getStaticProps() {
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
   const gitProfileService = new GitProfileService();
-  // const home = await sanityService.getHome();
+  const home = await sanityService.getHome();
   // const posts = await sanityService.getPosts();
   const portpolios = await sanityService.getPortpolio();
   const profile = await gitProfileService.getProfile();
+  const career = await sanityService.getCareer();
+  const devLog = await sanityService.getDevLog();
   console.log(profile);
   return {
     props: {
-      //home,
+      home,
       //posts,
       profile,
       portpolios,
+      career,
+      devLog,
     },
   };
 }

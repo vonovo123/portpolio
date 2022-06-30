@@ -54,7 +54,7 @@ export default function PortPolioNav({ change }) {
               fontWeight: "bold",
             }}
           >
-            Vue / Nuxt
+            Vue
           </h1>
         </Col>
         <Col

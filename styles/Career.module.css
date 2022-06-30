@@ -1,11 +1,12 @@
 .career {
-  padding-bottom: 70px;
+  padding-bottom: 80px;
+  height: 1100px;
 }
 .titleWrapper {
   width: 120px;
   height: 50px;
-
   position: relative;
+  margin-bottom: 50px;
 }
 .titleCover {
   width: 10%;
@@ -28,4 +29,40 @@
 }
 .titleText.sel {
   color: rgb(252, 231, 48);
+}
+
+.description {
+  width: 100%;
+  border: 3px solid black;
+  border-radius: 10px 10px 0 0;
+}
+.descriptionColHeader {
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  padding-top: 13px;
+  margin-bottom: 10px;
+}
+.descriptionCol {
+  text-align: center;
+  height: 70px;
+  font-weight: bold;
+  padding-top: 13px;
+  border-bottom: 3px dotted black;
+}
+.descriptionCol:last-child {
+  border-bottom: none;
+}
+.skills {
+  width: 100%;
+  display: flex;
+}
+.skillImage {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
 }

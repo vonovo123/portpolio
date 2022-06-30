@@ -3,12 +3,17 @@ import { CodeOutlined, CaretRightOutlined } from "@ant-design/icons";
 import { useState } from "react";
 import styles from "../styles/HeadLine.module.css";
 import classNames from "classnames/bind";
+import dayjs from "dayjs";
 const cx = classNames.bind(styles);
-export default function HeadLine() {
+export default function HeadLine({ devLog }) {
   const [fold, setFold] = useState(true);
   const resizeHeadline = function () {
     setFold(!fold);
   };
+  const rowData = [...devLog].sort(
+    (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+  );
+  console.log(rowData);
   return (
     <div className={cx("headline", { fold: fold })}>
       <Row className={styles.logBoard}>
@@ -31,28 +36,21 @@ export default function HeadLine() {
           </Row>
         </Col>
         <Col span={24} className={styles["logBoard_body"]}>
-          <div
-            style={{ fontSize: 20 }}
-            className={styles["logBoard_body_content"]}
-          >
-            <CaretRightOutlined /> <span className="date">2022. 06. 21</span>
-            <div style={{ marginLeft: "20px" }}>
-              <div className="content">Career 파트 Chart 구현</div>
-              <div className="content"> Portpolio 파트 레이아웃 구현</div>
-              <div className="content"> Posts 파트 레이아웃 구현</div>
-            </div>
-          </div>
-          <div
-            style={{ fontSize: 20 }}
-            className={styles["logBoard_body_content"]}
-          >
-            <CaretRightOutlined /> <span className="date">2022. 06. 20</span>
-            <div style={{ marginLeft: "20px" }}>
-              <div className="content">
-                2022.06.20 Index 페이지 레이아웃 설계 및 구현
+          {rowData.map((data, idx) => (
+            <div
+              style={{ fontSize: 20 }}
+              className={styles["logBoard_body_content"]}
+              key={idx}
+            >
+              <CaretRightOutlined />{" "}
+              <span className="date">
+                {dayjs(data.createdAt).format("YYYY / M. DD")}
+              </span>
+              <div style={{ marginLeft: "20px" }}>
+                <div className="content">{data.name}</div>
               </div>
             </div>
-          </div>
+          ))}
         </Col>
       </Row>
     </div>
