@@ -3,6 +3,7 @@ import { Col, Image, Row } from "antd";
 import dayjs from "dayjs";
 import styles from "../styles/Career.module.css";
 import classNames from "classnames/bind";
+import { useEffect } from "react";
 const cx = classNames.bind(styles);
 export default function Career({ view, career }) {
   const rowData = career[0];
@@ -14,7 +15,6 @@ export default function Career({ view, career }) {
       new Date(work.to),
     ];
   });
-  console.log(rows);
 
   const columns = [
     { type: "string", id: "name" },
@@ -24,7 +24,7 @@ export default function Career({ view, career }) {
   ];
   const data = [columns, ...rows];
   return (
-    <div className={styles.career} id="career">
+    <div className={styles.career} id="career" data-idx="career">
       <div className={styles.titleWrapper}>
         <div className={cx("titleCover", { sel: view === "career" })}></div>
         <div className={cx("titleText", { sel: view === "career" })}>

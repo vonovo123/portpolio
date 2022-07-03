@@ -12,7 +12,7 @@ import BlogPostDetail from "./BlogPostDetail";
 const cx = classNames.bind(styles);
 export default function About({ view, profile, intro }) {
   return (
-    <div className={styles.about} id="about">
+    <div className={styles.about} id="about" data-idx="about">
       <div className={styles.titleWrapper}>
         <div className={cx("titleCover", { sel: view === "about" })}></div>
         <div className={cx("titleText", { sel: view === "about" })}>About</div>

@@ -13,13 +13,12 @@ export default function HeadLine({ devLog }) {
   const rowData = [...devLog].sort(
     (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
   );
-  console.log(rowData);
   return (
     <div className={cx("headline", { fold: fold })}>
       <Row className={styles.logBoard}>
         <Col span={24}>
           <Row>
-            <Col span={4}>
+            <Col span={4} id="headLine">
               <h1 className={cx("title", { unfold: !fold })}>
                 <CodeOutlined /> 업데이트 로그
               </h1>

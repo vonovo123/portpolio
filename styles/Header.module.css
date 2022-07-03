@@ -2,12 +2,16 @@
   font-size: 23px;
   font-weight: bold;
 }
-.navWrapper.hide {
+.navWrapper {
   display: none;
+}
+.navWrapper.show {
+  display: block;
 }
 .nav {
   font-size: 18px;
   font-weight: bold;
+  cursor: pointer;
 }
 .nav.sel {
   color: rgb(252, 231, 48);

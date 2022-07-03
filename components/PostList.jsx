@@ -3,20 +3,16 @@ import dayjs from "dayjs";
 import styles from "../styles/Post.module.css";
 import classNames from "classnames/bind";
 import { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/router";
 const cx = classNames.bind(styles);
-export default function PostList({ posts, view, throttleGetView }) {
+export default function PostList({ posts, view }) {
   const [hoverIdx, setHoverIdx] = useState(-1);
   const router = useRouter();
   const goDetail = (slug) => {
-    console.log("slug: ", slug);
-    console.log(throttleGetView);
-    window.removeEventListener("scroll", throttleGetView);
     router.push(`/post/${slug}`);
   };
   return (
-    <div id="post" className={cx("postList")}>
+    <div className={cx("postList")} id="post" data-idx="post">
       <div className={styles.titleWrapper}>
         <div className={cx("titleCover", { sel: view === "post" })}></div>
         <div className={cx("titleText", { sel: view === "post" })}>Post</div>

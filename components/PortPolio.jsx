@@ -31,7 +31,7 @@ export default function Portpolio({
     }
   };
   return (
-    <div className={styles.portpolio} id="portpolio">
+    <div className={styles.portpolio} id="portpolio" data-idx="portpolio">
       <div className={styles.titleWrapper}>
         <div className={cx("titleCover", { sel: view === "portpolio" })}></div>
         <div className={cx("titleText", { sel: view === "portpolio" })}>
