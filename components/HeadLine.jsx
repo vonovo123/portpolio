@@ -1,5 +1,10 @@
 import { Col, Row } from "antd";
-import { CodeOutlined, CaretRightOutlined } from "@ant-design/icons";
+import {
+  FileOutlined,
+  CaretRightOutlined,
+  UpSquareOutlined,
+  DownSquareOutlined,
+} from "@ant-design/icons";
 import { useState } from "react";
 import styles from "../styles/HeadLine.module.css";
 import classNames from "classnames/bind";
@@ -18,19 +23,23 @@ export default function HeadLine({ devLog }) {
       <Row className={styles.logBoard}>
         <Col span={24}>
           <Row>
-            <Col span={4} id="headLine">
+            <Col span={22} id="headLine">
               <h1 className={cx("title", { unfold: !fold })}>
-                <CodeOutlined /> 업데이트 로그
+                <FileOutlined /> 업데이트 로그
               </h1>
             </Col>
-            <Col>
-              <div
-                className={styles.foldBtn}
-                style={{ fontSize: 15, fontWeight: "bold" }}
-                onClick={resizeHeadline}
-              >
-                {fold ? "펼치기" : "접기"}
-              </div>
+            <Col className={styles.logBtn} span={2}>
+              {fold ? (
+                <DownSquareOutlined
+                  style={{ fontSize: 25, fontWeight: "bold", paddingTop: 2 }}
+                  onClick={resizeHeadline}
+                />
+              ) : (
+                <UpSquareOutlined
+                  style={{ fontSize: 25, fontWeight: "bold", paddingTop: 2 }}
+                  onClick={resizeHeadline}
+                />
+              )}
             </Col>
           </Row>
         </Col>

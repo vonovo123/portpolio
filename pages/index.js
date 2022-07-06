@@ -7,7 +7,7 @@ import PortPolio from "../components/PortPolio";
 import PostList from "../components/PostList";
 import Footer from "../components/Footer";
 import About from "../components/About";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import GitProfileService from "../services/GitProfileService";
 export default function Home({
   home,
@@ -17,37 +17,53 @@ export default function Home({
   portpolios,
   career,
 }) {
-  const [view, setView] = useState("home");
-  profile = profile[0];
-  const html = portpolios.filter(
-    (portpolio) => portpolio.category.type === "html/css"
-  );
-  const vanillaJs = portpolios.filter(
-    (portpolio) => portpolio.category.type === "vanillaJs"
-  );
-  const vueNuxt = portpolios.filter(
-    (portpolio) => portpolio.category.type === "vueNuxt"
-  );
-  const reactNext = portpolios.filter(
-    (portpolio) => portpolio.category.type === "reactNext"
-  );
-  const intro = home.find((content) => content.title === "Introduction");
-  const navClickEvent = (target) => {
-    setView(target);
-    if (target === "home") {
-      window.scrollTo({ top: 0, behavior: "auto" });
-    } else {
-      window.scrollTo({
-        top: document.querySelector(`#${target}`).offsetTop - 100,
-        behavior: "auto",
-      });
-    }
+  const [width, setWidth] = useState();
+  const handleResize = () => {
+    setWidth(window.innerWidth);
   };
+  useEffect(() => {
+    setWidth(window.innerWidth);
+    console.log(width);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setWidth]);
+  const [view, setView] = useState("home");
+  let html = [],
+    vanillaJs = [],
+    vueNuxt = [],
+    reactNext = [];
+  profile = profile[0];
+  portpolios.forEach((portpolio) => {
+    if (portpolio.category.type === "html/css") {
+      html.push({ ...portpolio });
+    } else if (portpolio.category.type === "vanillaJs") {
+      vanillaJs.push({ ...portpolio });
+    } else if (portpolio.category.type === "vueNuxt") {
+      vueNuxt.push({ ...portpolio });
+    } else if (portpolio.category.type === "reactNext") {
+      reactNext.push({ ...portpolio });
+    }
+  });
+  const intro = home.find((content) => content.title === "Introduction");
+  const navClickEvent = useCallback(
+    (target) => {
+      setView(target);
+      if (target === "home") {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      } else {
+        window.scrollTo({
+          top: document.querySelector(`#${target}`).offsetTop - 100,
+          behavior: "auto",
+        });
+      }
+    },
+    [setView]
+  );
 
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: "-20% 0% -80% 0%",
+      rootMargin: "-30% 0% -70% 0%",
       threshold: 0.0,
     };
     const headerOption = {
@@ -75,25 +91,29 @@ export default function Home({
     const $portpolio = document.querySelector("#portpolio");
     const $post = document.querySelector("#post");
     const $about = document.querySelector("#about");
-    io.observe($career);
+    // io.observe($career);
     io.observe($portpolio);
     io.observe($post);
     io.observe($about);
   }, []);
   return (
-    <div>
-      <div className={styles.header}>
-        <Header view={view} navClickEvent={navClickEvent} type={"index"} />
-      </div>
+    <div className={styles.wrapper}>
+      <Header
+        view={view}
+        navClickEvent={navClickEvent}
+        type={"index"}
+        width={width}
+      />
       <div className={styles.container} id="rootContainer">
         <HeadLine devLog={devLog} />
-        <Career view={view} career={career} />
+        {/* <Career view={view} career={career} /> */}
         <PortPolio
           html={html}
           vanillaJs={vanillaJs}
           vueNuxt={vueNuxt}
           view={view}
           reactNext={reactNext}
+          width={width}
         />
         <PostList posts={posts} view={view} />
         <About view={view} profile={profile} intro={intro} />
