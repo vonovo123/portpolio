@@ -88,11 +88,11 @@ export default function Home({
     }, option);
     const $career = document.querySelector("#career");
     const $portpolio = document.querySelector("#portpolio");
-    const $post = document.querySelector("#post");
+    // const $post = document.querySelector("#post");
     const $about = document.querySelector("#about");
     io.observe($career);
     io.observe($portpolio);
-    io.observe($post);
+    // io.observe($post);
     io.observe($about);
   }, []);
   return (
@@ -114,7 +114,7 @@ export default function Home({
           reactNext={reactNext}
           width={width}
         />
-        <PostList posts={posts} view={view} width={width} />
+        {/* <PostList posts={posts} view={view} width={width} /> */}
         <About view={view} profile={profile} intro={intro} width={width} />
         <Footer />
       </div>

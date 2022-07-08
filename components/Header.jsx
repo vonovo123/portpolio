@@ -46,7 +46,7 @@ export default function Header({
                   }}
                 >
                   <div className={cx("nav", { sel: view === "career" })}>
-                    Career
+                    CAREER
                   </div>
                 </Col>
                 <Col
@@ -56,19 +56,19 @@ export default function Header({
                   }}
                 >
                   <div className={cx("nav", { sel: view === "portpolio" })}>
-                    Portpolio
+                    PORTPOLIO
                   </div>
                 </Col>
-                <Col
+                {/* <Col
                   span={5}
                   onClick={() => {
                     navClickEvent("post");
                   }}
                 >
                   <div className={cx("nav", { sel: view === "post" })}>
-                    Post
+                    POST
                   </div>
-                </Col>
+                </Col> */}
                 <Col
                   span={5}
                   onClick={() => {
@@ -76,7 +76,7 @@ export default function Header({
                   }}
                 >
                   <div className={cx("nav", { sel: view === "about" })}>
-                    About
+                    ABOUT
                   </div>
                 </Col>
               </Row>
@@ -118,10 +118,10 @@ export default function Header({
               <Col style={{ textAlign: "center" }} span={24}>
                 <div className={cx("nav", "sel")}>
                   {view === "home" && <>Web Frontend Development Log</>}
-                  {view === "career" && <>Career</>}
-                  {view === "portpolio" && <>Portpolio</>}
-                  {view === "post" && <>Post</>}
-                  {view === "about" && <>About</>}
+                  {view === "career" && <>CAREER</>}
+                  {view === "portpolio" && <>PORTPOLIO</>}
+                  {/* {view === "post" && <>POST</>} */}
+                  {view === "about" && <>ABOUT</>}
                 </div>
               </Col>
               <Col
@@ -156,7 +156,7 @@ export default function Header({
                 }}
               >
                 <div className={cx("nav", { sel: view === "career" })}>
-                  Career
+                  CAREER
                 </div>
               </Col>
               <Col
@@ -168,10 +168,10 @@ export default function Header({
                 }}
               >
                 <div className={cx("nav", { sel: view === "portpolio" })}>
-                  Portpolio
+                  PORTPOLIO
                 </div>
               </Col>
-              <Col
+              {/* <Col
                 span={24}
                 style={{ textAlign: "center" }}
                 onClick={() => {
@@ -180,7 +180,7 @@ export default function Header({
                 }}
               >
                 <div className={cx("nav", { sel: view === "post" })}>Post</div>
-              </Col>
+              </Col> */}
               <Col
                 span={24}
                 style={{ textAlign: "center" }}
@@ -190,7 +190,7 @@ export default function Header({
                 }}
               >
                 <div className={cx("nav", { sel: view === "about" })}>
-                  About
+                  ABOUT
                 </div>
               </Col>
               <Col
