@@ -61,8 +61,8 @@ export default function Portpolio({
               idx
             ) => {
               return (
-                <Col key={idx} span={24}>
-                  <Row className={styles.contentWrapper}>
+                <Col key={idx} span={24} className={styles.contentWrapper}>
+                  <Row>
                     <Col
                       className={styles.contentHeadWrapper}
                       xl={{ span: 9 }}
