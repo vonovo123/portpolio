@@ -1,31 +1,48 @@
 .headline {
-  padding-top: 120px;
-  margin-bottom: 90px;
-  max-height: 100vw;
+  margin-top: 120px;
+  margin-bottom: 60px;
+  height: 90vh;
   color: white;
   border-radius: 10px;
   transition: max-height 0.5s;
-  overflow: hidden;
+  overflow-y: scroll;
+  transition: height 0.5s;
 }
+.headline::-webkit-scrollbar {
+  display: none;
+}
+
 .title {
   font-size: 20px;
   font-weight: bold;
   transition: color 0.5s;
+  margin-left: 20px;
 }
 .title.unfold {
   color: rgb(218, 39, 39);
 }
+
 .headline.fold {
-  max-height: 190px;
+  overflow: hidden;
+  height: 70px;
+}
+
+.logBtn {
+  transition: color 0.5s;
+}
+.logBtn:hover {
+  color: rgb(252, 231, 48);
 }
 .logBoard {
-  padding-left: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
   padding-top: 20px;
   background-color: black;
   border-radius: 10px;
 }
 .logBoard_body {
   padding-left: 20px;
+  padding-right: 20px;
   margin-top: 10px;
   margin-bottom: 20px;
 }

@@ -7,96 +7,115 @@ import PortPolio from "../components/PortPolio";
 import PostList from "../components/PostList";
 import Footer from "../components/Footer";
 import About from "../components/About";
-import { useEffect, useMemo, useState } from "react";
-import { throttle } from "lodash";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import GitProfileService from "../services/GitProfileService";
-export default function Home({ home, devLog, profile, portpolios, career }) {
-  const [view, setView] = useState("home");
-  //const mainPost = posts.find((post) => post.slug === home.mainPostUrl);
-  profile = profile[0];
-  const html = portpolios.filter(
-    (portpolio) => portpolio.category.type === "html/css"
-  );
-  const vanillaJs = portpolios.filter(
-    (portpolio) => portpolio.category.type === "vanillaJs"
-  );
-  const vueNuxt = portpolios.filter(
-    (portpolio) => portpolio.category.type === "vueNuxt"
-  );
-  const reactNext = portpolios.filter(
-    (portpolio) => portpolio.category.type === "reactNext"
-  );
-  const intro = home.find((content) => content.title === "Introduction");
-  const moveScrollbyNav = (target) => {
-    setView(target);
-    if (target === "home") {
-      window.scrollTo({ top: 0, behavior: "auto" });
-    } else {
-      window.scrollTo({
-        top: document.querySelector(`#${target}`).offsetTop - 100,
-        behavior: "auto",
-      });
-    }
+export default function Home({
+  home,
+  posts,
+  devLog,
+  profile,
+  portpolios,
+  career,
+}) {
+  const [width, setWidth] = useState();
+  const handleResize = () => {
+    setWidth(window.innerWidth);
   };
   useEffect(() => {
-    getView();
-  }, []);
-  useEffect(() => {
-    window.addEventListener("scroll", throttleGetView);
-    return () => {
-      window.removeEventListener("scroll", throttleGetView);
-    };
+    setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [setWidth]);
+  const [view, setView] = useState("home");
+  let html = [],
+    vanillaJs = [],
+    vueNuxt = [],
+    reactNext = [];
+  profile = profile[0];
+  portpolios.forEach((portpolio) => {
+    if (portpolio.category.type === "html/css") {
+      html.push({ ...portpolio });
+    } else if (portpolio.category.type === "vanillaJs") {
+      vanillaJs.push({ ...portpolio });
+    } else if (portpolio.category.type === "vueNuxt") {
+      vueNuxt.push({ ...portpolio });
+    } else if (portpolio.category.type === "reactNext") {
+      reactNext.push({ ...portpolio });
+    }
   });
+  const intro = home.find((content) => content.title === "Introduction");
+  const navClickEvent = useCallback(
+    (target) => {
+      setView(target);
+      if (target === "home") {
+        window.scrollTo({ top: 0, behavior: "auto" });
+      } else {
+        window.scrollTo({
+          top: document.querySelector(`#${target}`).offsetTop - 100,
+          behavior: "auto",
+        });
+      }
+    },
+    [setView]
+  );
 
-  const throttleGetView = throttle(() => {
-    const { scrollY } = window;
-    const careerTop = document.querySelector("#career").offsetTop;
-    const carrerBottom =
-      careerTop + document.querySelector("#career").offsetHeight;
-    const portpolioTop = document.querySelector("#portpolio").offsetTop;
-    const portpolioBottom =
-      portpolioTop + document.querySelector("#portpolio").offsetHeight;
-    // const postTop = document.querySelector("#post").offsetTop;
-    // const postBottom = postTop + document.querySelector("#post").offsetHeight;
-    const aboutTop = document.querySelector("#about").offsetTop;
-    const aboutBottom =
-      aboutTop + document.querySelector("#about").offsetHeight;
-    scrollY = Number(scrollY) + 400;
-    if (scrollY > 400 && scrollY <= carrerBottom) {
-      setView("career");
-    } else if (scrollY >= portpolioTop && scrollY <= portpolioBottom) {
-      setView("portpolio");
-    }
-    // } else if (scrollY >= postTop && scrollY <= postBottom) {
-    //   setView("post");
-    else if (scrollY >= aboutTop && scrollY <= aboutBottom) {
-      setView("about");
-    } else {
-      setView("home");
-    }
-  }, 500);
-  const getView = (e) => {};
+  useEffect(() => {
+    const option = {
+      root: null,
+      rootMargin: "-20% 0% -80% 0%",
+      threshold: 0.0,
+    };
+    const headerOption = {
+      root: null,
+      rootMargin: "-15% 0% 0% 0%",
+      threshold: 0.0,
+    };
+    const $headLine = document.querySelector("#headLine");
+    const Ho = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setView("home");
+        }
+      });
+    }, headerOption);
+    Ho.observe($headLine);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setView(entry.target.dataset.idx);
+        }
+      });
+    }, option);
+    const $career = document.querySelector("#career");
+    const $portpolio = document.querySelector("#portpolio");
+    // const $post = document.querySelector("#post");
+    const $about = document.querySelector("#about");
+    io.observe($career);
+    io.observe($portpolio);
+    // io.observe($post);
+    io.observe($about);
+  }, []);
   return (
-    <div>
-      <div className={styles.header}>
-        <Header view={view} moveScrollbyNav={moveScrollbyNav} showNav={true} />
-      </div>
-      <div className={styles.container}>
+    <div className={styles.wrapper}>
+      <Header
+        view={view}
+        navClickEvent={navClickEvent}
+        type={"index"}
+        width={width}
+      />
+      <div className={styles.container} id="rootContainer">
         <HeadLine devLog={devLog} />
-        <Career view={view} career={career} />
+        <Career view={view} career={career} width={width} />
         <PortPolio
           html={html}
           vanillaJs={vanillaJs}
           vueNuxt={vueNuxt}
           view={view}
           reactNext={reactNext}
+          width={width}
         />
-        {/* <PostList
-          posts={otherPosts}
-          view={view}
-          throttleGetView={throttleGetView}
-        /> */}
-        <About view={view} profile={profile} intro={intro} />
+        {/* <PostList posts={posts} view={view} width={width} /> */}
+        <About view={view} profile={profile} intro={intro} width={width} />
         <Footer />
       </div>
     </div>
@@ -108,17 +127,15 @@ export async function getStaticProps() {
   const sanityService = new SanityService();
   const gitProfileService = new GitProfileService();
   const home = await sanityService.getHome();
-  // const posts = await sanityService.getPosts();
+  const posts = await sanityService.getPosts();
   const portpolios = await sanityService.getPortpolio();
-  //const profile = await gitProfileService.getProfile();
   const career = await sanityService.getCareer();
   const devLog = await sanityService.getDevLog();
   const profile = await sanityService.getProfile();
-  console.log(profile);
   return {
     props: {
       home,
-      //posts,
+      posts,
       profile,
       portpolios,
       career,

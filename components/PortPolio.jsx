@@ -15,6 +15,7 @@ export default function Portpolio({
   vueNuxt,
   reactNext,
   view,
+  width,
 }) {
   const [target, setTarget] = useState([...html]);
   const change = function (idx) {
@@ -31,7 +32,7 @@ export default function Portpolio({
     }
   };
   return (
-    <div className={styles.portpolio} id="portpolio">
+    <div className={styles.portpolio} id="portpolio" data-idx="portpolio">
       <div className={styles.titleWrapper}>
         <div className={cx("titleCover", { sel: view === "portpolio" })}></div>
         <div className={cx("titleText", { sel: view === "portpolio" })}>
@@ -61,67 +62,99 @@ export default function Portpolio({
             ) => {
               return (
                 <Col key={idx} span={24} className={styles.contentWrapper}>
-                  <div className={styles.contentHeadWrapper}>
-                    <div className={styles.contentHeadImageWrapper}>
-                      <Image
-                        src={thumbnail.imageUrl}
-                        alt={thumbnail.alt}
-                        className={styles.contentHeadImage}
-                        preview={false}
-                      ></Image>
-                    </div>
-                    <div className={styles.contentHeadText}>
-                      <div>
-                        <div className={styles.repoDescription}>
-                          <GithubOutlined />
-                          <a
-                            href={repoUrl}
-                            target={"_blank"}
-                            rel="noreferrer"
-                            className={styles.url}
-                          >
-                            {repoUrl.substr(8)}
-                          </a>
-                        </div>
-                      </div>
-                      <div>
-                        <div className={styles.repoDescription}>
-                          <DeploymentUnitOutlined />
-                          <a
-                            href={demoUrl}
-                            target={"_blank"}
-                            rel="noreferrer"
-                            className={styles.url}
-                          >
-                            {demoUrl.substr(8)}
-                          </a>
-                        </div>
-                      </div>
-                      <div className={styles.skills}>
-                        {skills.map((skill, idx) => (
-                          <div key={idx}>
-                            <Image
-                              className={styles.skillImage}
-                              src={skill.iconUrl}
-                              alt={skill.name}
-                              preview={false}
-                            />
+                  <Row>
+                    <Col
+                      className={styles.contentHeadWrapper}
+                      xl={{ span: 9 }}
+                      lg={{ span: 9 }}
+                      md={{ span: 24 }}
+                      sm={{ span: 24 }}
+                      xs={{ span: 24 }}
+                    >
+                      <Row span={24}>
+                        <Col
+                          className={styles.contentHeadImageWrapper}
+                          span={24}
+                        >
+                          <Image
+                            src={thumbnail.imageUrl}
+                            alt={thumbnail.alt}
+                            className={styles.contentHeadImage}
+                            preview={false}
+                          ></Image>
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col
+                      className={styles.contentBody}
+                      xl={{ span: 15 }}
+                      lg={{ span: 15 }}
+                      md={{ span: 24 }}
+                      sm={{ span: 24 }}
+                      xs={{ span: 24 }}
+                    >
+                      <Row>
+                        <Col className={styles.contentBodyHead} span={24}>
+                          <div className={styles.contentBodyHeaderTitle}>
+                            {title}
                           </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.contentBody}>
-                    <div className={styles.contentBodyHead}>
-                      <h1>{title}</h1>
-                      {author.name}
-                      &nbsp;
-                      {dayjs(createdAt).format("YYYY / MMMM DD")}
-                    </div>
-                    <div className={styles.contentBodyBody}>
-                      <BlogPostDetail blocks={content} />
-                    </div>
-                  </div>
+                          <div className={styles.contentBodyHeaderInfo}>
+                            {dayjs(createdAt).format("YYYY / MMMM DD")}
+                          </div>
+                        </Col>
+                        <Col className={styles.contentBodyBody} span={24}>
+                          <BlogPostDetail blocks={content} />
+                        </Col>
+
+                        <Col className={styles.contentHeadText} span={24}>
+                          <Row span={24}>
+                            <Col
+                              className={styles.repoDescription}
+                              span={7}
+                              align="center"
+                              onClick={() => {
+                                window.location.href = repoUrl;
+                              }}
+                            >
+                              <GithubOutlined className={styles.icon} />
+                              <div>GIT REPO</div>
+                            </Col>
+                            <Col
+                              className={styles.repoDescription}
+                              span={7}
+                              align="center"
+                              onClick={() => {
+                                window.location.href = demoUrl;
+                              }}
+                            >
+                              <DeploymentUnitOutlined className={styles.icon} />
+                              <div>DEMO URL</div>
+                            </Col>
+
+                            <Col
+                              className={styles.repoDescription}
+                              span={10}
+                              align={"center"}
+                            >
+                              <Row className={styles.skills} align={"center"}>
+                                {skills.map((skill, idx) => (
+                                  <Col key={idx}>
+                                    <Image
+                                      className={styles.skillImage}
+                                      src={skill.iconUrl}
+                                      alt={skill.name}
+                                      preview={false}
+                                    />
+                                  </Col>
+                                ))}
+                              </Row>
+                              <div>SKILL SET</div>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
                 </Col>
               );
             }

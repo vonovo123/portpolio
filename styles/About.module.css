@@ -1,6 +1,9 @@
 .about {
   min-height: 700px;
 }
+.aTag {
+  color: black;
+}
 .titleWrapper {
   width: 100px;
   height: 50px;
@@ -31,19 +34,11 @@
 }
 
 .profileWrapper {
-  width: 100%;
   border-radius: 10px;
   padding: 10px;
 }
 
-.profile {
-  width: 100%;
-  display: flex;
-  margin-bottom: 10px;
-}
-
 .profileDesc {
-  width: 50%;
   border: 3px dotted black;
   border-radius: 10px;
 }
@@ -53,9 +48,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
   border-bottom: 3px dotted black;
-  margin: 0 20px 0 20px;
 }
 .profileDescImage {
   width: 280px;
@@ -70,39 +63,72 @@
   padding-bottom: 20px;
 }
 
-.profileDescInfo > div {
+.profileDescInfoDetail {
   margin-bottom: 10px;
   transition: all 0.5s;
   cursor: pointer;
+  font-size: 15px;
 }
-
-.profileDescInfo > div:hover:not(.name) {
-  font-weight: bold;
-  font-size: 16px;
-}
-.profileDescInfo > div > span {
+.profileDescInfoDetail .text {
   margin-left: 10px;
-}
-.profileDescInfo .name {
-  font-weight: bold;
-  font-size: 25px;
 }
 
 .profileIntro {
-  width: 60%;
   border: 3px dotted black;
   border-left: none;
   border-radius: 10px;
-  padding-top: 40px;
+  padding: 80px;
+  font-size: 17px;
 }
 
-.profileIntro > .title {
-  font-size: 25px;
-  font-weight: bold;
-  height: 70px;
-  text-align: center;
-  margin: 30px;
-  padding-top: 15px;
-  border: 3pxs dotted black;
-  border-radius: 7px;
+@media only screen and (max-width: 767px) {
+  .profileDesc {
+    border: none;
+  }
+
+  .profileDescImageWrapper {
+    border: 3px dotted black;
+    border-bottom: none;
+    border-radius: 5px;
+    height: 400px;
+  }
+  .profileDescImage {
+    width: 200px;
+    height: 200x;
+    border-radius: 100%;
+  }
+  .profileDescInfo {
+    border: 3px solid black;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding: 0;
+  }
+  .profileDescInfoDetail {
+    margin-bottom: 0;
+    font-size: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .profileDescInfoDetail.sel {
+    background-color: black;
+    color: rgb(252, 231, 48);
+    font-weight: bold;
+  }
+  .profileIntro {
+    border: 3px dotted black;
+    border-bottom: none;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 17px;
+    height: 400px;
+    overflow: scroll;
+  }
+  .showInfo {
+    margin-top: 50px;
+    font-size: 14px;
+    font-weight: bold;
+  }
 }

@@ -8,9 +8,13 @@ export default function PortPolioNav({ change }) {
 
   return (
     <div>
-      <Row justify="end" className={styles.navigation}>
+      <Row className={styles.navigation}>
         <Col
-          span={3}
+          xl={{ span: 3 }}
+          lg={{ span: 3 }}
+          md={{ span: 3 }}
+          sm={{ span: 5 }}
+          xs={{ span: 5 }}
           className={cx("nav", { sel: selNav === 0 })}
           onClick={() => {
             setSelNav(0);
@@ -26,7 +30,11 @@ export default function PortPolioNav({ change }) {
           </h1>
         </Col>
         <Col
-          span={3}
+          xl={{ span: 3 }}
+          lg={{ span: 3 }}
+          md={{ span: 3 }}
+          sm={{ span: 5 }}
+          xs={{ span: 5 }}
           className={cx("nav", { sel: selNav === 1 })}
           onClick={() => {
             setSelNav(1);
@@ -42,7 +50,11 @@ export default function PortPolioNav({ change }) {
           </h1>
         </Col>
         <Col
-          span={3}
+          xl={{ span: 3 }}
+          lg={{ span: 3 }}
+          md={{ span: 3 }}
+          sm={{ span: 5 }}
+          xs={{ span: 5 }}
           className={cx("nav", { sel: selNav === 2 })}
           onClick={() => {
             setSelNav(2);
@@ -58,7 +70,11 @@ export default function PortPolioNav({ change }) {
           </h1>
         </Col>
         <Col
-          span={3}
+          xl={{ span: 3 }}
+          lg={{ span: 3 }}
+          md={{ span: 3 }}
+          sm={{ span: 5 }}
+          xs={{ span: 5 }}
           className={cx("nav", { sel: selNav === 3 })}
           onClick={() => {
             setSelNav(3);
@@ -70,7 +86,7 @@ export default function PortPolioNav({ change }) {
               fontWeight: "bold",
             }}
           >
-            React / Next
+            React
           </h1>
         </Col>
       </Row>
