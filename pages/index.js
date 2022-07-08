@@ -23,7 +23,6 @@ export default function Home({
   };
   useEffect(() => {
     setWidth(window.innerWidth);
-    console.log(width);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [setWidth]);
@@ -63,7 +62,7 @@ export default function Home({
   useEffect(() => {
     const option = {
       root: null,
-      rootMargin: "-30% 0% -70% 0%",
+      rootMargin: "-20% 0% -80% 0%",
       threshold: 0.0,
     };
     const headerOption = {
@@ -91,7 +90,7 @@ export default function Home({
     const $portpolio = document.querySelector("#portpolio");
     const $post = document.querySelector("#post");
     const $about = document.querySelector("#about");
-    // io.observe($career);
+    io.observe($career);
     io.observe($portpolio);
     io.observe($post);
     io.observe($about);
@@ -106,7 +105,7 @@ export default function Home({
       />
       <div className={styles.container} id="rootContainer">
         <HeadLine devLog={devLog} />
-        {/* <Career view={view} career={career} /> */}
+        <Career view={view} career={career} width={width} />
         <PortPolio
           html={html}
           vanillaJs={vanillaJs}
@@ -115,8 +114,8 @@ export default function Home({
           reactNext={reactNext}
           width={width}
         />
-        <PostList posts={posts} view={view} />
-        <About view={view} profile={profile} intro={intro} />
+        <PostList posts={posts} view={view} width={width} />
+        <About view={view} profile={profile} intro={intro} width={width} />
         <Footer />
       </div>
     </div>

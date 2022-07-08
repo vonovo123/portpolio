@@ -31,35 +31,40 @@
 .titleText.sel {
   color: rgb(252, 231, 48);
 }
-
 .post {
-  display: flex;
   margin-bottom: 20px;
   width: 100%;
-  height: 400px;
+}
+.postContent {
+  height: 100%;
+  border: 3px solid var(--border-color);
+  border-left: 0;
+  border-radius: 8px;
+  transition: border 0.5s;
+  padding: 30px;
+  padding-top: 10px;
+}
+.postContentText {
 }
 .postTitleWrapper {
   font-weight: bold;
-  padding-bottom: 10px;
-  border-bottom: 5px dotted rgb(192, 191, 191);
-  margin-bottom: 10px;
+  margin-bottom: 10pxß;
+  margin-top: 50px;
 }
 .postTitle {
   font-size: 30px;
 }
 .postInfoWrapper {
-  margin-bottom: 20px;
 }
-.postAutor {
-  font-weight: bold;
-  margin-left: 10px;
-}
+
 .postShort {
+  margin: 20px;
   font-size: 20px;
+  min-height: 120px;
 }
-.post > .postImageWrapper {
+
+.post .postImageWrapper {
   border: 4px dotted var(--border-color);
-  width: 40%;
   border-radius: 8px;
   transition: all 0.5s;
   display: flex;
@@ -67,37 +72,27 @@
   align-items: center;
 }
 .postImage {
-  width: 350px;
-  height: 300px;
+  height: 200px;
   object-fit: fill;
   border-radius: 5px;
 }
 
-.post > .postCard {
-  width: 60%;
+.postCategory {
+  margin-top: 15px;
   border: 3px solid var(--border-color);
-  border-left: 0;
-  border-radius: 8px;
-  transition: border 0.5s;
-}
-
-.post > .postTag {
-  width: 5%;
-  height: 80px;
-  margin-top: 20px;
-  border: 3px solid var(--border-color);
-  border-radius: 0 5px 5px 0;
-  border-left: 0;
+  border-radius: 5px;
   font-size: 20px;
   font-weight: bold;
-  writing-mode: tb-rl;
   text-align: center;
-  padding-right: 8px;
   color: var(--border-color);
   transition: all 0.5s;
+  height: 30%;
 }
 
-.post:hover > .postTag {
+.postTagWrapper {
+  border-top: 3px dotted var(--border-color);
+}
+.post:hover .postCategory {
   color: rgb(252, 231, 48);
   background-color: black;
   border-color: black;
@@ -108,6 +103,30 @@
   border-color: black;
 }
 
-.post:hover > .postCard {
+.post:hover > .postContent {
   border-color: black;
+}
+
+@media only screen and (max-width: 767px) {
+  .postImage {
+    height: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .postContent {
+    height: 100%;
+    border: 3px solid var(--border-color);
+    border-top: 0;
+    border-radius: 8px;
+    transition: border 0.5s;
+    padding: 30px;
+    padding-top: 10px;
+  }
+
+  .postTitleWrapper {
+    font-weight: bold;
+    margin-bottom: 10pxß;
+    margin-top: 20px;
+  }
 }

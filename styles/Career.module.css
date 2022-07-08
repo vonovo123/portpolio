@@ -1,6 +1,5 @@
 .career {
   padding-bottom: 80px;
-  height: 1100px;
 }
 .titleWrapper {
   width: 120px;
@@ -45,24 +44,37 @@
   color: white;
   font-weight: bold;
   padding-top: 13px;
-  margin-bottom: 10px;
 }
 .descriptionCol {
   text-align: center;
-  height: 70px;
   font-weight: bold;
-  padding-top: 13px;
+  padding-top: 5px;
   border-bottom: 3px dotted black;
 }
 .descriptionCol:last-child {
   border-bottom: none;
 }
-.skills {
-  width: 100%;
-  display: flex;
-}
+
 .skillImage {
   width: 30px;
   height: 30px;
   margin-right: 10px;
+}
+
+@media only screen and (max-width: 767px) {
+  .descriptionCol {
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    padding-top: 5px;
+  }
+  .date {
+  }
+  .skills {
+    padding-top: 13px;
+  }
+  .skillImage {
+    width: 20px;
+    height: 20px;
+  }
 }
