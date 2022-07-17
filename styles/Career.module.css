@@ -68,6 +68,9 @@
     font-weight: bold;
     padding-top: 5px;
   }
+  .titleWrapper {
+    display: none;
+  }
   .date {
   }
   .skills {

@@ -28,6 +28,10 @@ const postsUrl = `
   subtitle,
   createdAt,
   shortContent,
+  'category' : category -> {
+    name,
+    type
+  },
   'content':content[]{ 
     ...,
     ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
@@ -42,9 +46,11 @@ const postsUrl = `
     role,
     'image' : image.asset -> url  
   },
-  'tag': tag -> {
-    title,
-    'slug': slug.current
+  'tag': tag[]{
+    _type == 'reference' => @ -> {
+      title,
+      'slug': slug.current
+    }
   }
 }`;
 const portpolioUrl = `

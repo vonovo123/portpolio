@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import HeadLine from "../components/HeadLine";
 import Career from "../components/Career";
 import PortPolio from "../components/PortPolio";
-import PostList from "../components/PostList";
+import Post from "../components/Post";
 import Footer from "../components/Footer";
 import About from "../components/About";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -65,20 +65,20 @@ export default function Home({
       rootMargin: "-20% 0% -80% 0%",
       threshold: 0.0,
     };
-    const headerOption = {
-      root: null,
-      rootMargin: "-15% 0% 0% 0%",
-      threshold: 0.0,
-    };
-    const $headLine = document.querySelector("#headLine");
-    const Ho = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setView("home");
-        }
-      });
-    }, headerOption);
-    Ho.observe($headLine);
+    // const headerOption = {
+    //   root: null,
+    //   rootMargin: "-15% 0% 0% 0%",
+    //   threshold: 0.0,
+    // };
+    // const $headLine = document.querySelector("#headLine");
+    // const Ho = new IntersectionObserver((entries) => {
+    //   entries.forEach((entry) => {
+    //     if (entry.isIntersecting) {
+    //       setView("home");
+    //     }
+    //   });
+    // }, headerOption);
+    //Ho.observe($headLine);
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -88,11 +88,11 @@ export default function Home({
     }, option);
     const $career = document.querySelector("#career");
     const $portpolio = document.querySelector("#portpolio");
-    // const $post = document.querySelector("#post");
+    const $post = document.querySelector("#post");
     const $about = document.querySelector("#about");
     io.observe($career);
     io.observe($portpolio);
-    // io.observe($post);
+    io.observe($post);
     io.observe($about);
   }, []);
   return (
@@ -102,9 +102,10 @@ export default function Home({
         navClickEvent={navClickEvent}
         type={"index"}
         width={width}
+        title={"WFDL [Web Frontend Development Log]"}
       />
       <div className={styles.container} id="rootContainer">
-        <HeadLine devLog={devLog} />
+        {/* <HeadLine devLog={devLog} /> */}
         <Career view={view} career={career} width={width} />
         <PortPolio
           html={html}
@@ -114,7 +115,7 @@ export default function Home({
           reactNext={reactNext}
           width={width}
         />
-        {/* <PostList posts={posts} view={view} width={width} /> */}
+        <Post posts={posts} view={view} width={width} showTitle={true} />
         <About view={view} profile={profile} intro={intro} width={width} />
         <Footer />
       </div>

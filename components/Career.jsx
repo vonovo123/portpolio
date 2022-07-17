@@ -64,7 +64,7 @@ export default function Career({ view, career, width }) {
               <Chart
                 chartType="Timeline"
                 data={data}
-                width="1100px"
+                width="950px"
                 height="100px"
                 //options={options}
                 chartEvents={[

@@ -1,12 +1,17 @@
 import { Col, Row } from "antd";
 import BlockContent from "@sanity/block-content-to-react";
 import SyntaxHighlighter from "react-syntax-highlighter";
+import { docco, dracula } from "react-syntax-highlighter/dist/cjs/styles/hljs";
 const serializers = {
   types: {
     code: ({ node }) => {
       const { code } = node;
       return (
-        <SyntaxHighlighter language="javascript"> {code}</SyntaxHighlighter>
+        <div>
+          <SyntaxHighlighter language="javascript" style={dracula}>
+            {code}
+          </SyntaxHighlighter>
+        </div>
       );
     },
     video: ({ node }) => {

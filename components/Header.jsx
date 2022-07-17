@@ -3,21 +3,31 @@ import {
   CaretUpOutlined,
   CaretDownOutlined,
   CodeOutlined,
+  RollbackOutlined,
 } from "@ant-design/icons";
 import styles from "../styles/Header.module.css";
+import fadeTransition from "../styles/transition/fade.module.css";
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { createRef, useRef, useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import Router, { useRouter } from "next/router";
 const cx = classNames.bind(styles);
 export default function Header({
   view,
   navClickEvent,
   type,
+  title,
   backBtnMouseHoverEvent,
   width,
 }) {
+  const router = useRouter();
+  const nodeRef = useRef(null);
   const [fold, setFold] = useState(true);
   const changeFold = () => {
     setFold(!fold);
+  };
+  const goBack = () => {
+    Router.back();
   };
   return (
     <>
@@ -31,7 +41,7 @@ export default function Header({
               }}
             >
               <div className={cx("title", { sel: view === "home" })}>
-                <CodeOutlined /> WFDL [Web Frontend Development Log]
+                <CodeOutlined /> {title}
               </div>
             </Col>
             <Col
@@ -59,7 +69,7 @@ export default function Header({
                     PORTPOLIO
                   </div>
                 </Col>
-                {/* <Col
+                <Col
                   span={5}
                   onClick={() => {
                     navClickEvent("post");
@@ -68,7 +78,7 @@ export default function Header({
                   <div className={cx("nav", { sel: view === "post" })}>
                     POST
                   </div>
-                </Col> */}
+                </Col>
                 <Col
                   span={5}
                   onClick={() => {
@@ -87,23 +97,28 @@ export default function Header({
               md={{ span: 9 }}
               sm={{ span: 24 }}
               xs={{ span: 24 }}
-              className={cx("navWrapper", { show: type === "detail" })}
+              className={cx("navWrapper", {
+                show: type === "postDetail" || type === "postList",
+              })}
             >
               <Row style={{ textAlign: "right" }}>
                 <Col
                   span={24}
                   onClick={() => {
-                    navClickEvent("detail");
+                    navClickEvent("");
                   }}
                   onMouseEnter={() => {
-                    backBtnMouseHoverEvent("detail");
+                    backBtnMouseHoverEvent("");
                   }}
                   onMouseLeave={() => {
                     backBtnMouseHoverEvent("home");
                   }}
                 >
-                  <div className={cx("nav", { sel: view === "detail" })}>
-                    Back
+                  <div
+                    className={cx("nav", { sel: view === "" })}
+                    style={{ fontWeight: "bold", fontSize: 25 }}
+                  >
+                    <RollbackOutlined onClick={goBack} />
                   </div>
                 </Col>
               </Row>
@@ -112,94 +127,131 @@ export default function Header({
         </div>
       )}
       {width < 767 && (
-        <div className={cx("header", { unfold: !fold })}>
-          {fold && (
-            <Row align="middle" span={24} className={styles.index}>
-              <Col style={{ textAlign: "center" }} span={24}>
-                <div className={cx("nav", "sel")}>
-                  {view === "home" && <>Web Frontend Development Log</>}
-                  {view === "career" && <>CAREER</>}
-                  {view === "portpolio" && <>PORTPOLIO</>}
-                  {/* {view === "post" && <>POST</>} */}
-                  {view === "about" && <>ABOUT</>}
-                </div>
-              </Col>
-              <Col
-                style={{ textAlign: "center", fontSize: 20, marginTop: 2 }}
-                span={24}
+        <div className={cx("headWrapper")}>
+          {type === "index" && (
+            <div
+              className={cx("header", { unfold: !fold })}
+              onClick={changeFold}
+            >
+              <CSSTransition
+                in={fold}
+                classNames={fadeTransition}
+                timeout={500}
+                mountOnEnter
+                nodeRef={nodeRef}
               >
-                <CaretDownOutlined onClick={changeFold} />
-              </Col>
-            </Row>
+                <Row span={24} ref={nodeRef}>
+                  <Col span={20} style={{ marginTop: 5 }}>
+                    <div className={cx("nav", "sel")}>
+                      {view === "home" && <>Web Frontend Development Log</>}
+                      {view === "career" && <>CAREER</>}
+                      {view === "portpolio" && <>PORTPOLIO</>}
+                      {view === "post" && <>POST</>}
+                      {view === "about" && <>ABOUT</>}
+                    </div>
+                  </Col>
+                  <Col
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      marginTop: 2,
+                    }}
+                    span={4}
+                  >
+                    <CaretDownOutlined />
+                  </Col>
+                </Row>
+              </CSSTransition>
+              <CSSTransition
+                in={!fold}
+                classNames={fadeTransition}
+                timeout={500}
+                mountOnEnter
+              >
+                <Row span={24} className={styles.index}>
+                  <Col
+                    span={20}
+                    style={{ marginTop: 2 }}
+                    onClick={() => {
+                      navClickEvent("home");
+                      setFold(true);
+                    }}
+                  >
+                    <div className={cx("nav", { sel: view === "home" })}>
+                      Web Frontend Development Log
+                    </div>
+                  </Col>
+                  <Col
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      marginTop: 2,
+                    }}
+                    span={4}
+                  >
+                    <CaretUpOutlined onClick={changeFold} />
+                  </Col>
+                  <Col
+                    span={24}
+                    onClick={() => {
+                      navClickEvent("career");
+                      setFold(true);
+                    }}
+                  >
+                    <div className={cx("nav", { sel: view === "career" })}>
+                      CAREER
+                    </div>
+                  </Col>
+                  <Col
+                    span={24}
+                    onClick={() => {
+                      navClickEvent("portpolio");
+                      setFold(true);
+                    }}
+                  >
+                    <div className={cx("nav", { sel: view === "portpolio" })}>
+                      PORTPOLIO
+                    </div>
+                  </Col>
+                  <Col
+                    span={24}
+                    onClick={() => {
+                      navClickEvent("post");
+                      setFold(true);
+                    }}
+                  >
+                    <div className={cx("nav", { sel: view === "post" })}>
+                      POST
+                    </div>
+                  </Col>
+                  <Col
+                    span={24}
+                    onClick={() => {
+                      navClickEvent("about");
+                      setFold(true);
+                    }}
+                  >
+                    <div className={cx("nav", { sel: view === "about" })}>
+                      ABOUT
+                    </div>
+                  </Col>
+                </Row>
+              </CSSTransition>
+            </div>
           )}
-          {!fold && (
-            <Row align="middle" span={24} className={styles.index}>
-              <Col
-                span={24}
-                style={{ textAlign: "center" }}
-                onClick={() => {
-                  navClickEvent("home");
-                  setFold(true);
-                }}
-              >
-                <div className={cx("nav", { sel: view === "home" })}>
-                  Web Frontend Development Log
-                </div>
-              </Col>
-
-              <Col
-                span={24}
-                style={{ textAlign: "center" }}
-                onClick={() => {
-                  navClickEvent("career");
-                  setFold(true);
-                }}
-              >
-                <div className={cx("nav", { sel: view === "career" })}>
-                  CAREER
-                </div>
-              </Col>
-              <Col
-                span={24}
-                style={{ textAlign: "center" }}
-                onClick={() => {
-                  navClickEvent("portpolio");
-                  setFold(true);
-                }}
-              >
-                <div className={cx("nav", { sel: view === "portpolio" })}>
-                  PORTPOLIO
-                </div>
-              </Col>
-              {/* <Col
-                span={24}
-                style={{ textAlign: "center" }}
-                onClick={() => {
-                  navClickEvent("post");
-                  setFold(true);
-                }}
-              >
-                <div className={cx("nav", { sel: view === "post" })}>Post</div>
-              </Col> */}
-              <Col
-                span={24}
-                style={{ textAlign: "center" }}
-                onClick={() => {
-                  navClickEvent("about");
-                  setFold(true);
-                }}
-              >
-                <div className={cx("nav", { sel: view === "about" })}>
-                  ABOUT
-                </div>
-              </Col>
-              <Col
-                style={{ textAlign: "center", fontSize: 20, marginTop: 2 }}
-                span={24}
-              >
-                <CaretUpOutlined onClick={changeFold} />
-              </Col>
-            </Row>
+          {(type === "postDetail" || type === "postList") && (
+            <div className={cx("header")}>
+              <Row align="middle" span={24} className={styles.index}>
+                <Col span={3} style={{ fontWeight: "bold", fontSize: 20 }}>
+                  <RollbackOutlined onClick={goBack} />
+                </Col>
+                <Col span={20}>
+                  <div className={cx("nav")} style={{ textAlign: "center" }}>
+                    {title}
+                  </div>
+                </Col>
+              </Row>
+            </div>
           )}
         </div>
       )}

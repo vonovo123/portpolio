@@ -1,35 +1,48 @@
 .postList {
-  --border-color: rgb(192, 191, 191);
-  padding-bottom: 100px;
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  padding-bottom: 50px;
+  border-top: 3px dotted var(--disabled-color);
+}
+
+.hide {
+  display: none;
 }
 
 .titleWrapper {
-  width: 100px;
-  height: 50px;
-  margin-bottom: 30px;
-  position: relative;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
-.titleCover {
-  width: 10%;
-  height: 100%;
-  background-color: rgb(0, 0, 0);
-  border-radius: 5px;
-  transition: width 0.5s;
-}
-.titleCover.sel {
-  width: 100%;
-}
+
 .titleText {
-  width: 100px;
-  position: absolute;
-  font-size: 22px;
+  font-size: 25px;
   font-weight: bold;
-  top: 7px;
-  transition: color 0.5s;
-  text-align: center;
+  color: var(--disabled-color);
+  transition: all 0.5s;
 }
-.titleText.sel {
-  color: rgb(252, 231, 48);
+
+.infoText {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--disabled-color);
+  transition: all 0.5s;
+  padding-top: 15px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.moveText {
+  font-size: 13px;
+  color: var(--disabled-color);
+  transition: all 0.5s;
+  padding-top: 18px;
+  cursor: pointer;
+}
+
+.titleText.sel,
+.infoText.sel,
+.moveText:hover {
+  color: var(--activated-color);
 }
 .post {
   margin-bottom: 20px;
@@ -37,34 +50,36 @@
 }
 .postContent {
   height: 100%;
-  border: 3px solid var(--border-color);
+  border: 3px solid var(--disabled-color);
   border-left: 0;
   border-radius: 8px;
   transition: border 0.5s;
   padding: 30px;
   padding-top: 10px;
 }
-.postContentText {
+
+.postInfoWrapper {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
+
 .postTitleWrapper {
-  font-weight: bold;
-  margin-bottom: 10pxß;
-  margin-top: 50px;
+  margin-bottom: 10px;
 }
 .postTitle {
-  font-size: 30px;
-}
-.postInfoWrapper {
+  font-size: 25px;
+  font-weight: bold;
 }
 
 .postShort {
   margin: 20px;
-  font-size: 20px;
-  min-height: 120px;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .post .postImageWrapper {
-  border: 4px dotted var(--border-color);
+  border: 3px solid var(--disabled-color);
+  border-right-style: dotted;
   border-radius: 8px;
   transition: all 0.5s;
   display: flex;
@@ -72,51 +87,49 @@
   align-items: center;
 }
 .postImage {
-  height: 200px;
+  height: 150px;
   object-fit: fill;
   border-radius: 5px;
 }
 
 .postCategory {
-  margin-top: 15px;
-  border: 3px solid var(--border-color);
-  border-radius: 5px;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
   text-align: center;
-  color: var(--border-color);
+  color: white;
   transition: all 0.5s;
-  height: 30%;
+  background-color: grey;
+  border-radius: 5px;
+  padding: 9px;
+  margin-top: 20px;
+  font-weight: bold;
 }
 
 .postTagWrapper {
-  border-top: 3px dotted var(--border-color);
-}
-.post:hover .postCategory {
-  color: rgb(252, 231, 48);
-  background-color: black;
-  border-color: black;
+  border-top: 3px dotted var(--disabled-color);
 }
 
-.post:hover > .postImageWrapper {
-  /* border-color: rgb(252, 231, 48); */
-  border-color: black;
-}
-
-.post:hover > .postContent {
-  border-color: black;
+.post.active > .postImageWrapper,
+.post.active > .postContent {
+  border-color: var(--activated-color);
 }
 
 @media only screen and (max-width: 767px) {
+  .post .postImageWrapper {
+    border-right-style: solid;
+    border-bottom-style: dotted;
+  }
+
   .postImage {
     height: 150px;
     margin-top: 20px;
     margin-bottom: 20px;
   }
-
+  .titleWrapper {
+    display: none;
+  }
   .postContent {
     height: 100%;
-    border: 3px solid var(--border-color);
+    border: 3px solid var(--disabled-color);
     border-top: 0;
     border-radius: 8px;
     transition: border 0.5s;
@@ -128,5 +141,14 @@
     font-weight: bold;
     margin-bottom: 10pxß;
     margin-top: 20px;
+  }
+
+  .postTitle {
+    font-size: 17px;
+  }
+
+  .postShort {
+    font-size: 15px;
+    margin: 1s0px;
   }
 }
