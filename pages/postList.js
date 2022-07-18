@@ -14,7 +14,7 @@ import fadeTransition from "../styles/transition/fade.module.css";
 const cx = classNames.bind(styles);
 export default function PostList({ posts }) {
   const router = useRouter();
-  const [view, setView] = useState("home");
+  const [view, setView] = useState("post");
   const [showMenu, setShowMenu] = useState(false);
   const [menu, setMenu] = useState("ALL");
   const [width, setWidth] = useState();
@@ -33,7 +33,7 @@ export default function PostList({ posts }) {
   };
   const navClickEvent = (target) => {
     if (target === "home") {
-      window.scrollTo({ top: 0, behavior: "auto" });
+      router.push("/");
     } else {
       goBack();
     }
@@ -47,13 +47,17 @@ export default function PostList({ posts }) {
     },
     { router }
   );
+  useEffect(() => {
+    if (router.query.menu) {
+      setMenu(router.query.menu);
+    }
+  }, []);
   return (
     <div className={styles.wrapper}>
       <Header
         view={view}
         width={width}
         type={"postList"}
-        title="포스팅 목록"
         navClickEvent={navClickEvent}
         backBtnMouseHoverEvent={backBtnMouseHoverEvent}
       />
@@ -96,7 +100,8 @@ export default function PostList({ posts }) {
                       span={24}
                       className={cx("menu")}
                       onClick={() => {
-                        console.log(menu);
+                        setMenu(menus[idx]);
+                        setShowMenu(false);
                       }}
                     >
                       {menu}
@@ -107,7 +112,7 @@ export default function PostList({ posts }) {
             </div>
           </div>
         </div>
-        <Post posts={posts} view={view} width={width} showTitle={false} />
+        <Post posts={posts} view={view} width={width} show={false} />
         <Footer />
       </div>
     </div>

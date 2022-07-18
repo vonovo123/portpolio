@@ -1,56 +1,40 @@
 .career {
-  padding-bottom: 80px;
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  color: var(--disabled-color);
+  padding-bottom: 50px;
+  padding-top: 20px;
 }
-.titleWrapper {
-  width: 120px;
-  height: 50px;
-  position: relative;
-  margin-bottom: 50px;
-}
-.titleCover {
-  width: 10%;
-  height: 100%;
-  background-color: rgb(0, 0, 0);
-  border-radius: 5px;
-  transition: width 0.5s;
-}
-.titleCover.sel {
-  width: 100%;
-}
-.titleText {
-  width: 120px;
-  position: absolute;
-  top: 7px;
-  font-size: 22px;
-  font-weight: bold;
-  transition: color 0.5s;
-  text-align: center;
-}
-.titleText.sel {
-  color: rgb(252, 231, 48);
+.career.sel {
+  color: var(--activated-color);
 }
 
 .description {
   width: 100%;
-  border: 3px solid black;
+  border: 3px solid var(--disabled-color);
   border-radius: 10px 10px 0 0;
+}
+.description.sel {
+  border: 3px solid var(--activated-color);
 }
 .descriptionColHeader {
   height: 50px;
   font-size: 15px;
   text-align: center;
   justify-content: center;
-  background-color: black;
-  color: white;
   font-weight: bold;
   padding-top: 13px;
 }
 .descriptionCol {
   text-align: center;
-  font-weight: bold;
-  padding-top: 5px;
-  border-bottom: 3px dotted black;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border-bottom: 3px dotted var(--disabled-color);
 }
+.descriptionCol.sel {
+  border-bottom: 3px dotted var(--activated-color);
+}
+
 .descriptionCol:last-child {
   border-bottom: none;
 }
@@ -59,8 +43,11 @@
   width: 30px;
   height: 30px;
   margin-right: 10px;
+  opacity: 0.5;
 }
-
+.skillImage.sel {
+  opacity: 1;
+}
 @media only screen and (max-width: 767px) {
   .descriptionCol {
     font-size: 12px;
@@ -68,11 +55,7 @@
     font-weight: bold;
     padding-top: 5px;
   }
-  .titleWrapper {
-    display: none;
-  }
-  .date {
-  }
+
   .skills {
     padding-top: 13px;
   }

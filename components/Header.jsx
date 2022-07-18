@@ -16,7 +16,7 @@ export default function Header({
   view,
   navClickEvent,
   type,
-  title,
+  title = "Web Frontend Development Log",
   backBtnMouseHoverEvent,
   width,
 }) {
@@ -33,19 +33,21 @@ export default function Header({
     <>
       {width >= 767 && (
         <div className={cx("header")}>
-          <Row align="middle" span={24} className={styles.index}>
+          <Row align="middle" className={styles.index}>
             <Col
+              offset={1}
               span={15}
               onClick={() => {
                 navClickEvent("home");
               }}
+              style={{ cursor: "pointer" }}
             >
               <div className={cx("title", { sel: view === "home" })}>
                 <CodeOutlined /> {title}
               </div>
             </Col>
             <Col
-              span={9}
+              span={8}
               className={cx("navWrapper", { show: type === "index" })}
             >
               <Row style={{ textAlign: "center" }}>
@@ -92,9 +94,9 @@ export default function Header({
               </Row>
             </Col>
             <Col
-              xl={{ span: 9 }}
-              lg={{ span: 9 }}
-              md={{ span: 9 }}
+              xl={{ span: 7 }}
+              lg={{ span: 7 }}
+              md={{ span: 7 }}
               sm={{ span: 24 }}
               xs={{ span: 24 }}
               className={cx("navWrapper", {
@@ -136,7 +138,7 @@ export default function Header({
               <CSSTransition
                 in={fold}
                 classNames={fadeTransition}
-                timeout={500}
+                timeout={0}
                 mountOnEnter
                 nodeRef={nodeRef}
               >
@@ -165,7 +167,7 @@ export default function Header({
               <CSSTransition
                 in={!fold}
                 classNames={fadeTransition}
-                timeout={500}
+                timeout={0}
                 mountOnEnter
               >
                 <Row span={24} className={styles.index}>

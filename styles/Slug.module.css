@@ -37,6 +37,7 @@
   margin: 5px;
   margin-right: 10px;
   color: grey;
+  cursor: pointer;
 }
 .category.sel {
   margin: 5px;

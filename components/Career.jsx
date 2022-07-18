@@ -1,9 +1,10 @@
 import { Chart } from "react-google-charts";
 import { Col, Image, Row } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import styles from "../styles/Career.module.css";
 import classNames from "classnames/bind";
-import { useEffect } from "react";
+import Title from "../components/Title";
 const cx = classNames.bind(styles);
 export default function Career({ view, career, width }) {
   const rowData = career[0];
@@ -24,13 +25,12 @@ export default function Career({ view, career, width }) {
   ];
   const data = [columns, ...rows];
   return (
-    <div className={styles.career} id="career" data-idx="career">
-      <div className={styles.titleWrapper}>
-        <div className={cx("titleCover", { sel: view === "career" })}></div>
-        <div className={cx("titleText", { sel: view === "career" })}>
-          Career
-        </div>
-      </div>
+    <div
+      className={cx("career", { sel: view === "career" })}
+      id="career"
+      data-idx="career"
+    >
+      <Title view={view} type={"career"}></Title>
       <div>
         <Row align="middle">
           <Col span={24}>
@@ -66,7 +66,6 @@ export default function Career({ view, career, width }) {
                 data={data}
                 width="950px"
                 height="100px"
-                //options={options}
                 chartEvents={[
                   {
                     eventName: "ready",
@@ -86,7 +85,7 @@ export default function Career({ view, career, width }) {
             )}
           </Col>
           <Col>
-            <Row className={styles.description}>
+            <Row className={cx("description", { sel: view === "career" })}>
               <Col span={24} className={styles.descriptionColHeader}>
                 <Row>
                   {width >= 767 && (
@@ -105,7 +104,11 @@ export default function Career({ view, career, width }) {
               </Col>
               {rowData.works.map((work, idx) => {
                 return (
-                  <Col key={idx} span={24} className={styles.descriptionCol}>
+                  <Col
+                    key={idx}
+                    span={24}
+                    className={cx("descriptionCol", { sel: view === "career" })}
+                  >
                     {width >= 767 && (
                       <>
                         <Row>
@@ -122,7 +125,9 @@ export default function Career({ view, career, width }) {
                               {work.skills.map((skill, idx) => (
                                 <Col key={idx}>
                                   <Image
-                                    className={styles.skillImage}
+                                    className={cx("skillImage", {
+                                      sel: view === "career",
+                                    })}
                                     src={skill.iconUrl}
                                     alt={skill.name}
                                     preview={false}

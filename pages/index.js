@@ -18,6 +18,7 @@ export default function Home({
   career,
 }) {
   const [width, setWidth] = useState();
+  const [scrollTop, setScrollTop] = useState(0);
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
@@ -51,7 +52,7 @@ export default function Home({
         window.scrollTo({ top: 0, behavior: "auto" });
       } else {
         window.scrollTo({
-          top: document.querySelector(`#${target}`).offsetTop - 100,
+          top: document.querySelector(`#${target}`).offsetTop - 50,
           behavior: "auto",
         });
       }
@@ -61,35 +62,23 @@ export default function Home({
 
   useEffect(() => {
     const option = {
-      root: null,
-      rootMargin: "-20% 0% -80% 0%",
-      threshold: 0.0,
+      rootMargin: "-10% 0% -90% 0%",
     };
-    // const headerOption = {
-    //   root: null,
-    //   rootMargin: "-15% 0% 0% 0%",
-    //   threshold: 0.0,
-    // };
-    // const $headLine = document.querySelector("#headLine");
-    // const Ho = new IntersectionObserver((entries) => {
-    //   entries.forEach((entry) => {
-    //     if (entry.isIntersecting) {
-    //       setView("home");
-    //     }
-    //   });
-    // }, headerOption);
-    //Ho.observe($headLine);
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          console.log("isIntersecting");
           setView(entry.target.dataset.idx);
         }
       });
     }, option);
+    const $home = document.querySelector("#home");
     const $career = document.querySelector("#career");
     const $portpolio = document.querySelector("#portpolio");
     const $post = document.querySelector("#post");
     const $about = document.querySelector("#about");
+    io.observe($home);
     io.observe($career);
     io.observe($portpolio);
     io.observe($post);
@@ -102,10 +91,9 @@ export default function Home({
         navClickEvent={navClickEvent}
         type={"index"}
         width={width}
-        title={"WFDL [Web Frontend Development Log]"}
       />
+      <div id="home" data-idx="home" style={{ height: 100, width: 100 }}></div>
       <div className={styles.container} id="rootContainer">
-        {/* <HeadLine devLog={devLog} /> */}
         <Career view={view} career={career} width={width} />
         <PortPolio
           html={html}
@@ -115,7 +103,7 @@ export default function Home({
           reactNext={reactNext}
           width={width}
         />
-        <Post posts={posts} view={view} width={width} showTitle={true} />
+        <Post posts={posts} view={view} width={width} show={true} />
         <About view={view} profile={profile} intro={intro} width={width} />
         <Footer />
       </div>

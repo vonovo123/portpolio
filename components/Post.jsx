@@ -5,8 +5,9 @@ import classNames from "classnames/bind";
 import { useState } from "react";
 import { RightOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
+import Title from "./Title";
 const cx = classNames.bind(styles);
-export default function PostPreview({ posts, view, width, showTitle }) {
+export default function PostPreview({ posts, view, width, show }) {
   const router = useRouter();
   const goDetail = (slug) => {
     router.push(`/post/${slug}`);
@@ -15,17 +16,30 @@ export default function PostPreview({ posts, view, width, showTitle }) {
     router.push(`/postList`);
   };
   return (
-    <div className={cx("postList")} id="post" data-idx="post">
-      <Row className={cx("titleWrapper", { hide: !showTitle })}>
-        <Col className={cx("titleText", { sel: view === "post" })} span={24}>
-          POST
-        </Col>
-        <Col className={cx("infoText", { sel: view === "post" })} span={3}>
+    <div
+      className={cx("postList", { sel: view === "post" })}
+      id="post"
+      data-idx="post"
+    >
+      <Title view={view} type={"post"} show={show}></Title>
+      <Row className={cx("info", { hide: !show })}>
+        <Col
+          className={cx("infoText", { sel: view === "post" })}
+          xl={{ span: 3 }}
+          lg={{ span: 3 }}
+          md={{ span: 11 }}
+          sm={{ span: 11 }}
+          xs={{ span: 11 }}
+        >
           최근 5개의 게시물
         </Col>
         <Col
           className={cx("moveText", { sel: view === "post" })}
-          span={3}
+          xl={{ span: 3 }}
+          lg={{ span: 3 }}
+          md={{ span: 12 }}
+          sm={{ span: 12 }}
+          xs={{ span: 12 }}
           onClick={goList}
         >
           {"전체보기"} <RightOutlined />
@@ -124,7 +138,7 @@ export default function PostPreview({ posts, view, width, showTitle }) {
                               {post.tag.map((tag, idx) => (
                                 <Col
                                   className={cx("postCategory")}
-                                  span={5}
+                                  span={7}
                                   offset={1}
                                   key={idx}
                                 >

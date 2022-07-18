@@ -2,31 +2,25 @@
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   padding-bottom: 50px;
+  padding-top: 50px;
   border-top: 3px dotted var(--disabled-color);
+  transition: all 0.5s;
+  opacity: 0.5;
 }
-
+.postList.sel {
+  opacity: 1;
+  border-top: 3px dotted var(--activated-color);
+}
 .hide {
   display: none;
 }
-
-.titleWrapper {
-  margin-top: 40px;
-  margin-bottom: 20px;
+.info {
+  margin-bottom: 15px;
 }
-
-.titleText {
-  font-size: 25px;
-  font-weight: bold;
-  color: var(--disabled-color);
-  transition: all 0.5s;
-}
-
 .infoText {
   font-size: 15px;
   font-weight: bold;
   color: var(--disabled-color);
-  transition: all 0.5s;
-  padding-top: 15px;
   padding-left: 10px;
   cursor: pointer;
 }
@@ -34,8 +28,7 @@
 .moveText {
   font-size: 13px;
   color: var(--disabled-color);
-  transition: all 0.5s;
-  padding-top: 18px;
+  padding-top: 3px;
   cursor: pointer;
 }
 
@@ -123,9 +116,6 @@
     height: 150px;
     margin-top: 20px;
     margin-bottom: 20px;
-  }
-  .titleWrapper {
-    display: none;
   }
   .postContent {
     height: 100%;

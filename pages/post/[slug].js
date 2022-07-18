@@ -26,7 +26,7 @@ export default function Post({ slug, post }) {
   };
   const navClickEvent = (target) => {
     if (target === "home") {
-      window.scrollTo({ top: 0, behavior: "auto" });
+      router.push("/");
     } else {
       goBack();
     }
@@ -40,7 +40,6 @@ export default function Post({ slug, post }) {
         view={view}
         width={width}
         type={"postDetail"}
-        title={post.title}
         navClickEvent={navClickEvent}
         backBtnMouseHoverEvent={backBtnMouseHoverEvent}
       />
@@ -49,9 +48,25 @@ export default function Post({ slug, post }) {
         <div className={cx("categoryWrapper")}>
           <div className={cx("category")}>{"HOME"}</div>
           <div className={cx("category")}>{">"}</div>
-          <div className={cx("category")}>{"POSTS"}</div>
+          <div
+            className={cx("category")}
+            onClick={() => {
+              router.push("/postList");
+            }}
+          >
+            {"POSTS"}
+          </div>
           <div className={cx("category")}>{">"}</div>
-          <div className={cx("category", "sel")}>{post.category.name}</div>
+          <div
+            className={cx("category")}
+            onClick={() => {
+              router.push({ pathname: "/postList", query: { menu: "dev" } });
+            }}
+          >
+            {post.category.name}
+          </div>
+          <div className={cx("category")}>{">"}</div>
+          <div className={cx("category", "sel")}>{"POST"}</div>
         </div>
 
         <div className={cx("contentHeader")}>

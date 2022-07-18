@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 import BlogPostDetail from "./BlogPostDetail";
 import { useState } from "react";
+import Title from "./Title";
 const cx = classNames.bind(styles);
 export default function About({ view, profile, intro, width }) {
   const [showInfo, setShowInfo] = useState("com");
@@ -17,14 +18,15 @@ export default function About({ view, profile, intro, width }) {
     setShowInfo(info);
   };
   return (
-    <div className={styles.about} id="about" data-idx="about">
-      <div className={styles.titleWrapper}>
-        <div className={cx("titleCover", { sel: view === "about" })}></div>
-        <div className={cx("titleText", { sel: view === "about" })}>About</div>
-      </div>
+    <div
+      className={cx("about", { sel: view === "about" })}
+      id="about"
+      data-idx="about"
+    >
+      <Title view={view} type={"about"}></Title>
       <Row className={cx("profileWrapper")} span={24}>
         <Col
-          className={cx("profileDesc")}
+          className={cx("profileDesc", { sel: view === "about" })}
           xl={{ span: 10 }}
           lg={{ span: 10 }}
           md={{ span: 10 }}
@@ -33,13 +35,20 @@ export default function About({ view, profile, intro, width }) {
         >
           <Row span={24}>
             {(width >= 767 || showInfo !== "message") && (
-              <Col className={cx("profileDescImageWrapper")} span={24}>
+              <Col
+                className={cx("profileDescImageWrapper", {
+                  sel: view === "about",
+                })}
+                span={24}
+              >
                 <Row span={24}>
                   {width >= 767 && (
                     <Image
                       src={profile.thumbnail.imageUrl}
                       alt={"profile_image"}
-                      className={cx("profileDescImage")}
+                      className={cx("profileDescImage", {
+                        sel: view === "about",
+                      })}
                       preview={false}
                     ></Image>
                   )}
@@ -49,7 +58,9 @@ export default function About({ view, profile, intro, width }) {
                         <Image
                           src={profile.thumbnail.imageUrl}
                           alt={"profile_image"}
-                          className={cx("profileDescImage")}
+                          className={cx("profileDescImage", {
+                            sel: view === "about",
+                          })}
                           preview={false}
                         ></Image>
                       </Col>
@@ -63,7 +74,7 @@ export default function About({ view, profile, intro, width }) {
                               href={profile.gitUrl}
                               target={"_blank"}
                               rel="noreferrer"
-                              className={cx("aTag")}
+                              className={cx("aTag", { sel: view === "about" })}
                             >
                               {profile.gitUrl}
                             </a>
@@ -78,11 +89,14 @@ export default function About({ view, profile, intro, width }) {
             )}
 
             {width < 767 && showInfo === "message" && (
-              <Col className={cx("profileIntro")}>
+              <Col className={cx("profileIntro", { sel: view === "about" })}>
                 <BlogPostDetail blocks={intro.content} />
               </Col>
             )}
-            <Col className={cx("profileDescInfo")} span={24}>
+            <Col
+              className={cx("profileDescInfo", { sel: view === "about" })}
+              span={24}
+            >
               {width >= 767 && (
                 <Row>
                   <Col span={24} className={cx("profileDescInfoDetail")}>
@@ -102,7 +116,7 @@ export default function About({ view, profile, intro, width }) {
                         href={profile.gitUrl}
                         target={"_blank"}
                         rel="noreferrer"
-                        className={cx("aTag")}
+                        className={cx("aTag", { sel: view === "about" })}
                       >
                         {profile.gitUrl}
                       </a>
@@ -171,7 +185,7 @@ export default function About({ view, profile, intro, width }) {
         </Col>
         {width >= 767 && (
           <Col
-            className={cx("profileIntro")}
+            className={cx("profileIntro", { sel: view === "about" })}
             xl={{ span: 14 }}
             lg={{ span: 14 }}
             md={{ span: 14 }}

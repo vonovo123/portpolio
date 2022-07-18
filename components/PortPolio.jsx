@@ -1,5 +1,6 @@
 import { Card, Col, Image, Row } from "antd";
 import { GithubOutlined, DeploymentUnitOutlined } from "@ant-design/icons";
+import { CaretRightOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import dayjs from "dayjs";
 import styles from "../styles/Portpolio.module.css";
@@ -7,6 +8,7 @@ import classNames from "classnames/bind";
 import PortPolioNav from "./PortPolioNav";
 import BlogPostDetail from "./BlogPostDetail";
 import { useState } from "react";
+import Title from "./Title";
 const cx = classNames.bind(styles);
 
 export default function Portpolio({
@@ -32,15 +34,14 @@ export default function Portpolio({
     }
   };
   return (
-    <div className={styles.portpolio} id="portpolio" data-idx="portpolio">
-      <div className={styles.titleWrapper}>
-        <div className={cx("titleCover", { sel: view === "portpolio" })}></div>
-        <div className={cx("titleText", { sel: view === "portpolio" })}>
-          Portpolio
-        </div>
-      </div>
-      <PortPolioNav change={change} />
-      <div className={styles.contentListWapper}>
+    <div
+      className={cx("portpolio", { sel: view === "portpolio" })}
+      id="portpolio"
+      data-idx="portpolio"
+    >
+      <Title view={view} type={"portpolio"}></Title>
+      <PortPolioNav view={view} change={change} />
+      <div className={cx("contentListWapper", { sel: view === "portpolio" })}>
         <Row
           align="middle"
           style={{ height: "auto" }}
@@ -61,7 +62,13 @@ export default function Portpolio({
               idx
             ) => {
               return (
-                <Col key={idx} span={24} className={styles.contentWrapper}>
+                <Col
+                  key={idx}
+                  span={24}
+                  className={cx("contentWrapper", {
+                    sel: view === "portpolio",
+                  })}
+                >
                   <Row>
                     <Col
                       className={styles.contentHeadWrapper}

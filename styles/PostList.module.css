@@ -18,7 +18,9 @@
   padding-top: 110px;
   background-image: url(../assets/pattern.png);
 }
-
+.hide {
+  display: none;
+}
 .container {
   min-height: 800px;
   width: 80%;
