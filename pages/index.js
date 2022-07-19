@@ -49,11 +49,11 @@ export default function Home({
     (target) => {
       setView(target);
       if (target === "home") {
-        window.scrollTo({ top: 0, behavior: "auto" });
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         window.scrollTo({
           top: document.querySelector(`#${target}`).offsetTop - 50,
-          behavior: "auto",
+          behavior: "smooth",
         });
       }
     },
@@ -116,7 +116,8 @@ export async function getStaticProps() {
   const sanityService = new SanityService();
   const gitProfileService = new GitProfileService();
   const home = await sanityService.getHome();
-  const posts = await sanityService.getPosts();
+  let posts = await sanityService.getPosts();
+  posts = [...posts, ...posts, ...posts, ...posts, ...posts];
   const portpolios = await sanityService.getPortpolio();
   const career = await sanityService.getCareer();
   const devLog = await sanityService.getDevLog();

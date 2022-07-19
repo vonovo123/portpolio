@@ -6,8 +6,8 @@
   --activated-color: #34495e;
   color: var(--disabled-color);
   border-top: 3px dotted var(--disabled-color);
-  transform: all 1s;
   opacity: 0.5;
+  transition: all 1s;
 }
 .about.sel {
   color: var(--activated-color);
@@ -65,7 +65,6 @@
 
 .profileDescInfoDetail {
   margin-bottom: 10px;
-  transition: all 0.5s;
   cursor: pointer;
   font-size: 15px;
 }

@@ -12,7 +12,8 @@
 .description {
   width: 100%;
   border: 3px solid var(--disabled-color);
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px;
+  transition: all 0.5s;
 }
 .description.sel {
   border: 3px solid var(--activated-color);
@@ -30,6 +31,9 @@
   padding-top: 10px;
   padding-bottom: 5px;
   border-bottom: 3px dotted var(--disabled-color);
+}
+.hide {
+  display: none;
 }
 .descriptionCol.sel {
   border-bottom: 3px dotted var(--activated-color);
