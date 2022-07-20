@@ -1,7 +1,7 @@
 import SanityService from "../services/SanityService";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import styles from "../styles/PostList.module.css";
+import styles from "../styles/Posts.module.css";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { useRef } from "react";
@@ -12,7 +12,7 @@ import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
 import fadeTransition from "../styles/transition/fade.module.css";
 const cx = classNames.bind(styles);
-export default function PostList({ posts }) {
+export default function Posts({ posts }) {
   const router = useRouter();
   const [view, setView] = useState("post");
   const [showMenu, setShowMenu] = useState(false);

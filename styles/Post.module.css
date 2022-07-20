@@ -17,6 +17,7 @@
 }
 .info {
   margin-bottom: 15px;
+  display: flex;
 }
 .infoText {
   font-size: 15px;
@@ -45,14 +46,30 @@
 .posts {
   display: flex;
   padding: 0px;
-  transition: all 0.5s;
+  transition: all 1s;
 }
+.posts.list {
+  flex-wrap: wrap;
+}
+
 .post {
   list-style: none;
   flex: 1 0 auto;
   width: 100%;
-  visibility: hidden;
 }
+.post.list {
+  flex: none;
+}
+.post.list:first-child {
+  display: none;
+}
+.post.list:last-child {
+  display: none;
+}
+.postInner {
+  padding: 20px;
+}
+
 .post.show {
   visibility: visible;
 }
@@ -99,7 +116,46 @@
   object-fit: fill;
   border-radius: 5px;
 }
-
+.arrowWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+.dotsWrapper {
+  width: 300px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+}
+.dots {
+  display: flex;
+  transition: all 0.5s;
+}
+.dots.hide {
+  display: none;
+}
+.arrow {
+  font-size: 25px;
+  margin: 0 10px 0 10px;
+}
+.listArrow {
+  font-size: 25px;
+}
+.dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 100%;
+  margin: 5px 15px 0 15px;
+  background-color: var(--disabled-color);
+  transition: all 0.5s;
+}
+.dot.sel {
+  width: 17px;
+  height: 17px;
+  border-radius: 100%;
+  margin: 5px 15px 0 15px;
+  background-color: grey;
+}
 .postCategory {
   font-size: 18px;
   text-align: center;
@@ -128,7 +184,7 @@
   }
 
   .postImage {
-    height: 150px;
+    height: 100px;
     margin-top: 20px;
     margin-bottom: 20px;
   }

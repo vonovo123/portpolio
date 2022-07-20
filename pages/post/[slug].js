@@ -51,16 +51,7 @@ export default function Post({ slug, post }) {
           <div
             className={cx("category")}
             onClick={() => {
-              router.push("/postList");
-            }}
-          >
-            {"POSTS"}
-          </div>
-          <div className={cx("category")}>{">"}</div>
-          <div
-            className={cx("category")}
-            onClick={() => {
-              router.push({ pathname: "/postList", query: { menu: "dev" } });
+              router.push({ pathname: "/posts", query: { menu: "dev" } });
             }}
           >
             {post.category.name}
