@@ -1,17 +1,17 @@
-import styles from "../styles/Post.module.css";
+import styles from "../../styles/Post/Post.module.css";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useRef, useState } from "react";
-import PostList from "../components/PostList";
+import PostList from "./PostList";
+import Arrow from "../Arrow";
 import { useRouter } from "next/router";
-import { CSSTransition } from "react-transition-group";
-import fadeTransition from "../styles/transition/fade.module.css";
 import {
   CaretLeftOutlined,
   RightOutlined,
   CaretRightOutlined,
   CaretDownOutlined,
 } from "@ant-design/icons";
-import Title from "./Title";
+import Title from "../Title";
+import { Row, Col } from "antd";
 const cx = classNames.bind(styles);
 export default function PostPreview({ posts, view, width, show }) {
   const router = useRouter();
@@ -55,12 +55,45 @@ export default function PostPreview({ posts, view, width, show }) {
   const changeListType = () => {
     if (listType === "slide") {
       setListType("list");
+      arrowRef.current.style.transition = `${0.5}s ease-out`;
       arrowRef.current.style.transform = `translate3d(${300}px, 0, 0)`;
       postsRef.current.style.transition = `${0}s ease-out`;
       postsRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
+      postsRef.current.childNodes.forEach((child, idx) => {
+        if (idx === 0) return;
+        if (idx === 1) return;
+        if (idx === 6) return;
+        child.style.transform = `translate3d(${-width * (idx - 1)}px,0, 0)`;
+        setTimeout(() => {
+          child.style.transition = `${0.5}s ease-out`;
+          child.style.transform = `translate3d(0,0,0)`;
+        }, 50 * (idx - 1));
+      });
     } else {
-      setListType("slide");
-      arrowRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
+      postsRef.current.childNodes.forEach((child, idx) => {
+        if (idx === 0) return;
+        if (idx === 1) return;
+        if (idx === 6) return;
+        setTimeout(() => {
+          child.style.transform = `translate3d(${-width * (idx - 1)}px,0, 0)`;
+        }, 50 * (6 - idx));
+      });
+
+      setTimeout(() => {
+        postsRef.current.childNodes.forEach((child, idx) => {
+          if (idx === 0) return;
+          if (idx === 1) return;
+          if (idx === 6) return;
+          child.style.transition = `none`;
+          child.style.transform = `translate3d(0,0, 0)`;
+        });
+        setListType("slide");
+        arrowRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
+        const { width } = postsRef.current.getBoundingClientRect();
+        postsRef.current.style.transform = `translate3d(${
+          -width * postIndex
+        }px, 0, 0)`;
+      }, 500);
     }
   };
   const handlePostResize = useCallback(() => {
@@ -77,6 +110,7 @@ export default function PostPreview({ posts, view, width, show }) {
   }, [listType, postIndex]);
   useEffect(() => {
     const { width } = postsRef.current.getBoundingClientRect();
+    console.log(width);
     postsRef.current.style.transform = `translate3d(${
       -width * postIndex
     }px, 0, 0)`;
@@ -84,7 +118,7 @@ export default function PostPreview({ posts, view, width, show }) {
 
   return (
     <div
-      className={cx("postList", { sel: view === "post" })}
+      className={cx("post", { sel: view === "post" })}
       id="post"
       data-idx="post"
     >
@@ -100,45 +134,27 @@ export default function PostPreview({ posts, view, width, show }) {
           {"전체보기"} <RightOutlined />
         </div>
       </div>
-      <div className={cx("arrowWrapper")}>
-        <div className={cx("dotsWrapper")}>
-          <div className={cx("dots")} ref={arrowRef}>
-            <CaretLeftOutlined
-              className={cx("arrow")}
-              onClick={() => {
-                changePost(-1);
-              }}
-            />
+      <Row className={cx("btns")}>
+        <Col className={cx("listArrow")} onClick={changeListType} span={4}>
+          {listType === "slide" ? "펼쳐보기" : "접어보기"}
+        </Col>
+        <Col
+          className={cx("arrowWrapper")}
+          xl={{ span: 7, offset: 13 }}
+          lg={{ span: 7, offset: 13 }}
+          md={{ span: 7, offset: 13 }}
+          sm={{ span: 24 }}
+          xs={{ span: 24 }}
+        >
+          <Arrow
+            arrowRef={arrowRef}
+            click={changePost}
+            postIndex={postIndex}
+            size={5}
+          ></Arrow>
+        </Col>
+      </Row>
 
-            {[1, 2, 3, 4, 5].map((v) => (
-              <div
-                key={v}
-                className={cx("dot", { sel: v === postIndex })}
-              ></div>
-            ))}
-            <CaretRightOutlined
-              className={cx("arrow")}
-              onClick={() => {
-                changePost(1);
-              }}
-            />
-          </div>
-        </div>
-        <>
-          {listType === "slide" && (
-            <CaretLeftOutlined
-              className={cx("listArrow")}
-              onClick={changeListType}
-            />
-          )}
-          {listType === "list" && (
-            <CaretDownOutlined
-              className={cx("listArrow")}
-              onClick={changeListType}
-            />
-          )}
-        </>
-      </div>
       <PostList
         posts={posts}
         postsRef={postsRef}

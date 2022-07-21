@@ -44,21 +44,24 @@
   overflow: hidden;
 }
 .posts {
+  position: relative;
+  width: 100%;
   display: flex;
   padding: 0px;
   transition: all 1s;
+  list-style-type: none;
+  transition: all 1s;
 }
 .posts.list {
-  flex-wrap: wrap;
+  display: block;
 }
 
 .post {
-  list-style: none;
   flex: 1 0 auto;
   width: 100%;
 }
-.post.list {
-  flex: none;
+.post:nth-child(2) {
+  z-index: 5;
 }
 .post.list:first-child {
   display: none;
@@ -67,11 +70,8 @@
   display: none;
 }
 .postInner {
+  width: 100%;
   padding: 20px;
-}
-
-.post.show {
-  visibility: visible;
 }
 .postContent {
   height: 100%;

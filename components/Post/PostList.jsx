@@ -1,6 +1,6 @@
-import styles from "../styles/Post.module.css";
-import { Row, Col, Card, Descriptions, Image } from "antd";
-import { useCallback, useEffect, useRef, useState } from "react";
+import styles from "../../styles/Post/PostList.module.css";
+import { Row, Col, Image } from "antd";
+import { useState, useRef } from "react";
 import classNames from "classnames/bind";
 import { useRouter } from "next/router";
 import dayjs from "dayjs";
@@ -14,7 +14,7 @@ export default function PostList({
   width,
 }) {
   const router = useRouter();
-
+  const nodeRef = useRef(null);
   const [touchStart, setTouchStart] = useState(null);
   const [touchPosition, setTouchPosition] = useState(null);
   const [postList, setPostsList] = useState([
@@ -61,7 +61,7 @@ export default function PostList({
                   list: listType === "list",
                 })}
               >
-                <div className={cx("postInner")}>
+                <div id="postInner" className={cx("postInner", "inner")}>
                   <Row
                     onClick={() => {
                       goDetail(post.slug);
@@ -90,9 +90,9 @@ export default function PostList({
                       xs={{ span: 24 }}
                       className={cx("postContent")}
                     >
-                      {width >= 767 && (
-                        <Row>
-                          <Col span={24} className={cx("postContentText")}>
+                      <Row>
+                        <Col span={24} className={cx("postContentText")}>
+                          {width >= 767 && (
                             <div className={cx("postInfoWrapper")}>
                               <span className={cx("postDate")}>
                                 {dayjs(post.createdAt).format(
@@ -100,70 +100,34 @@ export default function PostList({
                                 )}
                               </span>
                             </div>
-                            <div className={cx("postTitleWrapper")}>
-                              <div className={cx("postTitle")}>
-                                {post.title}
-                              </div>
-                            </div>
+                          )}
+                          <div className={cx("postTitleWrapper")}>
+                            <div className={cx("postTitle")}>{post.title}</div>
+                          </div>
 
-                            <div className={cx("postShort")}>
-                              {post.shortContent}
-                            </div>
-                          </Col>
-                          <Col className={cx("postTagWrapper")} span={24}>
-                            <Row>
-                              <Col span={24}>
-                                <Row>
-                                  {post.tag.map((tag, idx) => (
-                                    <Col
-                                      className={cx("postCategory")}
-                                      span={5}
-                                      offset={1}
-                                      key={idx}
-                                    >
-                                      {tag.title}
-                                    </Col>
-                                  ))}
-                                </Row>
-                              </Col>
-                            </Row>
-                          </Col>
-                        </Row>
-                      )}
-                      {width < 767 && (
-                        <Row>
-                          <Col span={24} className={cx("postContentText")}>
-                            <div className={cx("postTitleWrapper")}>
-                              <div className={cx("postTitle")}>
-                                {post.title}
-                              </div>
-                            </div>
-
-                            <div className={cx("postShort")}>
-                              {post.shortContent}
-                            </div>
-                          </Col>
-
-                          <Col className={cx("postTagWrapper")} span={24}>
-                            <Row>
-                              <Col span={24}>
-                                <Row>
-                                  {post.tag.map((tag, idx) => (
-                                    <Col
-                                      className={cx("postCategory")}
-                                      span={7}
-                                      offset={1}
-                                      key={idx}
-                                    >
-                                      {tag.title}
-                                    </Col>
-                                  ))}
-                                </Row>
-                              </Col>
-                            </Row>
-                          </Col>
-                        </Row>
-                      )}
+                          <div className={cx("postShort")}>
+                            {post.shortContent}
+                          </div>
+                        </Col>
+                        <Col className={cx("postTagWrapper")} span={24}>
+                          <Row>
+                            <Col span={24}>
+                              <Row>
+                                {post.tag.map((tag, idx) => (
+                                  <Col
+                                    className={cx("postCategory")}
+                                    span={5}
+                                    offset={1}
+                                    key={idx}
+                                  >
+                                    {tag.title}
+                                  </Col>
+                                ))}
+                              </Row>
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
                 </div>

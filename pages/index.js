@@ -1,10 +1,9 @@
 import styles from "../styles/Home.module.css";
 import SanityService from "../services/SanityService";
 import Header from "../components/Header";
-import HeadLine from "../components/HeadLine";
 import Career from "../components/Career";
 import PortPolio from "../components/PortPolio";
-import Post from "../components/Post";
+import Post from "../components/Post/Post";
 import Footer from "../components/Footer";
 import About from "../components/About";
 import { useCallback, useEffect, useMemo, useState } from "react";

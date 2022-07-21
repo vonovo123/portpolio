@@ -6,10 +6,11 @@ import {
   RollbackOutlined,
 } from "@ant-design/icons";
 import styles from "../styles/Header.module.css";
-import fadeTransition from "../styles/transition/fade.module.css";
+
 import classNames from "classnames/bind";
 import { createRef, useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import fadeTransition from "../styles/transition/fade.module.css";
 import Router, { useRouter } from "next/router";
 const cx = classNames.bind(styles);
 export default function Header({

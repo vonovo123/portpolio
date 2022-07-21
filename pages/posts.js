@@ -5,7 +5,7 @@ import styles from "../styles/Posts.module.css";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 import { useRef } from "react";
-import Post from "../components/Post";
+import Post from "../components/Post/Post";
 import { Row, Col } from "antd";
 import classNames from "classnames/bind";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
