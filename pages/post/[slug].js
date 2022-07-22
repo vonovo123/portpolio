@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { Image } from "antd";
 import dayjs from "dayjs";
 import classNames from "classnames/bind";
+import BreadCrumb from "../../components/BreadCrumb";
 const cx = classNames.bind(styles);
 export default function Post({ slug, post }) {
   const router = useRouter();
@@ -34,6 +35,19 @@ export default function Post({ slug, post }) {
   const backBtnMouseHoverEvent = (view) => {
     setView(view);
   };
+  const breadCrumbParam = [
+    () => (
+      <div
+        onClick={() => {
+          router.push({ pathname: "/posts", query: { menu: "개발" } });
+        }}
+      >
+        {post.category.name}
+      </div>
+    ),
+    slug.toUpperCase(),
+  ];
+
   return (
     <div className={styles.wrapper}>
       <Header
@@ -43,23 +57,8 @@ export default function Post({ slug, post }) {
         navClickEvent={navClickEvent}
         backBtnMouseHoverEvent={backBtnMouseHoverEvent}
       />
-
       <div className={cx("container", "mb30")}>
-        <div className={cx("categoryWrapper")}>
-          <div className={cx("category")}>{"HOME"}</div>
-          <div className={cx("category")}>{">"}</div>
-          <div
-            className={cx("category")}
-            onClick={() => {
-              router.push({ pathname: "/posts", query: { menu: "dev" } });
-            }}
-          >
-            {post.category.name}
-          </div>
-          <div className={cx("category")}>{">"}</div>
-          <div className={cx("category", "sel")}>{"POST"}</div>
-        </div>
-
+        <BreadCrumb params={breadCrumbParam}></BreadCrumb>
         <div className={cx("contentHeader")}>
           <div className={cx("title", "mb20")}>{post.title}</div>
           <div className={cx("subTitle", "mb20")}>{post.subtitle}</div>

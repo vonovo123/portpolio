@@ -1,0 +1,30 @@
+.breadCrumbWrapper {
+  font-size: 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  padding: 3px;
+  display: flex;
+}
+.mb10 {
+  margin-bottom: 10px;
+}
+.breadCrumb {
+  margin: 5px;
+  margin-right: 10px;
+}
+.crumb {
+  color: grey;
+  cursor: pointer;
+  padding: 10px;
+}
+.crumb.sel {
+  color: #34495e;
+}
+
+.crumb.home {
+  cursor: pointer;
+}
+
+.crumb.home:hover {
+  color: #34495e;
+}
