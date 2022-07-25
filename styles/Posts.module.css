@@ -1,3 +1,8 @@
+.wrapper {
+  width: 100%;
+  background-image: url(../assets/pattern.png);
+  padding-top: 80px;
+}
 .hide {
   display: none;
 }
@@ -12,25 +17,19 @@
 .mb30 {
   margin-bottom: 40px;
 }
-
-.posts {
-  width: 100%;
-  padding-top: 110px;
-  background-image: url(../assets/pattern.png);
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-}
 .hide {
   display: none;
 }
 
 .container {
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
   min-height: 800px;
   width: 80%;
   margin-left: 10%;
   margin-right: 10%;
   padding: 20px 40px 20px 40px;
-  border: 3px solid var(--activated-color);
+  border: 3px solid var(--disabled-color);
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 1);
 }
@@ -68,7 +67,7 @@
 }
 .menu {
   background-color: white;
-  color: var(--activated-color);
+  color: var(--disabled-color);
   border: 3px solid var(--activated-color);
   border-bottom: none;
   padding: 10px;
@@ -82,17 +81,25 @@
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-.menu:hover {
+.menu.sel {
+  color: var(--activated-color);
   font-weight: bold;
+}
+.menu:hover {
+  color: var(--activated-color);
+  background-color: var(--disabled-color);
 }
 
 .postWrapper {
   position: relative;
   width: 100%;
-  display: flex;
   padding: 0px;
   list-style-type: none;
   transition: all 1s;
+}
+
+.post {
+  width: 100%;
 }
 .postInner {
   width: 100%;

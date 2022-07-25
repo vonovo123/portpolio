@@ -1,7 +1,6 @@
 .about {
   padding-bottom: 50px;
   padding-top: 50px;
-  min-height: 900px;
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   color: var(--disabled-color);

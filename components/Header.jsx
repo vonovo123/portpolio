@@ -13,17 +13,21 @@ import { CSSTransition } from "react-transition-group";
 import fadeTransition from "../styles/transition/fade.module.css";
 import Router, { useRouter } from "next/router";
 const cx = classNames.bind(styles);
+
 export default function Header({
   view,
   navClickEvent,
   type,
   title = "Web Frontend Development Log",
-  backBtnMouseHoverEvent,
   width,
 }) {
   const router = useRouter();
   const nodeRef = useRef(null);
   const [fold, setFold] = useState(true);
+  const [back, setBack] = useState(false);
+  const backBtnMouseHoverEvent = () => {
+    setBack(!back);
+  };
   const changeFold = () => {
     setFold(!fold);
   };
@@ -36,19 +40,25 @@ export default function Header({
         <div className={cx("header")}>
           <Row align="middle" className={styles.index}>
             <Col
-              offset={1}
-              span={15}
+              offset={2}
+              span={16}
               onClick={() => {
                 navClickEvent("home");
               }}
               style={{ cursor: "pointer" }}
             >
-              <div className={cx("title", { sel: view === "home" })}>
+              <div
+                className={cx("title", {
+                  sel:
+                    (type === "index" && view === "home") ||
+                    (type !== "index" && !back),
+                })}
+              >
                 <CodeOutlined /> {title}
               </div>
             </Col>
             <Col
-              span={8}
+              span={6}
               className={cx("navWrapper", { show: type === "index" })}
             >
               <Row style={{ textAlign: "center" }}>
@@ -95,32 +105,29 @@ export default function Header({
               </Row>
             </Col>
             <Col
-              xl={{ span: 7 }}
-              lg={{ span: 7 }}
-              md={{ span: 7 }}
+              xl={{ span: 6 }}
+              lg={{ span: 6 }}
+              md={{ span: 6 }}
               sm={{ span: 24 }}
               xs={{ span: 24 }}
               className={cx("navWrapper", {
                 show: type === "postDetail" || type === "postList",
               })}
             >
-              <Row style={{ textAlign: "right" }}>
+              <Row style={{ textAlign: "center" }}>
                 <Col
                   span={24}
                   onClick={() => {
                     navClickEvent("");
                   }}
                   onMouseEnter={() => {
-                    backBtnMouseHoverEvent("");
+                    backBtnMouseHoverEvent();
                   }}
                   onMouseLeave={() => {
-                    backBtnMouseHoverEvent("home");
+                    backBtnMouseHoverEvent();
                   }}
                 >
-                  <div
-                    className={cx("nav", { sel: view === "" })}
-                    style={{ fontWeight: "bold", fontSize: 25 }}
-                  >
+                  <div className={cx("nav", "back", { sel: back })}>
                     <RollbackOutlined onClick={goBack} />
                   </div>
                 </Col>
@@ -245,7 +252,7 @@ export default function Header({
           {(type === "postDetail" || type === "postList") && (
             <div className={cx("header")}>
               <Row align="middle" span={24} className={styles.index}>
-                <Col span={3} style={{ fontWeight: "bold", fontSize: 20 }}>
+                <Col span={3} style={{ fontWeight: "bold", fontSize: 25 }}>
                   <RollbackOutlined onClick={goBack} />
                 </Col>
                 <Col span={20}>

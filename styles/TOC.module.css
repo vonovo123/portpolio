@@ -1,0 +1,89 @@
+.tocWrapper {
+  position: fixed;
+  z-index: 3;
+  width: 270px;
+  height: 97%;
+  right: -240px;
+  background-color: white;
+  padding: 25px;
+  padding-left: 40px;
+  padding-right: 0;
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  border: 3px solid var(--disabled-color);
+  border-radius: 5px;
+  color: var(--disabled-color);
+  margin-top: 10px;
+  transition: all 0.5s;
+}
+.read > div {
+  color: var(--activated-color);
+}
+.read::marker {
+  color: var(--activated-color);
+}
+.tocWrapper.open {
+  right: 0px;
+}
+.tocTitleWrapper {
+  position: absolute;
+  width: 300px;
+  z-index: 5;
+  left: -33px;
+  display: flex;
+}
+.tocArrowBtn {
+  border: 3px solid var(--disabled-color);
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  border-radius: 5px;
+  color: #34495e;
+  background-color: white;
+  cursor: pointer;
+}
+.tocTitle {
+  font-size: 25px;
+  font-weight: bold;
+  color: var(--activated-color);
+}
+.tocContentWrapper {
+  margin-top: 10px;
+  overflow-y: scroll;
+  min-width: 90%;
+}
+.orderedList {
+  padding-left: 25px;
+}
+
+.list {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.list.lv1 {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.list.lv2 {
+  font-weight: 500;
+  font-size: 17px;
+}
+
+.list.lv3 {
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.list.lv4 {
+  font-size: 13px;
+  font-weight: 200;
+}
+
+.list.lv5 {
+  font-size: 10px;
+  font-weight: 100;
+}

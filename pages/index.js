@@ -17,7 +17,6 @@ export default function Home({
   career,
 }) {
   const [width, setWidth] = useState();
-  const [scrollTop, setScrollTop] = useState(0);
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
@@ -67,7 +66,6 @@ export default function Home({
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log("isIntersecting");
           setView(entry.target.dataset.idx);
         }
       });
@@ -91,7 +89,7 @@ export default function Home({
         type={"index"}
         width={width}
       />
-      <div id="home" data-idx="home" style={{ height: 100, width: 100 }}></div>
+      <div id="home" data-idx="home" style={{ height: 80, width: 100 }}></div>
       <div className={styles.container} id="rootContainer">
         <Career view={view} career={career} width={width} />
         <PortPolio
@@ -116,7 +114,6 @@ export async function getStaticProps() {
   const gitProfileService = new GitProfileService();
   const home = await sanityService.getHome();
   let posts = await sanityService.getPosts();
-  posts = [...posts, ...posts, ...posts, ...posts, ...posts];
   const portpolios = await sanityService.getPortpolio();
   const career = await sanityService.getCareer();
   const devLog = await sanityService.getDevLog();

@@ -28,6 +28,7 @@ const postsUrl = `
   subtitle,
   createdAt,
   shortContent,
+  postContent,
   'category' : category -> {
     name,
     type

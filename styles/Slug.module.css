@@ -1,3 +1,17 @@
+.container {
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  width: 60%;
+  min-height: 1100px;
+  margin-left: 20%;
+  margin-right: 20%;
+  padding: 20px 30px 20px 30px;
+  border: 3px solid var(--disabled-color);
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 1);
+  overflow-x: hidden;
+}
+
 .mb10 {
   margin-bottom: 10px;
 }
@@ -10,47 +24,26 @@
   margin-bottom: 30px;
 }
 
+.em {
+  font-style: normal;
+  background-color: var(--activated-color);
+  color: white;
+  padding: 4px;
+  border-radius: 3px;
+}
 .wrapper {
   width: 100%;
-  padding-top: 110px;
   background-image: url(../assets/pattern.png);
+  padding-top: 80px;
 }
 
-.container {
-  min-height: 800px;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-  padding: 20px 40px 20px 40px;
-  border: 3px solid rgb(218, 215, 215);
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 1);
-}
-.categoryWrapper {
-  font-size: 18px;
-  border-radius: 8px;
-  font-weight: bold;
-  padding: 3px;
-  display: flex;
-}
-.category {
-  margin: 5px;
-  margin-right: 10px;
-  color: grey;
-  cursor: pointer;
-}
-.category.sel {
-  margin: 5px;
-  margin-right: 10px;
-  color: #34495e;
+.contentHeaderWrapper {
+  border-bottom: 4px dotted #34495e;
+  padding-bottom: 30px;
+  margin-bottom: 30px;
 }
 .contentHeader {
   text-align: center;
-  border-bottom: 4px dotted #34495e;
-  padding: 40px 0 30px 0;
-  border-radius: 8px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
 }
 
 .contentHeader .title {
@@ -60,17 +53,10 @@
 
 .contentHeader .subTitle {
   font-size: 30px;
-  font-weight: bold;
 }
 
 .contentBody {
   padding: 40px;
-  padding-top: 50px;
-  border-radius: 8px;
-  /* border: 4px solid #34495e; */
-  border-top: none;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
 }
 
 .tags {
@@ -84,9 +70,9 @@
 .tag {
   width: 20%;
   margin: 20px;
-  font-size: 20px;
-  background-color: grey;
-  color: white;
+  font-size: 15px;
+  background-color: var(--activated-color);
+  color: rgba(255, 255, 255, 1);
   border-radius: 5px;
 }
 

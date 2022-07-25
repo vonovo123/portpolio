@@ -28,3 +28,9 @@
 .crumb.home:hover {
   color: #34495e;
 }
+
+@media only screen and (max-width: 767px) {
+  .breadCrumbWrapper {
+    font-size: 13px;
+  }
+}
