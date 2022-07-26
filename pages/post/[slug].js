@@ -3,20 +3,22 @@ import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import styles from "../../styles/Slug.module.css";
 import BlogPostDetail from "../../components/BlogPostDetail";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/router";
 import { Col, Image, Row } from "antd";
 import dayjs from "dayjs";
 import classNames from "classnames/bind";
 import BreadCrumb from "../../components/BreadCrumb";
 import TableOfContents from "../../components/TableOfContents";
+import { set } from "lodash";
 const cx = classNames.bind(styles);
 export default function Post({ slug, post }) {
   const router = useRouter();
   const [view, setView] = useState("home");
   const [width, setWidth] = useState();
   const [openToc, setOpenToc] = useState(true);
-  const [readKey, setReadkey] = useState("");
+
+  const [readKey, setReadkey] = useState({ flag: false });
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
@@ -47,18 +49,16 @@ export default function Post({ slug, post }) {
     ),
     slug.toUpperCase(),
   ];
-
-  useEffect(() => {}, []);
-
   const [heading, setHeading] = useState([]);
+
   useEffect(() => {
     const option = {
-      rootMargin: "-30% 0% -70% 0%",
+      rootMargin: "-20% 0% -80% 0%",
     };
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          console.log(entry.target._key);
           setReadkey(entry.target._key);
         }
       });
@@ -83,7 +83,6 @@ export default function Post({ slug, post }) {
 
         return acc;
       }, []);
-      //console.log(result);
       return result;
     };
 
@@ -136,9 +135,19 @@ export default function Post({ slug, post }) {
         />
 
         <div className={cx("container", "mb30")}>
-          <BreadCrumb params={breadCrumbParam}></BreadCrumb>
           <Row className={cx("contentHeaderWrapper")}>
-            <Col span={24}>
+            <Col span={24} className={cx("mb30")}>
+              <BreadCrumb params={breadCrumbParam}></BreadCrumb>
+            </Col>
+            <Col span={12} align={"center"}>
+              <Image
+                src={post.thumbnail.imageUrl}
+                alt={post.thumbnail.alt}
+                className={cx("postImage", "mb30")}
+                preview={false}
+              />
+            </Col>
+            <Col span={12} align={"center"}>
               <div className={cx("contentHeader")}>
                 <div className={cx("title", "mb20")}>{post.title}</div>
                 <div className={cx("subTitle", "mb20")}>{post.subtitle}</div>
@@ -152,16 +161,9 @@ export default function Post({ slug, post }) {
                     </div>
                   ))}
                 </div>
-                <Image
-                  src={post.thumbnail.imageUrl}
-                  alt={post.thumbnail.alt}
-                  className={cx("postImage", "mb30")}
-                  preview={false}
-                />
               </div>
             </Col>
           </Row>
-
           <div className={styles.contentBody}>
             <BlogPostDetail
               blocks={post.content}

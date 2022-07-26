@@ -2,13 +2,35 @@ import styles from "../styles/TOC.module.css";
 import classNames from "classnames/bind";
 import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import { useCallback } from "react";
+import { useEffect } from "react";
+import { useRef } from "react";
 const cx = classNames.bind(styles);
 export default function TableOfContents({
   outline,
   openToc,
   setOpenToc,
   readKey,
+  fixed,
 }) {
+  const titleRef = useRef(null);
+  const swing = useRef(null);
+  useEffect(() => {
+    let flag = true;
+    if (!openToc) {
+      titleRef.current.style.transition = `${1}s `;
+      swing.current = setInterval(() => {
+        if (flag) {
+          titleRef.current.style.transform = `translate3d(${-15}px, 0, 0)`;
+        } else {
+          titleRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
+        }
+        flag = !flag;
+      }, 1000);
+    } else {
+      titleRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
+      clearInterval(swing.current);
+    }
+  }, [openToc]);
   const getChildrenText = (heading) => {
     return heading.el.innerText;
   };
@@ -30,7 +52,7 @@ export default function TableOfContents({
               className={cx({})}
               onClick={() => {
                 window.scrollTo({
-                  top: heading.el.offsetTop - 80,
+                  top: heading.el.offsetTop - 130,
                   behavior: "smooth",
                 });
               }}
@@ -45,16 +67,27 @@ export default function TableOfContents({
     );
   };
   return (
-    <div className={cx("tocWrapper", { open: openToc })}>
-      <div className={cx("tocTitleWrapper")}>
-        <div className={cx("tocArrowBtn")} onClick={changeTocState}>
-          {openToc && <CaretRightOutlined />}
-          {!openToc && <CaretLeftOutlined />}
-        </div>
+    <div className={cx("toc")}>
+      <div
+        className={cx("tocTitleWrapper", { open: openToc, fixed: fixed })}
+        ref={titleRef}
+        onClick={changeTocState}
+      >
+        {openToc && (
+          <div className={cx("tocTitle")}>
+            <CaretRightOutlined /> Table Of Contents
+          </div>
+        )}
+        {!openToc && (
+          <div className={cx("tocTitle")}>
+            <CaretLeftOutlined /> TOC
+          </div>
+        )}
       </div>
-      <div className={cx("tocContentWrapper")}>
-        <div className={cx("tocTitle")}>Table Of Contents</div>
-        {createOrderedList(outline)}
+      <div className={cx("tocWrapper", { open: openToc, fixed: fixed })}>
+        <div className={cx("tocContentWrapper")}>
+          {createOrderedList(outline)}
+        </div>
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ body {
   transition: width 0.5s;
   color: #34495e;
   user-select: none;
+  scroll-behavior: smooth;
 }
 html::-webkit-scrollbar {
   display: none;

@@ -1,57 +1,59 @@
-.tocWrapper {
-  position: fixed;
-  z-index: 3;
-  width: 270px;
-  height: 97%;
-  right: -240px;
-  background-color: white;
-  padding: 25px;
-  padding-left: 40px;
-  padding-right: 0;
+.toc {
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
-  border: 3px solid var(--disabled-color);
-  border-radius: 5px;
-  color: var(--disabled-color);
-  margin-top: 10px;
-  transition: all 0.5s;
 }
+
 .read > div {
   color: var(--activated-color);
 }
 .read::marker {
   color: var(--activated-color);
 }
+.tocTitleWrapper.open {
+  right: 0px;
+}
 .tocWrapper.open {
   right: 0px;
 }
 .tocTitleWrapper {
-  position: absolute;
-  width: 300px;
-  z-index: 5;
-  left: -33px;
-  display: flex;
-}
-.tocArrowBtn {
   border: 3px solid var(--disabled-color);
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
   border-radius: 5px;
-  color: #34495e;
+  position: fixed;
+  display: flex;
+  width: 280px;
+  z-index: 5;
+  right: -180px;
+  top: 80px;
   background-color: white;
-  cursor: pointer;
+  transition: right 0.5s;
 }
+
+.tocWrapper {
+  background-color: white;
+  position: fixed;
+  z-index: 3;
+  width: 270px;
+  top: 50px;
+  height: 91%;
+  right: -270px;
+  padding: 25px;
+  padding-left: 20px;
+  padding-right: 0;
+  background-color: white;
+  border: 3px solid var(--disabled-color);
+  border-radius: 5px;
+  color: var(--disabled-color);
+  transition: right 0.5s;
+}
+
 .tocTitle {
   font-size: 25px;
   font-weight: bold;
   color: var(--activated-color);
+  margin-left: 10px;
 }
 .tocContentWrapper {
-  margin-top: 10px;
+  margin-top: 60px;
   overflow-y: scroll;
   min-width: 90%;
 }
