@@ -10,7 +10,7 @@ export default function BreadCrumb({ params }) {
   }, [router]);
   const renderCategory = (param, sel, idx) => {
     return (
-      <div className={cx("breadCrumbWrapper")} key={idx}>
+      <div className={cx("breadCrumb")} key={idx}>
         <div className={cx("crumb")}>{">"}</div>
         <div className={cx("crumb", { sel: sel })}>
           {typeof param == "function" && <>{param()}</>}

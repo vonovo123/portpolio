@@ -70,7 +70,7 @@ export default function Career({ view, career, width }) {
               <Chart
                 chartType="Timeline"
                 data={data}
-                width="950px"
+                width="800px"
                 height="100px"
                 chartEvents={[
                   {
@@ -97,24 +97,8 @@ export default function Career({ view, career, width }) {
                   {width >= 767 && (
                     <>
                       <Col span={4}>기간</Col>
-                      <Col span={14}>프로젝트 및 상세</Col>
+                      <Col span={16}>프로젝트 및 상세</Col>
                       <Col span={4}>활용 기술</Col>
-                      <Col span={2}>
-                        {hide && (
-                          <CaretDownOutlined
-                            onClick={() => {
-                              setHide(!hide);
-                            }}
-                          />
-                        )}
-                        {!hide && (
-                          <CaretUpOutlined
-                            onClick={() => {
-                              setHide(!hide);
-                            }}
-                          />
-                        )}
-                      </Col>
                     </>
                   )}
                   {width < 767 && (
@@ -228,6 +212,29 @@ export default function Career({ view, career, width }) {
                   })}
                 </Row>
               </CSSTransition>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 24,
+                }}
+              >
+                {hide && (
+                  <CaretUpOutlined
+                    onClick={() => {
+                      setHide(!hide);
+                    }}
+                  />
+                )}
+                {!hide && (
+                  <CaretDownOutlined
+                    onClick={() => {
+                      setHide(!hide);
+                    }}
+                  />
+                )}
+              </div>
             </Row>
           </Col>
         </Row>

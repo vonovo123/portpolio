@@ -10,15 +10,15 @@ import dayjs from "dayjs";
 import classNames from "classnames/bind";
 import BreadCrumb from "../../components/BreadCrumb";
 import TableOfContents from "../../components/TableOfContents";
-import { set } from "lodash";
+import { makeHeadings } from "../../utils/makeHeadings";
 const cx = classNames.bind(styles);
 export default function Post({ slug, post }) {
   const router = useRouter();
   const [view, setView] = useState("home");
   const [width, setWidth] = useState();
-  const [openToc, setOpenToc] = useState(true);
-
+  const [openToc, setOpenToc] = useState(false);
   const [readKey, setReadkey] = useState({ flag: false });
+  const observed = useRef(null);
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
@@ -50,12 +50,31 @@ export default function Post({ slug, post }) {
     slug.toUpperCase(),
   ];
   const [heading, setHeading] = useState([]);
+  useEffect(() => {
+    const topOption = { rootMargin: "-20% 0% -80% 0%" };
+    const bottomOption = { rootMargin: "-60% 0% -40% 0%" };
+    const topIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setOpenToc(true);
+        }
+      });
+    }, topOption);
+    topIo.observe(observed.current);
+    const bottomIo = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setOpenToc(false);
+        }
+      });
+    }, bottomOption);
 
+    bottomIo.observe(observed.current);
+  }, []);
   useEffect(() => {
     const option = {
       rootMargin: "-20% 0% -80% 0%",
     };
-
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -65,61 +84,12 @@ export default function Post({ slug, post }) {
     }, option);
     const $nodes = document.querySelector("#content");
     let ast = [...$nodes.childNodes];
-
-    const filter = (ast, match) => {
-      const result = ast.reduce((acc, node) => {
-        if (match(node)) {
-          const key = Math.floor(Math.random() * 100000) + "";
-          node._key = "key_" + key;
-          node = {
-            el: node,
-            tagName: node.tagName,
-            level: node.tagName.slice(1),
-          };
-          io.observe(node.el);
-          acc.push(node);
-        }
-        if (node.children) acc.push(...filter([...node.children], match));
-
-        return acc;
-      }, []);
-      return result;
-    };
-
-    const findHeadings = (ast) => {
-      return filter(ast, (node) => /H\d/.test(node.tagName));
-    };
-    const outline = { subheadings: [] };
-    const headings = findHeadings(ast);
-    const path = [];
-    let lastLevel = 0;
-    const get = (object, path) => {
-      const result = path.reduce((prev, curr) => {
-        return prev[curr];
-      }, object);
-      return result;
-    };
-    const getObjectPath = (path) => {
-      return path.length === 0
-        ? path
-        : ["subheadings"].concat(path.join(".subheadings.").split("."));
-    };
-    headings.forEach((heading) => {
-      const level = Number(heading.tagName.slice(1));
-      heading.subheadings = [];
-      if (level < lastLevel) {
-        for (let i = lastLevel; i >= level; i--) path.pop();
-      } else if (level === lastLevel) path.pop();
-      const prop = get(outline, getObjectPath(path));
-      prop.subheadings.push(heading);
-      path.push(prop.subheadings.length - 1);
-      lastLevel = level;
-    });
-    setHeading(outline.subheadings);
+    const headings = makeHeadings({ ast, io });
+    setHeading(headings);
   }, []);
 
   return (
-    <div>
+    <div className={cx("slug")}>
       <TableOfContents
         outline={heading}
         openToc={openToc}
@@ -133,13 +103,12 @@ export default function Post({ slug, post }) {
           type={"postDetail"}
           navClickEvent={navClickEvent}
         />
-
         <div className={cx("container", "mb30")}>
           <Row className={cx("contentHeaderWrapper")}>
-            <Col span={24} className={cx("mb30")}>
+            <div className={cx("breadCrumbWrapper", "mb50")}>
               <BreadCrumb params={breadCrumbParam}></BreadCrumb>
-            </Col>
-            <Col span={12} align={"center"}>
+            </div>
+            <Col span={24} align={"center"}>
               <Image
                 src={post.thumbnail.imageUrl}
                 alt={post.thumbnail.alt}
@@ -147,7 +116,7 @@ export default function Post({ slug, post }) {
                 preview={false}
               />
             </Col>
-            <Col span={12} align={"center"}>
+            <Col span={24} align={"center"}>
               <div className={cx("contentHeader")}>
                 <div className={cx("title", "mb20")}>{post.title}</div>
                 <div className={cx("subTitle", "mb20")}>{post.subtitle}</div>
@@ -163,8 +132,11 @@ export default function Post({ slug, post }) {
                 </div>
               </div>
             </Col>
+            <div ref={observed} className={cx("observe")}>
+              obs
+            </div>
           </Row>
-          <div className={styles.contentBody}>
+          <div className={cx("contentBody")}>
             <BlogPostDetail
               blocks={post.content}
               markdown={post.postContent.markdown}

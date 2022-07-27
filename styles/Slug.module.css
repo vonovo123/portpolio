@@ -10,6 +10,13 @@
   margin-bottom: 30px;
 }
 
+.mb40 {
+  margin-bottom: 40px;
+}
+
+.mb50 {
+  margin-bottom: 100px;
+}
 .em {
   font-style: normal;
   background-color: var(--activated-color);
@@ -17,15 +24,18 @@
   padding: 4px;
   border-radius: 3px;
 }
-
+.slug {
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  width: 100%;
+  overflow: hidden;
+}
 .wrapper {
   width: 100%;
   background-image: url(../assets/pattern.png);
   padding-top: 80px;
 }
 .container {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
   width: 60%;
   margin-left: 20%;
   margin-right: 20%;
@@ -34,12 +44,15 @@
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 1);
   overflow-x: hidden;
+  position: relative;
 }
 
 .contentHeaderWrapper {
-  padding: 30px;
-  padding-top: 20px;
-  height: 500px;
+  height: 100%;
+  padding: 20px 30px 0px 30px;
+}
+.breadCrumbWrapper {
+  position: relative;
 }
 .contentHeader {
   text-align: center;
@@ -85,10 +98,8 @@
   background-color: red;
   margin-bottom: 30px;
 }
-.observePoint {
-  position: fixed;
-  background-color: yellow;
-  top: 20%;
+.observe {
+  visibility: hidden;
 }
 @media only screen and (max-width: 767px) {
   .container {

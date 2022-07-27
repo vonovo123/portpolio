@@ -17,10 +17,10 @@ export default function TableOfContents({
   useEffect(() => {
     let flag = true;
     if (!openToc) {
-      titleRef.current.style.transition = `${1}s `;
+      //if (swing.current) return;
       swing.current = setInterval(() => {
         if (flag) {
-          titleRef.current.style.transform = `translate3d(${-15}px, 0, 0)`;
+          titleRef.current.style.transform = `translate3d(${15}px, 0, 0)`;
         } else {
           titleRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
         }
@@ -29,7 +29,11 @@ export default function TableOfContents({
     } else {
       titleRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
       clearInterval(swing.current);
+      swing.current = null;
     }
+    return () => {
+      clearInterval(swing.current);
+    };
   }, [openToc]);
   const getChildrenText = (heading) => {
     return heading.el.innerText;
@@ -69,22 +73,26 @@ export default function TableOfContents({
   return (
     <div className={cx("toc")}>
       <div
-        className={cx("tocTitleWrapper", { open: openToc, fixed: fixed })}
+        className={cx("tocMoveTitle", { open: openToc, fixed: fixed })}
         ref={titleRef}
         onClick={changeTocState}
       >
-        {openToc && (
-          <div className={cx("tocTitle")}>
-            <CaretRightOutlined /> Table Of Contents
-          </div>
-        )}
-        {!openToc && (
-          <div className={cx("tocTitle")}>
-            <CaretLeftOutlined /> TOC
-          </div>
-        )}
+        <div className={cx("tocTitle")}>
+          <CaretLeftOutlined /> TOC
+        </div>
       </div>
+
       <div className={cx("tocWrapper", { open: openToc, fixed: fixed })}>
+        <div
+          className={cx("tocTitleWrapper", { open: openToc, fixed: fixed })}
+          onClick={changeTocState}
+        >
+          <div className={cx("tocTitle")}>
+            <CaretRightOutlined style={{ paddingRight: 20 }} />
+            Table Of Contents
+          </div>
+        </div>
+
         <div className={cx("tocContentWrapper")}>
           {createOrderedList(outline)}
         </div>

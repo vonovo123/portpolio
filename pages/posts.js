@@ -62,7 +62,9 @@ export default function Posts({ posts }) {
       />
       <div className={cx("container")}>
         <div className={cx("posts")}>
-          <BreadCrumb params={breadCrumParams}></BreadCrumb>
+          <div className={cx("breadCrumbWrapper", "mb50")}>
+            <BreadCrumb params={breadCrumParams}></BreadCrumb>
+          </div>
           <Menus
             menus={menus}
             setMenu={setMenu}
