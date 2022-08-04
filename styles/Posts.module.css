@@ -1,10 +1,9 @@
 .wrapper {
   width: 100%;
   background-image: url(../assets/pattern.png);
-  padding-top: 80px;
-}
-.hide {
-  display: none;
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  --background-color: rgba(255, 255, 255, 1);
 }
 .mb10 {
   margin-bottom: 10px;
@@ -15,25 +14,30 @@
 }
 
 .mb30 {
+  margin-bottom: 30px;
+}
+
+.mb40 {
   margin-bottom: 40px;
 }
+
+.mb50 {
+  margin-bottom: 50px;
+}
+
 .hide {
   display: none;
 }
 
 .container {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-  min-height: 800px;
   width: 60%;
   margin-left: 20%;
   margin-right: 20%;
-  padding: 20px 40px 20px 40px;
-  border: 3px solid var(--disabled-color);
+  padding: 60px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 1);
-}
-.breadCrumbWrapper {
+  border: 3px solid var(--disabled-color);
+  background-color: var(--background-color);
+  min-height: 800px;
 }
 .menuWrapper {
   position: relative;
@@ -169,10 +173,11 @@
 
 @media only screen and (max-width: 767px) {
   .container {
-    padding: 10px;
-    width: 100%;
-    margin: 0;
-    border: none;
+    padding: 20px;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    box-shadow: none;
   }
   .post .postImageWrapper {
     border-right-style: solid;

@@ -1,7 +1,5 @@
-.arrowWrapper {
-  display: flex;
-}
 .dotsWrapper {
+  margin: 10px;
   width: 300px;
   overflow: hidden;
   display: flex;
@@ -10,13 +8,6 @@
 .dots {
   display: flex;
   transition: all 0.5s;
-}
-.dots.hide {
-  display: none;
-}
-.arrow {
-  font-size: 18px;
-  margin: 0 10px 0 10px;
 }
 .dot {
   width: 10px;

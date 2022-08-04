@@ -1,31 +1,40 @@
 import styles from "../styles/Home.module.css";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
+
 import SanityService from "../services/SanityService";
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import Career from "../components/Career";
 import PortPolio from "../components/PortPolio";
 import Post from "../components/Post/Post";
 import Footer from "../components/Footer";
 import About from "../components/About";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import GitProfileService from "../services/GitProfileService";
-export default function Home({
-  home,
-  posts,
-  devLog,
-  profile,
-  portpolios,
-  career,
-}) {
+
+export default function Home({ home, posts, profile, portpolios, career }) {
   const [width, setWidth] = useState();
   const handleResize = () => {
     setWidth(window.innerWidth);
   };
+  const careerRef = useRef(null);
+  const postRef = useRef(null);
+  const portRef = useRef(null);
+  const aboutRef = useRef(null);
+  const ref = {
+    career: careerRef,
+    post: postRef,
+    portpolio: portRef,
+    about: aboutRef,
+  };
+  const intro = home.find((content) => content.title === "Introduction");
+  const [view, setView] = useState("home");
   useEffect(() => {
     setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [setWidth]);
-  const [view, setView] = useState("home");
+
   let html = [],
     vanillaJs = [],
     vueNuxt = [],
@@ -42,15 +51,17 @@ export default function Home({
       reactNext.push({ ...portpolio });
     }
   });
-  const intro = home.find((content) => content.title === "Introduction");
   const navClickEvent = useCallback(
     (target) => {
-      setView(target);
-      if (target === "home") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
+      if (target === "") {
         window.scrollTo({
-          top: document.querySelector(`#${target}`).offsetTop - 50,
+          top: 0,
+          behavior: "smooth",
+        });
+      } else {
+        setView(target);
+        window.scrollTo({
+          top: ref[target].current.offsetTop - 60,
           behavior: "smooth",
         });
       }
@@ -62,7 +73,6 @@ export default function Home({
     const option = {
       rootMargin: "-10% 0% -90% 0%",
     };
-
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -70,40 +80,59 @@ export default function Home({
         }
       });
     }, option);
-    const $home = document.querySelector("#home");
-    const $career = document.querySelector("#career");
-    const $portpolio = document.querySelector("#portpolio");
-    const $post = document.querySelector("#post");
-    const $about = document.querySelector("#about");
-    io.observe($home);
-    io.observe($career);
-    io.observe($portpolio);
-    io.observe($post);
-    io.observe($about);
+    io.observe(postRef.current);
+    io.observe(careerRef.current);
+    io.observe(portRef.current);
+    io.observe(aboutRef.current);
   }, []);
   return (
-    <div className={styles.wrapper}>
+    <div className={cx("wrapper")}>
       <Header
         view={view}
         navClickEvent={navClickEvent}
         type={"index"}
         width={width}
       />
-      <div id="home" data-idx="home" style={{ height: 80, width: 100 }}></div>
-      <div className={styles.container} id="rootContainer">
-        <Career view={view} career={career} width={width} />
+      <div className={cx("container", "wide")}>
+        <Post
+          posts={posts}
+          view={view}
+          width={width}
+          show={true}
+          postRef={postRef}
+        />
+      </div>
+      <div className={cx("container", "wide")}>
         <PortPolio
           html={html}
           vanillaJs={vanillaJs}
           vueNuxt={vueNuxt}
-          view={view}
           reactNext={reactNext}
+          view={view}
           width={width}
+          show={true}
+          portRef={portRef}
         />
-        <Post posts={posts} view={view} width={width} show={true} />
-        <About view={view} profile={profile} intro={intro} width={width} />
-        <Footer />
       </div>
+      <div className={cx("container", "narrow")}>
+        <div className={cx("homeWrapper")}>
+          <Career
+            view={view}
+            career={career}
+            width={width}
+            careerRef={careerRef}
+          />
+
+          <About
+            view={view}
+            profile={profile}
+            intro={intro}
+            width={width}
+            aboutRef={aboutRef}
+          />
+        </div>
+      </div>
+      <Footer />
     </div>
   );
 }
@@ -116,7 +145,6 @@ export async function getStaticProps() {
   let posts = await sanityService.getPosts();
   const portpolios = await sanityService.getPortpolio();
   const career = await sanityService.getCareer();
-  const devLog = await sanityService.getDevLog();
   const profile = await sanityService.getProfile();
   return {
     props: {
@@ -125,7 +153,6 @@ export async function getStaticProps() {
       profile,
       portpolios,
       career,
-      devLog,
     },
   };
 }

@@ -1,24 +1,65 @@
 .wrapper {
   width: 100%;
-  background-image: url(../assets/pattern.png);
+  padding-top: 7%;
+  /* background-image: url(../assets/pattern.png); */
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  --background-color: rgba(255, 255, 255, 1);
+  background-color: var(--background-color);
+}
+
+.mb10 {
+  margin-bottom: 10px;
+}
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.mb30 {
+  margin-bottom: 30px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
+}
+
+.mb50 {
+  margin-bottom: 50px;
+}
+
+.hide {
+  display: none;
 }
 
 .container {
-  width: 60%;
-  margin-left: 20%;
-  margin-right: 20%;
-  padding: 60px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 1);
-  margin-bottom: 30px;
-  border: 3px solid rgb(218, 215, 215);
 }
+.container.wide {
+  padding: 0% 1% 0% 1%;
+  margin-bottom: 3%;
+}
+.container.narrow {
+  /* border: 3px solid var(--disabled-color); */
+  padding: 0% 3% 0% 3%;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.homeWrapper {
+  padding: 20px;
+  min-height: 800px;
+}
+
 @media only screen and (max-width: 767px) {
-  .container {
-    padding: 20px;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    box-shadow: none;
+  .wrapper {
+    padding-top: 13%;
+  }
+  .container.wide {
+    padding: 0% 1% 0% 1%;
+    margin-bottom: 5%;
+  }
+  .homeWrapper {
+    padding: 0;
   }
 }

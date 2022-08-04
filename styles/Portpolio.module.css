@@ -1,112 +1,55 @@
 .portpolio {
-  padding-bottom: 50px;
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
-  color: var(--disabled-color);
-  border-top: 3px dotted var(--disabled-color);
   transition: all 0.5s;
   opacity: 0.5;
-  padding-top: 50px;
+  padding: 10px;
 }
 .portpolio.sel {
-  color: var(--activated-color);
-  border-top: 3px dotted var(--activated-color);
   opacity: 1;
 }
 
-.navigation {
-  text-align: center;
-  justify-content: right;
+.hide {
+  display: none;
 }
-.blank {
-  border-bottom: 3px solid var(--disabled-color);
-}
-.blank.sel {
-  border-bottom: 3px solid var(--activated-color);
+.info {
+  margin-bottom: 5px;
 }
 
-.nav {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  padding: 8px;
-  cursor: pointer;
-  border: 3px solid var(--disabled-color);
-  border-left: none;
-  color: var(--disabled-color);
-  font-size: 15px;
-  font-weight: bold;
-}
-.nav:nth-child(2) {
-  border-left: 3px solid var(--disabled-color);
-}
-.nav.checked {
-  border-bottom: none;
-}
-
-.nav.sel {
-  border-color: var(--activated-color);
-  color: var(--activated-color);
-}
-
-.contentListWapper {
-  border: 3px solid var(--disabled-color);
-  border-top: none;
-  padding: 50px;
-}
-.contentListWapper.sel {
-  border: 3px solid var(--activated-color);
-  border-top: none;
+.titleWrapper {
+  margin-left: 5%;
 }
 .contentWrapper {
-  border: 3px dotted var(--disabled-color);
-  border-radius: 10px 10px 0 0;
-  padding: 50px;
+  border: 3px solid var(--activated-color);
   transition: all 0.5s;
+  margin-bottom: 30px;
+  font-size: 17px;
+  padding: 20px;
 }
-.contentWrapper.sel {
-  border: 3px dotted var(--activated-color);
-}
-.contentWrapper:last-child {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-.contentWrapper:not(:first-child) {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-.contentWrapper:not(:last-child) {
-  border-bottom: none;
-}
-
-.contentWrapper > .contentHeadWrapper {
-  padding-right: 20px;
-  border-right: 3px dotted var(--disabled-color);
+.head {
+  margin-bottom: 30px;
   transition: all 0.5s;
+  margin-bottom: 10px;
 }
-
+.headTitle {
+  font-size: 23px;
+}
+.headDate {
+  font-size: 15px;
+}
 .contentHeadImageWrapper {
-  transition: all 0.5s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  transition: all 0.5s;
-  padding-top: 30px;
+  margin-bottom: 20px;
 }
-
 .contentHeadImage {
-  height: 350px;
   transition: all 0.5s;
   border-radius: 5px;
-}
-.contentWrapper:hover .contentHeadImage {
-  height: 350px;
+  height: 400px;
+  width: 400px;
+  object-fit: cover;
 }
 
 .contentHeadText {
-  padding: 10px;
   font-size: 12px;
-  font-weight: bold;
 }
 
 .repoDescription {
@@ -125,37 +68,14 @@
   width: 30px;
   height: 30px;
 }
-.contentBody {
-  border-radius: 5px;
-  padding-top: 20px;
-  padding-left: 30px;
-  padding-right: 20px;
-  font-size: 17px;
-}
-.contentBodyBody {
-  border-bottom: 3px dotted rgba(192, 191, 191, 0.5);
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-}
-.contentBodyHead {
-  margin-bottom: 30px;
-  transition: all 0.5s;
-}
-.contentBodyHeaderTitle {
-  font-size: 23px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.contentBodyHeaderInfo {
-  font-size: 15px;
-}
+
 .icon {
   font-size: 30px;
   margin-bottom: 10px;
 }
 
 @media only screen and (max-width: 767px) {
-  .contentListWapper {
+  .contentList {
     padding: 10px;
   }
   .contentWrapper {
@@ -171,9 +91,7 @@
   .contentBodyHead {
     margin-top: 20px;
   }
-  .contentHeadImageWrapper {
-    padding-top: 10px;
-  }
+
   .contentHeadImage {
     height: 250px;
   }
@@ -183,7 +101,6 @@
 
   .contentBodyHeaderTitle {
     font-size: 18px;
-    font-weight: bold;
   }
   .contentBodyHeaderInfo {
     font-size: 10px;
@@ -192,15 +109,9 @@
     padding: 0;
     padding-left: 10px;
   }
-  .contentBodyBody {
-    font-size: 15px;
-  }
 
   .contentHeadText {
     padding: 0;
     font-size: 10px;
-  }
-  .nav {
-    font-size: 3px;
   }
 }

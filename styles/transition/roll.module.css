@@ -1,0 +1,28 @@
+.enter {
+  height: 0px;
+  overflow: hidden;
+}
+
+.enterActive {
+  height: 0px;
+  overflow: hidden;
+}
+.enterDone {
+  height: 0px;
+  overflow: hidden;
+}
+
+.exit {
+  height: 500px;
+  overflow: scroll;
+}
+
+.exitActive {
+  height: 500px;
+  overflow: scroll;
+}
+
+.exitDone {
+  height: 500px;
+  overflow: scroll;
+}

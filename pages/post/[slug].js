@@ -1,9 +1,9 @@
 import SanityService from "../../services/SanityService";
-import Header from "../../components/Header";
+import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer";
 import styles from "../../styles/Slug.module.css";
 import BlogPostDetail from "../../components/BlogPostDetail";
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { Col, Image, Row } from "antd";
 import dayjs from "dayjs";
@@ -27,15 +27,9 @@ export default function Post({ slug, post }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [setWidth]);
-  const goBack = () => {
-    router.back();
-  };
-  const navClickEvent = (target) => {
-    if (target === "home") {
-      router.push("/");
-    } else {
-      goBack();
-    }
+
+  const navClickEvent = () => {
+    router.push("/");
   };
   const breadCrumbParam = [
     () => (

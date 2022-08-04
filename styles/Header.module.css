@@ -2,7 +2,7 @@
   width: 100%;
   top: 0;
   padding: 10px 100px 10px 100px;
-  height: 60px;
+  height: 50px;
   background-color: rgba(255, 255, 255, 0.95);
   border-bottom: 3px solid rgb(218, 215, 215);
   color: grey;
@@ -11,15 +11,12 @@
   transition: height 0.5s;
 }
 .title {
-  font-size: 17px;
+  font-size: 20px;
   font-weight: bold;
 }
 .navWrapper {
-  display: none;
 }
-.navWrapper.show {
-  display: block;
-}
+
 .nav {
   font-size: 15px;
   cursor: pointer;
@@ -27,7 +24,7 @@
   transition: all 0.5s;
 }
 .nav.back {
-  font-size: 25px;
+  font-size: 20px;
 }
 .title.sel,
 .nav.sel {
@@ -36,9 +33,19 @@
 
 @media only screen and (max-width: 767px) {
   .header {
-    padding: 20px 50px 20px 50px;
+    top: 80%;
+    height: 300px;
+    padding: 10px 25px 0px 25px;
+    border: 3px solid rgb(218, 215, 215);
+    transition: top 0.5s;
+  }
+  .header.fold {
+    top: 94%;
   }
   .nav {
     font-size: 17px;
+  }
+  .nav.hide {
+    display: none;
   }
 }
