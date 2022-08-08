@@ -24,7 +24,7 @@ export default function About({ view, profile, intro, width, aboutRef }) {
       ref={aboutRef}
       data-idx="about"
     >
-      <Title view={view} type={"about"}></Title>
+      <Title view={view} type={"about"} title={"어바웃"}></Title>
       <Row className={cx("profileWrapper")} span={24}>
         <Col
           className={cx("profileDesc", { sel: view === "about" })}

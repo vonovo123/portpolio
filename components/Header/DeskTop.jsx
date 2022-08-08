@@ -16,7 +16,7 @@ export default function DeskTop({
   const backBtnMouseHoverEvent = () => {
     setBack(!back);
   };
-  const menuSize = [5, 5, 9, 5];
+  const menuSize = [7, 10, 7];
   return (
     <div className={cx("header")}>
       <Row align="middle" className={styles.index}>

@@ -11,10 +11,13 @@ import {
 } from "@ant-design/icons";
 import Title from "../Title";
 import { Row, Col } from "antd";
+import CarouselElement from "../Carousel/CarouselElement";
 const cx = classNames.bind(styles);
-export default function PostPreview({ posts, view, width, show, postRef }) {
+export default function PostPreview({ posts, view, width, postRef }) {
   const router = useRouter();
-
+  const makeElement = (element) => {
+    return <CarouselElement element={element}></CarouselElement>;
+  };
   const [postList, setPostsList] = useState([
     posts[1],
     posts[0],
@@ -72,27 +75,20 @@ export default function PostPreview({ posts, view, width, show, postRef }) {
 
   return (
     <div
-      className={cx("post", { sel: view === "post" })}
+      className={cx("post", "mb10", { sel: view === "post" })}
       ref={postRef}
       data-idx="post"
     >
-      <Row className={cx("info", { hide: !show })}>
-        <Col className={cx("titleWrapper")}>
-          <Title
-            view={view}
-            type={"post"}
-            title={"최근 글"}
-            show={show}
-          ></Title>
-        </Col>
+      <Row className={cx("header")}>
+        <Title view={view} type={"post"} title={"최근 글"} show={true}></Title>
         <Col
           className={cx("moveText", { sel: view === "post" })}
           onClick={goList}
         >
           {"전체보기"} <RightOutlined />
         </Col>
-        <Carousel slideData={postList} startIndex={5}></Carousel>
       </Row>
+      <Carousel slideData={postList} makeElement={makeElement}></Carousel>
     </div>
   );
 }

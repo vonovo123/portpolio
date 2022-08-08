@@ -1,9 +1,12 @@
+.mb10 {
+  margin-bottom: 10px;
+}
 .post {
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   transition: all 0.5s;
   opacity: 0.5;
-  padding: 10px;
+  padding-bottom: 40px;
 }
 .post.sel {
   opacity: 1;
@@ -11,8 +14,9 @@
 .hide {
   display: none;
 }
-.info {
+.header {
   margin-bottom: 5px;
+  margin-left: 5%;
 }
 .infoText {
   font-size: 15px;
@@ -21,9 +25,6 @@
   padding-left: 10px;
   margin-right: 10px;
   cursor: pointer;
-}
-.titleWrapper {
-  margin-left: 5%;
 }
 .moveText {
   font-size: 13px;

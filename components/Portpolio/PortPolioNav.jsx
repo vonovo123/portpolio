@@ -1,5 +1,5 @@
 import { Card, Col, Row } from "antd";
-import styles from "../styles/PortpolioNav.module.css";
+import styles from "../../styles/PortpolioNav.module.css";
 import { useState } from "react";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);

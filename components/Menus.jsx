@@ -7,24 +7,31 @@ import fadeTransition from "../styles/transition/fade.module.css";
 import { useRef } from "react";
 const cx = classNames.bind(styles);
 
-export default function Menus({ menus, setMenu, menu, showMenu, setShowMenu }) {
+export default function Menus({
+  menus,
+  setMenu,
+  menu,
+  showMenuList,
+  setShowMenuList,
+  changeMenu,
+}) {
   const nodeRef = useRef(null);
   return (
     <div className={cx("menuWrapper")}>
       <div
-        className={cx("selMenu", { disable: showMenu })}
+        className={cx("selMenu", { disable: showMenuList })}
         onClick={() => {
-          setShowMenu(!showMenu);
+          setShowMenuList(!showMenuList);
         }}
       >
         <div className={cx("selMenuText")}>{menu}</div>
-        {!showMenu && <CaretDownOutlined className={cx("selMenuArrow")} />}
-        {showMenu && <CaretUpOutlined className={cx("selMenuArrow")} />}
+        {!showMenuList && <CaretDownOutlined className={cx("selMenuArrow")} />}
+        {showMenuList && <CaretUpOutlined className={cx("selMenuArrow")} />}
       </div>
 
       <div className={cx("categoryMenu")}>
         <CSSTransition
-          in={showMenu}
+          in={showMenuList}
           classNames={fadeTransition}
           timeout={500}
           mountOnEnter
@@ -38,7 +45,8 @@ export default function Menus({ menus, setMenu, menu, showMenu, setShowMenu }) {
                 className={cx("menu", { sel: option === menu })}
                 onClick={() => {
                   setMenu(menus[idx]);
-                  setShowMenu(false);
+                  changeMenu(option);
+                  setShowMenuList(false);
                 }}
               >
                 {option}

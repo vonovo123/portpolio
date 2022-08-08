@@ -44,8 +44,8 @@
   margin-left: 20px;
 }
 .selMenu {
+  min-width: 100px;
   display: flex;
-  width: 100px;
   border: 3px solid var(--activated-color);
   font-weight: bold;
   border-radius: 5px;
@@ -66,8 +66,8 @@
 }
 
 .categoryMenu {
-  width: 100px;
   position: absolute;
+  min-width: 100px;
   top: 40px;
   z-index: 2;
 }

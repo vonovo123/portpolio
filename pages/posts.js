@@ -15,7 +15,7 @@ export default function Posts({ posts }) {
   const router = useRouter();
   const [view, setView] = useState("post");
   const [breadCrumParams, setBreadCrumParams] = useState([]);
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenuList, setShowMenuList] = useState(false);
   const [menu, setMenu] = useState(router.query.menu || "ALL");
   const [width, setWidth] = useState();
   const menus = ["ALL", "개발", "일상", "리뷰"];
@@ -61,8 +61,8 @@ export default function Posts({ posts }) {
           menus={menus}
           setMenu={setMenu}
           menu={menu}
-          showMenu={showMenu}
-          setShowMenu={setShowMenu}
+          showMenuList={showMenuList}
+          setShowMenuList={setShowMenuList}
         ></Menus>
         <ul className={cx("postWrapper")}>
           {posts.map((post, idx) => {

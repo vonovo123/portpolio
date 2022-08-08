@@ -39,15 +39,9 @@ export default function Career({ view, career, width, careerRef }) {
       data-idx="career"
     >
       <Title view={view} type={"career"}></Title>
-      <CSSTransition
-        in={hide}
-        classNames={rollTransition}
-        timeout={500}
-        mountOnEnter
-        nodeRef={nodeRef}
-      >
-        <Row className={cx("description", { sel: view === "career" })}>
-          {/* <Chart
+
+      <Row className={cx("description", { sel: view === "career" })}>
+        {/* <Chart
                   chartType="Timeline"
                   data={data}
                   width="1200px"
@@ -68,47 +62,54 @@ export default function Career({ view, career, width, careerRef }) {
                     },
                   ]}/> */}
 
-          <Col span={24} className={cx("descriptionHeader")}>
-            <Row>
-              <Col span={1}></Col>
-              <Col span={21}>
-                <span
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "bold",
-                    marginRight: 10,
+        <Col span={24} className={cx("descriptionHeader")}>
+          <Row>
+            <Col span={1}></Col>
+            <Col span={21}>
+              <span
+                style={{
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  marginRight: 10,
+                }}
+              >
+                {rowData.name}
+              </span>
+              <span
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                }}
+              >
+                [{dayjs(rowData.from).format("YYYY / M. DD")} -
+                {dayjs(rowData.to).format("YYYY / M. DD")}]
+              </span>
+            </Col>
+            <Col span={2}>
+              {!hide && (
+                <CaretUpOutlined
+                  onClick={() => {
+                    setHide(!hide);
                   }}
-                >
-                  {rowData.name}
-                </span>
-                <span
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "bold",
+                />
+              )}
+              {hide && (
+                <CaretDownOutlined
+                  onClick={() => {
+                    setHide(!hide);
                   }}
-                >
-                  [{dayjs(rowData.from).format("YYYY / M. DD")} -
-                  {dayjs(rowData.to).format("YYYY / M. DD")}]
-                </span>
-              </Col>
-              <Col span={2}>
-                {!hide && (
-                  <CaretUpOutlined
-                    onClick={() => {
-                      setHide(!hide);
-                    }}
-                  />
-                )}
-                {hide && (
-                  <CaretDownOutlined
-                    onClick={() => {
-                      setHide(!hide);
-                    }}
-                  />
-                )}
-              </Col>
-            </Row>
-          </Col>
+                />
+              )}
+            </Col>
+          </Row>
+        </Col>
+        <CSSTransition
+          in={hide}
+          classNames={rollTransition}
+          timeout={500}
+          mountOnEnter
+          nodeRef={nodeRef}
+        >
           <Col span={24} className={cx("descriptionBody")} ref={nodeRef}>
             <Row>
               <Col span={24} className={cx("descriptionCol", "header")}>
@@ -170,8 +171,8 @@ export default function Career({ view, career, width, careerRef }) {
               })}
             </Row>
           </Col>
-        </Row>
-      </CSSTransition>
+        </CSSTransition>
+      </Row>
     </div>
   );
 }

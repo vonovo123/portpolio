@@ -1,0 +1,24 @@
+.portpolio {
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  transition: all 0.5s;
+  padding: 10px;
+  padding-top: 20px;
+  opacity: 0.5;
+}
+.portpolio.sel {
+  opacity: 1;
+}
+
+.header {
+  margin-left: 5%;
+  margin-bottom: 5px;
+}
+
+.hide {
+  display: none;
+}
+
+.body {
+  margin: 30px;
+}

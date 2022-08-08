@@ -8,7 +8,7 @@ export default function Header({
   title = "Web Frontend Development Log",
   width,
 }) {
-  const menus = ["post", "career", "portpolio", "about"];
+  const menus = ["post", "portpolio", "about"];
   const goBack = () => {
     Router.back();
   };

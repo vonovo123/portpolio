@@ -17,16 +17,16 @@
   margin-bottom: 20px;
   font-size: 20px;
   font-weight: bold;
-  min-height: 70px;
+  min-height: 40px;
 }
 .postShort {
   font-size: 14px;
   padding: 10px;
-  min-height: 70px;
+  min-height: 40px;
 }
 
 .postTagWrapper {
-  padding: 0px 10px 0px 10px;
+  padding: 10px;
 }
 .postTag {
   font-size: 10px;

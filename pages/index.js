@@ -5,12 +5,13 @@ const cx = classNames.bind(styles);
 import SanityService from "../services/SanityService";
 import Header from "../components/Header/Header";
 import Career from "../components/Career";
-import PortPolio from "../components/PortPolio";
+import PortPolio from "../components/Portpolio/PortPolio";
 import Post from "../components/Post/Post";
 import Footer from "../components/Footer";
 import About from "../components/About";
 import { useCallback, useEffect, useRef, useState } from "react";
 import GitProfileService from "../services/GitProfileService";
+import _ from "lodash";
 
 export default function Home({ home, posts, profile, portpolios, career }) {
   const [width, setWidth] = useState();
@@ -28,12 +29,49 @@ export default function Home({ home, posts, profile, portpolios, career }) {
     about: aboutRef,
   };
   const intro = home.find((content) => content.title === "Introduction");
-  const [view, setView] = useState("home");
+  const [view, setView] = useState("post");
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   useEffect(() => {
     setWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [setWidth]);
+  const handelScroll = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    moveScroll(e.deltaY);
+    return false;
+  };
+  const moveScroll = _.debounce((dir) => {
+    let next = view;
+    if (dir > 0) {
+      if (view === "post") {
+        next = "portpolio";
+      } else if (view === "portpolio") {
+        next = "about";
+      }
+    } else {
+      if (view === "about") {
+        next = "portpolio";
+      } else if (view === "portpolio") {
+        next = "post";
+      }
+    }
+    setView(next);
+    window.scrollTo({
+      top: ref[next].current.offsetTop - 60,
+      behavior: "smooth",
+    });
+  }, 300);
+  useEffect(() => {
+    window.addEventListener("wheel", handelScroll, { passive: false });
+    return () => window.removeEventListener("wheel", handelScroll);
+  }, [view]);
 
   let html = [],
     vanillaJs = [],
@@ -71,7 +109,7 @@ export default function Home({ home, posts, profile, portpolios, career }) {
 
   useEffect(() => {
     const option = {
-      rootMargin: "-10% 0% -90% 0%",
+      rootMargin: "-50% 0% -50% 0%",
     };
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -81,7 +119,7 @@ export default function Home({ home, posts, profile, portpolios, career }) {
       });
     }, option);
     io.observe(postRef.current);
-    io.observe(careerRef.current);
+    // io.observe(careerRef.current);
     io.observe(portRef.current);
     io.observe(aboutRef.current);
   }, []);
@@ -93,7 +131,7 @@ export default function Home({ home, posts, profile, portpolios, career }) {
         type={"index"}
         width={width}
       />
-      <div className={cx("container", "wide")}>
+      <div className={cx("container", "narrow")}>
         <Post
           posts={posts}
           view={view}
@@ -102,7 +140,7 @@ export default function Home({ home, posts, profile, portpolios, career }) {
           postRef={postRef}
         />
       </div>
-      <div className={cx("container", "wide")}>
+      <div className={cx("container", "narrow")}>
         <PortPolio
           html={html}
           vanillaJs={vanillaJs}
@@ -116,13 +154,12 @@ export default function Home({ home, posts, profile, portpolios, career }) {
       </div>
       <div className={cx("container", "narrow")}>
         <div className={cx("homeWrapper")}>
-          <Career
+          {/* <Career
             view={view}
             career={career}
             width={width}
             careerRef={careerRef}
-          />
-
+          /> */}
           <About
             view={view}
             profile={profile}

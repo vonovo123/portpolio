@@ -1,6 +1,6 @@
 .wrapper {
   width: 100%;
-  padding-top: 7%;
+  padding-top: 6%;
   /* background-image: url(../assets/pattern.png); */
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
@@ -37,7 +37,6 @@
 }
 .container.wide {
   padding: 0% 1% 0% 1%;
-  margin-bottom: 3%;
 }
 .container.narrow {
   /* border: 3px solid var(--disabled-color); */

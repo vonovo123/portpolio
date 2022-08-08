@@ -6,21 +6,53 @@ import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 import styles from "../../styles/Carousel/Carousel.module.css";
 import Dots from "./Dots";
 const cx = classNames.bind(styles);
-export default function Carousel({ slideData, startIndex }) {
+export default function Carousel({ slideData, makeElement }) {
   const slideRef = useRef(null);
-  const elementRef = useRef(null);
-
-  const [index, setIndex] = useState(startIndex);
+  const [size, setSize] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [width, setWidth] = useState(0);
   const [touchStartTime, setTouchStartTime] = useState(null);
   const [touchPosition, setTouchPosition] = useState(null);
   const handlePostResize = useCallback(() => {
-    const { width } = elementRef.current.getBoundingClientRect();
-    slideRef.current.style.transform = `translate3d(${-width * index}px, 0, 0)`;
-  }, [slideRef, elementRef]);
+    if (slideData.length >= 5) {
+      const { width } = slideRef.current
+        .getElementsByTagName("li")[0]
+        .getBoundingClientRect();
+      slideRef.current.style.transition = `${0.0}s`;
+      slideRef.current.style.visibility = "hidden";
+      slideRef.current.style.transform = `translate3d(${
+        -width * slideData.length * 3
+      }px, 0, 0)`;
+      setTimeout(() => {
+        slideRef.current.style.visibility = "visible";
+        slideRef.current.style.transition = `${0.5}s`;
+        slideRef.current.style.transform = `translate3d(${
+          -width * slideData.length
+        }px, 0, 0)`;
+      }, 300);
 
+      setWidth(width);
+      setSize(slideData.length);
+      setIndex(slideData.length);
+    } else {
+      const { width } = slideRef.current
+        .getElementsByTagName("li")[0]
+        .getBoundingClientRect();
+      setSize(slideData.length);
+      setIndex(slideData.length);
+      slideRef.current.style.transition = `${0}s`;
+      slideRef.current.style.visibility = "hidden";
+      slideRef.current.style.transform = `translate3d(${-width * 5}px, 0, 0)`;
+      setTimeout(() => {
+        slideRef.current.style.visibility = "visible";
+        slideRef.current.style.transition = `${0.5}s`;
+        slideRef.current.style.transform = `translate3d(0px, 0, 0)`;
+      }, 500);
+    }
+  }, [slideData]);
   useEffect(() => {
     handlePostResize();
-  }, []);
+  }, [slideData]);
   useEffect(() => {
     window.removeEventListener("resize", handlePostResize);
     window.addEventListener("resize", handlePostResize);
@@ -30,15 +62,14 @@ export default function Carousel({ slideData, startIndex }) {
   const moveSlide = useCallback(
     (dir) => {
       const nextIdx = index + dir;
-      const { width } = elementRef.current.getBoundingClientRect();
       slideRef.current.style.transition = `${0.5}s ease-out`;
       slideRef.current.style.transform = `translate3d(${
         -width * nextIdx
       }px, 0, 0)`;
       setIndex(nextIdx);
-      if (nextIdx === startIndex * 2 || nextIdx === 0) {
+      if (nextIdx === size * 2 || nextIdx === 0) {
         setTimeout(() => {
-          nextIdx = startIndex;
+          nextIdx = size;
           slideRef.current.style.transition = `${0}s ease-out`;
           slideRef.current.style.transform = `translate3d(${
             -width * nextIdx
@@ -47,7 +78,7 @@ export default function Carousel({ slideData, startIndex }) {
         }, 500);
       }
     },
-    [index, startIndex]
+    [index, size, width]
   );
 
   const touchStart = useCallback(
@@ -72,89 +103,84 @@ export default function Carousel({ slideData, startIndex }) {
   return (
     <>
       <Row align="middle">
-        <Col
-          xl={{ span: 1 }}
-          lg={{ span: 1 }}
-          md={{ span: 0 }}
-          sm={{ span: 0 }}
-          xs={{ span: 0 }}
-          align={"left"}
-        >
-          {
-            <CaretLeftOutlined
-              className={cx("arrow")}
-              onClick={() => {
-                moveSlide(-1);
-              }}
-            />
-          }
-        </Col>
+        {size > 5 && (
+          <>
+            <Col
+              xl={{ span: 1 }}
+              lg={{ span: 1 }}
+              md={{ span: 0 }}
+              sm={{ span: 0 }}
+              xs={{ span: 0 }}
+              align={"left"}
+            >
+              {
+                <CaretLeftOutlined
+                  className={cx("arrow")}
+                  onClick={() => {
+                    moveSlide(-1);
+                  }}
+                />
+              }
+            </Col>
+          </>
+        )}
         <Col
           xl={{ span: 22 }}
           lg={{ span: 22 }}
           md={{ span: 24 }}
           sm={{ span: 24 }}
           xs={{ span: 24 }}
+          className={cx("wrapper")}
         >
-          <div className={cx("wrapper")}>
-            <ul
-              className={cx("slide")}
-              ref={slideRef}
-              onTouchStart={(e) => {
-                touchStart(e);
-              }}
-              onTouchEnd={(e) => {
-                touchEnd(e);
-              }}
+          <ul
+            className={cx("slide")}
+            ref={slideRef}
+            onTouchStart={(e) => {
+              touchStart(e);
+            }}
+            onTouchEnd={(e) => {
+              touchEnd(e);
+            }}
+          >
+            {size > 5 &&
+              slideData.map((element, idx) => {
+                return <li key={idx}>{makeElement(element)}</li>;
+              })}
+            {slideData.map((element, idx) => {
+              return <li key={idx}>{makeElement(element)}</li>;
+            })}
+            {size >= 5 &&
+              slideData.map((element, idx) => {
+                return <li key={idx}>{makeElement(element)}</li>;
+              })}
+          </ul>
+        </Col>
+        {size > 5 && (
+          <>
+            <Col
+              xl={{ span: 1 }}
+              lg={{ span: 1 }}
+              md={{ span: 0 }}
+              sm={{ span: 0 }}
+              xs={{ span: 0 }}
+              align={"right"}
             >
-              {slideData.map((element, idx) => {
-                return (
-                  <li
-                    key={idx}
-                    className={cx({ sel: idx === index + 2 })}
-                    ref={elementRef}
-                  >
-                    <CarouselElement element={element}></CarouselElement>
-                  </li>
-                );
-              })}
-              {slideData.map((element, idx) => {
-                return (
-                  <li key={idx} className={cx({ sel: idx === index - 3 })}>
-                    <CarouselElement element={element}></CarouselElement>
-                  </li>
-                );
-              })}
-              {slideData.map((element, idx) => {
-                return (
-                  <li key={idx} className={cx({ sel: idx + 8 === index })}>
-                    <CarouselElement element={element}></CarouselElement>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </Col>
-        <Col
-          xl={{ span: 1 }}
-          lg={{ span: 1 }}
-          md={{ span: 0 }}
-          sm={{ span: 0 }}
-          xs={{ span: 0 }}
-          align={"right"}
-        >
-          {
-            <CaretRightOutlined
-              className={cx("arrow")}
-              onClick={() => {
-                moveSlide(1);
-              }}
-            />
-          }
-        </Col>
-        <Col span={24} className={cx("dotsWrapper")}>
-          <Dots index={index} size={startIndex}></Dots>
-        </Col>
+              {
+                <CaretRightOutlined
+                  className={cx("arrow")}
+                  onClick={() => {
+                    moveSlide(1);
+                  }}
+                />
+              }
+            </Col>
+          </>
+        )}
+        {size > 5 && (
+          <Col span={24} className={cx("dotsWrapper")}>
+            <Dots index={index} size={size}></Dots>
+          </Col>
+        )}
       </Row>
     </>
   );

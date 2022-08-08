@@ -1,17 +1,17 @@
 .about {
-  padding-bottom: 50px;
-  padding-top: 50px;
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   color: var(--disabled-color);
-  border-top: 3px dotted var(--disabled-color);
   opacity: 0.5;
   transition: all 1s;
 }
 .about.sel {
   color: var(--activated-color);
-  border-top: 3px dotted var(--activated-color);
   opacity: 1;
+}
+.header {
+  margin-bottom: 5px;
+  margin-left: 5%;
 }
 .aTag {
   color: var(--disabled-color);
