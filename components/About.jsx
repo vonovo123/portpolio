@@ -12,19 +12,16 @@ import BlogPostDetail from "./BlogPostDetail";
 import { useState } from "react";
 import Title from "./Title";
 const cx = classNames.bind(styles);
-export default function About({ view, profile, intro, width, aboutRef }) {
+export default function About({ view, profile, intro, width }) {
   const [showInfo, setShowInfo] = useState("com");
   const selShowInfo = (info) => {
     setShowInfo(info);
   };
   return (
-    <div
-      className={cx("about", { sel: view === "about" })}
-      id="about"
-      ref={aboutRef}
-      data-idx="about"
-    >
-      <Title view={view} type={"about"} title={"어바웃"}></Title>
+    <div className={cx("about", { sel: view === "about" })}>
+      <div className={cx("header")}>
+        <Title view={view} type={"about"} title={"어바웃"}></Title>
+      </div>
       <Row className={cx("profileWrapper")} span={24}>
         <Col
           className={cx("profileDesc", { sel: view === "about" })}

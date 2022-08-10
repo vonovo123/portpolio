@@ -16,7 +16,6 @@ export default function Portpolio({
   reactNext,
   view,
   width,
-  portRef,
 }) {
   const [target, setTarget] = useState([
     ...html,
@@ -52,11 +51,7 @@ export default function Portpolio({
   const [menu, setMenu] = useState("ALL");
 
   return (
-    <div
-      className={cx("portpolio", { sel: view === "portpolio" })}
-      ref={portRef}
-      data-idx="portpolio"
-    >
+    <div className={cx("portpolio", { sel: view === "portpolio" })}>
       <Row className={cx("header")}>
         <Title
           view={view}
@@ -73,7 +68,11 @@ export default function Portpolio({
           changeMenu={changeMenu}
         ></Menus>
       </Row>
-      <Carousel slideData={target} makeElement={makeElement}></Carousel>
+      <Carousel
+        slideData={target}
+        makeElement={makeElement}
+        windowWidth={width}
+      ></Carousel>
     </div>
   );
 }

@@ -4,14 +4,14 @@
   color: var(--disabled-color);
   opacity: 0.5;
   transition: all 1s;
+  padding-bottom: 20%;
 }
 .about.sel {
   color: var(--activated-color);
   opacity: 1;
 }
 .header {
-  margin-bottom: 5px;
-  margin-left: 5%;
+  margin-bottom: 50px;
 }
 .aTag {
   color: var(--disabled-color);

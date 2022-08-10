@@ -6,7 +6,6 @@
   --activated-color: #34495e;
   transition: all 0.5s;
   opacity: 0.5;
-  padding-bottom: 40px;
 }
 .post.sel {
   opacity: 1;
@@ -15,8 +14,8 @@
   display: none;
 }
 .header {
-  margin-bottom: 5px;
-  margin-left: 5%;
+  margin-bottom: 15px;
+  margin-left: 2%;
 }
 .infoText {
   font-size: 15px;

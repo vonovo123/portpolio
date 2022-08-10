@@ -12,7 +12,7 @@
 
 .slide li {
   flex-basis: auto;
-  flex-grow: 1;
+  flex-grow: 0;
   flex-shrink: 0;
   width: 20%;
   padding: 1%;
@@ -23,13 +23,14 @@
 
 .dotsWrapper {
   width: 100%;
-  overflow: hidden;
   display: flex;
   justify-content: center;
 }
 .arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 25px;
-  margin: 0 10px 0 10px;
 }
 
 @media only screen and (max-width: 767px) {

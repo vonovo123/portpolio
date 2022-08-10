@@ -1,55 +1,52 @@
 .mb30 {
   margin-bottom: 30px;
 }
-.element {
-  width: 100%;
-  transition: all 0.5s;
-  background-color: white;
-  text-align: center;
+.elementWrapper {
+  height: 530px;
+  overflow: hidden;
+  margin-bottom: 30px;
 }
-
+.elementInnerWrapper {
+  transition: all 0.5s;
+}
+.element {
+  text-align: center;
+  height: 530px;
+}
+.skills {
+  height: 30px;
+}
 .elementImage {
   border-radius: 8px;
+  width: 100%;
   height: 400px;
   object-fit: cover;
-  margin-bottom: 20px;
+  opacity: 0.9;
+  margin-bottom: 50px;
 }
-.wrapper {
-  /* padding: 0px 30px 0px 30px; */
-}
+
 .elementTitle {
-  margin-bottom: 20px;
-  font-size: 18px;
+  height: 50px;
+  font-size: 16px;
   font-weight: bold;
-  min-height: 40px;
-}
-.elementShort {
-  margin-bottom: 20px;
-  font-size: 14px;
-  padding: 10px;
-  min-height: 40px;
 }
 
 .description {
-  cursor: pointer;
-  margin-bottom: 30px;
-}
-.url {
-  margin-left: 10px;
-  font-size: 15px;
+  height: 70px;
 }
 
-.skills {
+.elementContent {
+  padding-top: 30px;
+  height: 530px;
 }
+
 .skill {
-  width: 35px;
-  height: 35px;
-  margin-bottom: 10px;
+  width: 25px;
+  height: 25px;
 }
 
 .icon {
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: 25px;
 }
 
 @media only screen and (max-width: 767px) {

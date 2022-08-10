@@ -1,34 +1,39 @@
 .header {
-  width: 100%;
-  top: 0;
-  padding: 10px 100px 10px 100px;
-  height: 50px;
-  background-color: rgba(255, 255, 255, 0.95);
-  border-bottom: 3px solid rgb(218, 215, 215);
-  color: grey;
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  --background-color: rgba(255, 255, 255, 1);
+  width: 20%;
+  padding: 50px 20px 50px 20px;
+  height: 1200px;
+  background-color: var(--activated-color);
+  opacity: 0.9;
+  border: 3px solid var(--activated-color);
   position: fixed;
-  z-index: 5;
   transition: height 0.5s;
+  color: var(--background-color);
 }
 .title {
   font-size: 20px;
   font-weight: bold;
+  margin-bottom: 100px;
 }
 .navWrapper {
 }
 
 .nav {
-  font-size: 15px;
+  font-size: 20px;
   cursor: pointer;
   font-weight: bold;
   transition: all 0.5s;
+  text-align: left;
+  margin-left: 60px;
 }
 .nav.back {
   font-size: 20px;
 }
 .title.sel,
 .nav.sel {
-  color: #34495e;
+  color: #ffe600;
 }
 
 @media only screen and (max-width: 767px) {

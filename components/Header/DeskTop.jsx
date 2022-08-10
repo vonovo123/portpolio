@@ -16,29 +16,27 @@ export default function DeskTop({
   const backBtnMouseHoverEvent = () => {
     setBack(!back);
   };
-  const menuSize = [7, 10, 7];
   return (
     <div className={cx("header")}>
       <Row align="middle" className={styles.index}>
         <Col
-          offset={2}
-          span={16}
+          span={24}
           onClick={() => {
-            navClickEvent("");
+            navClickEvent("post");
           }}
           style={{ cursor: "pointer" }}
         >
-          <div className={cx("title", "sel")}>
+          <div className={cx("title")}>
             <CodeOutlined /> {title}
           </div>
         </Col>
-        <Col span={6} className={cx("navWrapper")}>
+        <Col span={24} className={cx("navWrapper")}>
           <Row style={{ textAlign: "center" }}>
             {type === "index" &&
               menus.map((menu, idx) => (
                 <Col
                   key={idx}
-                  span={menuSize[idx]}
+                  span={24}
                   onClick={() => {
                     navClickEvent(menu);
                   }}

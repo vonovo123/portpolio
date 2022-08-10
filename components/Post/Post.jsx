@@ -13,18 +13,12 @@ import Title from "../Title";
 import { Row, Col } from "antd";
 import CarouselElement from "../Carousel/CarouselElement";
 const cx = classNames.bind(styles);
-export default function PostPreview({ posts, view, width, postRef }) {
+export default function PostPreview({ posts, view, width }) {
   const router = useRouter();
   const makeElement = (element) => {
     return <CarouselElement element={element}></CarouselElement>;
   };
-  const [postList, setPostsList] = useState([
-    posts[1],
-    posts[0],
-    posts[1],
-    posts[0],
-    posts[1],
-  ]);
+  const [postList, setPostsList] = useState([...posts]);
   const goList = useCallback(() => {
     router.push(`/posts`);
   }, [router]);
@@ -74,11 +68,7 @@ export default function PostPreview({ posts, view, width, postRef }) {
   // };
 
   return (
-    <div
-      className={cx("post", "mb10", { sel: view === "post" })}
-      ref={postRef}
-      data-idx="post"
-    >
+    <div className={cx("post", "mb10", { sel: view === "post" })}>
       <Row className={cx("header")}>
         <Title view={view} type={"post"} title={"최근 글"} show={true}></Title>
         <Col
@@ -88,7 +78,11 @@ export default function PostPreview({ posts, view, width, postRef }) {
           {"전체보기"} <RightOutlined />
         </Col>
       </Row>
-      <Carousel slideData={postList} makeElement={makeElement}></Carousel>
+      <Carousel
+        slideData={postList}
+        makeElement={makeElement}
+        windowWidth={width}
+      ></Carousel>
     </div>
   );
 }

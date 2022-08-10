@@ -15,9 +15,6 @@ import _ from "lodash";
 
 export default function Home({ home, posts, profile, portpolios, career }) {
   const [width, setWidth] = useState();
-  const handleResize = () => {
-    setWidth(window.innerWidth);
-  };
   const careerRef = useRef(null);
   const postRef = useRef(null);
   const portRef = useRef(null);
@@ -30,23 +27,6 @@ export default function Home({ home, posts, profile, portpolios, career }) {
   };
   const intro = home.find((content) => content.title === "Introduction");
   const [view, setView] = useState("post");
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
-  useEffect(() => {
-    setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setWidth]);
-  const handelScroll = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    moveScroll(e.deltaY);
-    return false;
-  };
   const moveScroll = _.debounce((dir) => {
     let next = view;
     if (dir > 0) {
@@ -62,16 +42,36 @@ export default function Home({ home, posts, profile, portpolios, career }) {
         next = "post";
       }
     }
+    if (view === next) return;
     setView(next);
     window.scrollTo({
-      top: ref[next].current.offsetTop - 60,
+      top: ref[next].current.offsetTop,
+    });
+  }, 100);
+  const handleResize = useCallback(() => {
+    setWidth(window.innerWidth);
+  }, []);
+  const handelScroll = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    moveScroll(e.deltaY);
+    return false;
+  };
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
       behavior: "smooth",
     });
-  }, 300);
+  }, []);
   useEffect(() => {
-    window.addEventListener("wheel", handelScroll, { passive: false });
-    return () => window.removeEventListener("wheel", handelScroll);
-  }, [view]);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [handleResize]);
+  // useEffect(() => {
+  //   window.addEventListener("wheel", handelScroll, { passive: false });
+  //   return () => window.removeEventListener("wheel", handelScroll);
+  // }, [view]);
 
   let html = [],
     vanillaJs = [],
@@ -91,15 +91,15 @@ export default function Home({ home, posts, profile, portpolios, career }) {
   });
   const navClickEvent = useCallback(
     (target) => {
-      if (target === "") {
+      setView(target);
+      if (target === "home" || target === "post") {
         window.scrollTo({
           top: 0,
           behavior: "smooth",
         });
       } else {
-        setView(target);
         window.scrollTo({
-          top: ref[target].current.offsetTop - 60,
+          top: ref[target].current.offsetTop,
           behavior: "smooth",
         });
       }
@@ -119,7 +119,6 @@ export default function Home({ home, posts, profile, portpolios, career }) {
       });
     }, option);
     io.observe(postRef.current);
-    // io.observe(careerRef.current);
     io.observe(portRef.current);
     io.observe(aboutRef.current);
   }, []);
@@ -131,16 +130,10 @@ export default function Home({ home, posts, profile, portpolios, career }) {
         type={"index"}
         width={width}
       />
-      <div className={cx("container", "narrow")}>
-        <Post
-          posts={posts}
-          view={view}
-          width={width}
-          show={true}
-          postRef={postRef}
-        />
+      <div className={cx("container")} ref={postRef} data-idx="post">
+        <Post posts={posts} view={view} width={width} show={true} />
       </div>
-      <div className={cx("container", "narrow")}>
+      <div className={cx("container")} ref={portRef} data-idx="portpolio">
         <PortPolio
           html={html}
           vanillaJs={vanillaJs}
@@ -149,25 +142,16 @@ export default function Home({ home, posts, profile, portpolios, career }) {
           view={view}
           width={width}
           show={true}
-          portRef={portRef}
         />
       </div>
-      <div className={cx("container", "narrow")}>
-        <div className={cx("homeWrapper")}>
-          {/* <Career
+      <div className={cx("container")} ref={aboutRef} data-idx="about">
+        {/* <Career
             view={view}
             career={career}
             width={width}
             careerRef={careerRef}
           /> */}
-          <About
-            view={view}
-            profile={profile}
-            intro={intro}
-            width={width}
-            aboutRef={aboutRef}
-          />
-        </div>
+        <About view={view} profile={profile} intro={intro} width={width} />
       </div>
       <Footer />
     </div>
