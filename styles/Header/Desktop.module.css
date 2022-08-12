@@ -2,22 +2,25 @@
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   --background-color: rgba(255, 255, 255, 1);
-  width: 20%;
-  padding: 50px 20px 50px 20px;
+  width: 300px;
+  padding: 50px 0 50px 0;
   height: 1200px;
   background-color: var(--activated-color);
   opacity: 0.9;
-  border: 3px solid var(--activated-color);
   position: fixed;
+  z-index: 5;
   transition: height 0.5s;
   color: var(--background-color);
 }
 .title {
-  font-size: 20px;
+  font-size: 25px;
   font-weight: bold;
-  margin-bottom: 100px;
+  margin-bottom: 60px;
+  margin-left: 30px;
 }
 .navWrapper {
+  margin-left: 60px;
+  margin-bottom: 20px;
 }
 
 .nav {
@@ -26,31 +29,19 @@
   font-weight: bold;
   transition: all 0.5s;
   text-align: left;
-  margin-left: 60px;
+  margin-bottom: 10px;
 }
 .nav.back {
   font-size: 20px;
 }
 .title.sel,
 .nav.sel {
-  color: #ffe600;
+  color: #efdc37;
 }
-
-@media only screen and (max-width: 767px) {
-  .header {
-    top: 80%;
-    height: 300px;
-    padding: 10px 25px 0px 25px;
-    border: 3px solid rgb(218, 215, 215);
-    transition: top 0.5s;
-  }
-  .header.fold {
-    top: 94%;
-  }
-  .nav {
-    font-size: 17px;
-  }
-  .nav.hide {
-    display: none;
-  }
+.about {
+  margin-top: 430px;
+  transition: 0.5s;
+}
+.about.show {
+  margin-top: 0px;
 }

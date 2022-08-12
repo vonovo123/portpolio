@@ -1,18 +1,21 @@
 import { Col, Row } from "antd";
 import { CodeOutlined, RollbackOutlined } from "@ant-design/icons";
-import styles from "../../styles/Header.module.css";
+import styles from "../../styles/Header/Desktop.module.css";
 import classNames from "classnames/bind";
 import { useState } from "react";
+import About from "../About";
 const cx = classNames.bind(styles);
-export default function DeskTop({
+export default function Desktop({
   type,
   view,
   goBack,
   navClickEvent,
   title,
   menus,
+  profile,
 }) {
   const [back, setBack] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
   const backBtnMouseHoverEvent = () => {
     setBack(!back);
   };
@@ -32,39 +35,45 @@ export default function DeskTop({
         </Col>
         <Col span={24} className={cx("navWrapper")}>
           <Row style={{ textAlign: "center" }}>
-            {type === "index" &&
-              menus.map((menu, idx) => (
-                <Col
-                  key={idx}
-                  span={24}
-                  onClick={() => {
-                    navClickEvent(menu);
-                  }}
-                >
-                  <div className={cx("nav", { sel: view === menu })}>
-                    {menu.toUpperCase()}
-                  </div>
-                </Col>
-              ))}
-            {(type === "postDetail" || type === "postList") && (
+            {menus.map((menu, idx) => (
               <Col
+                key={idx}
                 span={24}
                 onClick={() => {
-                  navClickEvent();
-                }}
-                onMouseEnter={() => {
-                  backBtnMouseHoverEvent();
-                }}
-                onMouseLeave={() => {
-                  backBtnMouseHoverEvent();
+                  navClickEvent(menu.id);
                 }}
               >
-                <div className={cx("nav", "back", { sel: back })}>
-                  <RollbackOutlined onClick={goBack} />
+                <div className={cx("nav", { sel: view === menu.id })}>
+                  {menu.name}
                 </div>
               </Col>
-            )}
+            ))}
+            {/* <Col
+              span={24}
+              onClick={() => {
+                navClickEvent();
+              }}
+              onMouseEnter={() => {
+                backBtnMouseHoverEvent();
+              }}
+              onMouseLeave={() => {
+                backBtnMouseHoverEvent();
+              }}
+            >
+              <div className={cx("nav", "back", { sel: back })}>
+                <RollbackOutlined onClick={goBack} />
+              </div>
+            </Col> */}
           </Row>
+        </Col>
+        <Col
+          className={cx("about", { show: showAbout })}
+          onClick={(e) => {
+            setShowAbout(!showAbout);
+            e.stopPropagation();
+          }}
+        >
+          <About view={view} profile={profile} show={showAbout} />
         </Col>
       </Row>
     </div>

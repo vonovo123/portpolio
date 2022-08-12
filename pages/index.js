@@ -8,55 +8,39 @@ import Career from "../components/Career";
 import PortPolio from "../components/Portpolio/PortPolio";
 import Post from "../components/Post/Post";
 import Footer from "../components/Footer";
-import About from "../components/About";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import GitProfileService from "../services/GitProfileService";
 import _ from "lodash";
+import Title from "../components/Title";
 
 export default function Home({ home, posts, profile, portpolios, career }) {
+  profile = profile[0];
   const [width, setWidth] = useState();
-  const careerRef = useRef(null);
+  const [portpolioMenu, setPortpolioMenu] = useState("ALL");
   const postRef = useRef(null);
   const portRef = useRef(null);
-  const aboutRef = useRef(null);
-  const ref = {
-    career: careerRef,
-    post: postRef,
-    portpolio: portRef,
-    about: aboutRef,
+  const careerRef = useRef(null);
+  const ref = useMemo(() => {
+    return {
+      post: postRef,
+      portpolio: portRef,
+      career: careerRef,
+    };
+  }, [postRef, portRef, careerRef]);
+  const headerMenus = [
+    { id: "post", name: "최근 글" },
+    { id: "portpolio", name: "포트폴리오" },
+    { id: "career", name: "커리어" },
+  ];
+  const titleMenus = {
+    post: "최근 글",
+    portpolio: "포트폴리오",
+    career: "커리어",
   };
-  const intro = home.find((content) => content.title === "Introduction");
   const [view, setView] = useState("post");
-  const moveScroll = _.debounce((dir) => {
-    let next = view;
-    if (dir > 0) {
-      if (view === "post") {
-        next = "portpolio";
-      } else if (view === "portpolio") {
-        next = "about";
-      }
-    } else {
-      if (view === "about") {
-        next = "portpolio";
-      } else if (view === "portpolio") {
-        next = "post";
-      }
-    }
-    if (view === next) return;
-    setView(next);
-    window.scrollTo({
-      top: ref[next].current.offsetTop,
-    });
-  }, 100);
   const handleResize = useCallback(() => {
     setWidth(window.innerWidth);
   }, []);
-  const handelScroll = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    moveScroll(e.deltaY);
-    return false;
-  };
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -68,27 +52,7 @@ export default function Home({ home, posts, profile, portpolios, career }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
-  // useEffect(() => {
-  //   window.addEventListener("wheel", handelScroll, { passive: false });
-  //   return () => window.removeEventListener("wheel", handelScroll);
-  // }, [view]);
 
-  let html = [],
-    vanillaJs = [],
-    vueNuxt = [],
-    reactNext = [];
-  profile = profile[0];
-  portpolios.forEach((portpolio) => {
-    if (portpolio.category.type === "html/css") {
-      html.push({ ...portpolio });
-    } else if (portpolio.category.type === "vanillaJs") {
-      vanillaJs.push({ ...portpolio });
-    } else if (portpolio.category.type === "vueNuxt") {
-      vueNuxt.push({ ...portpolio });
-    } else if (portpolio.category.type === "reactNext") {
-      reactNext.push({ ...portpolio });
-    }
-  });
   const navClickEvent = useCallback(
     (target) => {
       setView(target);
@@ -104,7 +68,7 @@ export default function Home({ home, posts, profile, portpolios, career }) {
         });
       }
     },
-    [setView]
+    [setView, ref]
   );
 
   useEffect(() => {
@@ -120,7 +84,7 @@ export default function Home({ home, posts, profile, portpolios, career }) {
     }, option);
     io.observe(postRef.current);
     io.observe(portRef.current);
-    io.observe(aboutRef.current);
+    io.observe(careerRef.current);
   }, []);
   return (
     <div className={cx("wrapper")}>
@@ -128,30 +92,39 @@ export default function Home({ home, posts, profile, portpolios, career }) {
         view={view}
         navClickEvent={navClickEvent}
         type={"index"}
+        profile={profile}
         width={width}
+        menus={headerMenus}
       />
+      <div className={cx("container", "title")}>
+        <Title
+          view={view}
+          type={view}
+          show={true}
+          menu={portpolioMenu}
+          setMenu={setPortpolioMenu}
+          menus={titleMenus}
+        ></Title>
+      </div>
       <div className={cx("container")} ref={postRef} data-idx="post">
         <Post posts={posts} view={view} width={width} show={true} />
       </div>
       <div className={cx("container")} ref={portRef} data-idx="portpolio">
         <PortPolio
-          html={html}
-          vanillaJs={vanillaJs}
-          vueNuxt={vueNuxt}
-          reactNext={reactNext}
+          portpolios={portpolios}
           view={view}
           width={width}
           show={true}
+          menu={portpolioMenu}
         />
       </div>
-      <div className={cx("container")} ref={aboutRef} data-idx="about">
-        {/* <Career
-            view={view}
-            career={career}
-            width={width}
-            careerRef={careerRef}
-          /> */}
-        <About view={view} profile={profile} intro={intro} width={width} />
+      <div className={cx("container")} ref={careerRef} data-idx="career">
+        <Career
+          view={view}
+          career={career}
+          width={width}
+          careerRef={careerRef}
+        />
       </div>
       <Footer />
     </div>

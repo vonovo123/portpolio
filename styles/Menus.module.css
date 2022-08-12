@@ -1,0 +1,40 @@
+.menuWrapper {
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  position: relative;
+  margin-left: 20px;
+  font-size: 15px;
+}
+.selMenu {
+  display: flex;
+  padding: 10px;
+  color: var(--disabled-color);
+  cursor: pointer;
+}
+
+.selMenu.disable {
+  color: var(--activated-color);
+}
+
+.selMenuArrow {
+  margin: 3px;
+  padding-left: 10px;
+}
+
+.categoryMenu {
+  position: absolute;
+  min-width: 100px;
+  top: 40px;
+  z-index: 2;
+}
+.menu {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--disabled-color);
+  border-bottom: none;
+  padding: 10px;
+}
+
+.menu:hover {
+  color: var(--activated-color);
+  background-color: var(--disabled-color);
+}

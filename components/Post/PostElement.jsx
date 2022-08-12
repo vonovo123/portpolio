@@ -1,4 +1,4 @@
-import styles from "../../styles/Carousel/CarouselElement.module.css";
+import styles from "../../styles/Post/PostElement.module.css";
 import { Row, Col, Image } from "antd";
 import classNames from "classnames/bind";
 import { useCallback } from "react";

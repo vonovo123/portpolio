@@ -1,13 +1,15 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
-import styles from "../../styles/Header.module.css";
+import styles from "../../styles/Header/Mobile.module.css";
 import { Col, Row } from "antd";
 import {
   CaretUpOutlined,
   CaretDownOutlined,
   RollbackOutlined,
 } from "@ant-design/icons";
+import About from "../About";
 const cx = classNames.bind(styles);
+
 export default function Mobile({
   type,
   view,
@@ -15,50 +17,40 @@ export default function Mobile({
   navClickEvent,
   title,
   menus,
+  profile,
 }) {
-  const [fold, setFold] = useState(true);
-
-  const changeFold = () => {
-    setFold(!fold);
-  };
+  const [showAbout, setShowAbout] = useState(false);
   return (
     <>
       {type === "index" && (
-        <div className={cx("header", { fold: fold })}>
-          <Row span={24}>
-            <Col span={20} style={{ marginTop: 5 }}>
-              <div className={cx("nav", "sel", { hide: !fold })}>
-                {view.toUpperCase()}
-              </div>
-            </Col>
-            <Col
-              style={{
-                textAlign: "center",
-                fontSize: 20,
-                marginTop: 2,
-              }}
-              span={4}
-            >
-              {fold && <CaretUpOutlined onClick={changeFold} />}
-              {!fold && <CaretDownOutlined onClick={changeFold} />}
-            </Col>
-            <Row style={{ marginTop: 10 }}>
+        <>
+          <div
+            className={cx("about", { show: showAbout })}
+            onClick={(e) => {
+              setShowAbout(!showAbout);
+              e.stopPropagation();
+            }}
+          >
+            <About view={view} profile={profile} show={showAbout} />
+          </div>
+          <div className={cx("header")}>
+            <Row className={cx("navWrapper")}>
               {menus.map((menu, idx) => (
                 <Col
                   key={idx}
-                  span={24}
+                  span={8}
                   onClick={() => {
-                    navClickEvent(menu);
+                    navClickEvent(menu.id);
                   }}
                 >
-                  <div className={cx("nav", { sel: view === menu })}>
-                    {menu.toUpperCase()}
+                  <div className={cx("nav", { sel: view === menu.id })}>
+                    {menu.name}
                   </div>
                 </Col>
               ))}
             </Row>
-          </Row>
-        </div>
+          </div>
+        </>
       )}
       {(type === "postDetail" || type === "postList") && (
         <div className={cx("header", "fold")}>

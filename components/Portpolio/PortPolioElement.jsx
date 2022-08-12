@@ -13,7 +13,7 @@ const cx = classNames.bind(styles);
 export default function PortPolioElement({ element }) {
   const router = useRouter();
   const elRef = useRef(null);
-  const [index, setIndex] = useState(1);
+  const [detail, setDetail] = useState(false);
   const {
     author,
     content,
@@ -26,16 +26,10 @@ export default function PortPolioElement({ element }) {
   } = element;
   const moveElement = useCallback(() => {
     elRef.current.style.transition = `${0.5}s ease-out`;
-    elRef.current.style.transform = `translate3d(0, ${-530 * index}px, 0)`;
-    setIndex(index + 1);
-    if (index === 2) {
-      setTimeout(() => {
-        elRef.current.style.transition = `${0}s ease-out`;
-        elRef.current.style.transform = `translate3d(0, 0px, 0)`;
-        setIndex(1);
-      }, 500);
-    }
-  }, [index]);
+    if (!detail) elRef.current.style.transform = `translate3d(0, ${-450}px, 0)`;
+    else elRef.current.style.transform = `translate3d(0, 0px, 0)`;
+    setDetail(!detail);
+  }, [detail]);
   return (
     <div>
       <div className={cx("elementWrapper")}>
@@ -75,30 +69,6 @@ export default function PortPolioElement({ element }) {
               {<div>test</div>}
               {<div>test</div>}
               {<div>test</div>}
-            </Col>
-          </Row>
-          <Row className={cx("element")}>
-            <div className={cx("skills")} align={"left"}>
-              {skills.map((skill, idx) => (
-                <Image
-                  key={idx}
-                  className={styles.skill}
-                  src={skill.iconUrl}
-                  alt={skill.name}
-                  preview={false}
-                />
-              ))}
-            </div>
-            <Col span={24} className={cx()}>
-              <Image
-                src={thumbnail.imageUrl}
-                alt={thumbnail.alt}
-                className={cx("elementImage")}
-                preview={false}
-              />
-            </Col>
-            <Col span={24} className={cx("elementTitle")}>
-              {title}
             </Col>
           </Row>
         </div>

@@ -2,26 +2,15 @@ import styles from "../../styles/Post/Post.module.css";
 import classNames from "classnames/bind";
 import { useCallback, useState } from "react";
 import Carousel from "../Carousel/Carousel";
-
-import { useRouter } from "next/router";
-import {
-  CaretLeftOutlined,
-  RightOutlined,
-  CaretRightOutlined,
-} from "@ant-design/icons";
 import Title from "../Title";
 import { Row, Col } from "antd";
-import CarouselElement from "../Carousel/CarouselElement";
+import CarouselElement from "./PostElement";
 const cx = classNames.bind(styles);
 export default function PostPreview({ posts, view, width }) {
-  const router = useRouter();
   const makeElement = (element) => {
     return <CarouselElement element={element}></CarouselElement>;
   };
   const [postList, setPostsList] = useState([...posts]);
-  const goList = useCallback(() => {
-    router.push(`/posts`);
-  }, [router]);
 
   // const changeListType = () => {
   //   if (listType === "slide") {
@@ -69,15 +58,7 @@ export default function PostPreview({ posts, view, width }) {
 
   return (
     <div className={cx("post", "mb10", { sel: view === "post" })}>
-      <Row className={cx("header")}>
-        <Title view={view} type={"post"} title={"최근 글"} show={true}></Title>
-        <Col
-          className={cx("moveText", { sel: view === "post" })}
-          onClick={goList}
-        >
-          {"전체보기"} <RightOutlined />
-        </Col>
-      </Row>
+      <Row className={cx("header")}></Row>
       <Carousel
         slideData={postList}
         makeElement={makeElement}

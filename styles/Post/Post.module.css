@@ -25,13 +25,6 @@
   margin-right: 10px;
   cursor: pointer;
 }
-.moveText {
-  font-size: 13px;
-  padding: 10px;
-  margin-left: 5px;
-  color: var(--disabled-color);
-  cursor: pointer;
-}
 
 .arrowWrapper {
   margin-top: 20px;

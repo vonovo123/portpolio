@@ -1,0 +1,39 @@
+.header {
+  --disabled-color: rgb(192, 191, 191);
+  --activated-color: #34495e;
+  --background-color: rgba(255, 255, 255, 1);
+  width: 100%;
+  position: fixed;
+  bottom: 150px;
+  z-index: 5;
+  transition: height 0.5s;
+  color: var(--background-color);
+  font-weight: bold;
+}
+.header.fold {
+  top: 94%;
+}
+.navWrapper {
+  height: 100%;
+  height: 60px;
+  background-color: var(--activated-color);
+  align-items: center;
+}
+.nav {
+  font-size: 17px;
+  text-align: center;
+}
+.nav.sel {
+  color: #efdc37;
+}
+
+.about {
+  position: fixed;
+  transition: 0.5s;
+  top: 640px;
+  z-index: 4;
+}
+.about.show {
+  top: 240px;
+  margin-top: 0px;
+}

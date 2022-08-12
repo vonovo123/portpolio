@@ -1,7 +1,6 @@
 .titleWrapper {
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
-  margin-bottom: 20px;
 }
 
 .titleText {
@@ -9,26 +8,20 @@
   font-weight: bold;
   color: var(--disabled-color);
 }
+.moveText {
+  font-size: 15px;
+  padding: 10px;
+  margin-left: 5px;
+  color: var(--disabled-color);
+  cursor: pointer;
+}
 .hide {
   display: none;
 }
 .titleText.sel {
   color: var(--activated-color);
 }
-.titleArrow {
-  width: 8px;
-  margin-top: 2px;
-  height: 30px;
-  background-color: #34495e;
-  opacity: 0;
-  margin-left: 10px;
 
-  transition: all 1s;
-}
-
-.titleArrow.sel {
-  opacity: 1;
-}
 /* @media only screen and (max-width: 767px) {
   .titleWrapper {
     display: none;

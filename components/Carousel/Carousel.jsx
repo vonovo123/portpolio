@@ -1,13 +1,14 @@
 import { Row, Col } from "antd";
 import { useCallback, useState, useEffect, useRef } from "react";
 import classNames from "classnames/bind";
-import CarouselElement from "./CarouselElement";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 import styles from "../../styles/Carousel/Carousel.module.css";
 import Dots from "./Dots";
 const cx = classNames.bind(styles);
 export default function Carousel({ slideData, makeElement, windowWidth }) {
   const slideRef = useRef(null);
+  // const [data, setData] = useState([[slideData[0]]]);
+  // console.log(data);
   const [size, setSize] = useState(0);
   const [index, setIndex] = useState(0);
   const [width, setWidth] = useState(0);
@@ -17,31 +18,28 @@ export default function Carousel({ slideData, makeElement, windowWidth }) {
     const { width } = slideRef.current
       .getElementsByTagName("li")[0]
       .getBoundingClientRect();
-    let startPosition = -width * 5;
-    let endPosition = 0;
-    if (slideData.length >= 5 || windowWidth < 767) {
-      startPosition = -width * slideData.length * 3;
-      endPosition = -width * slideData.length;
-    }
+    const slideWidth = width * 3 * slideData.length;
     setWidth(width);
     setSize(slideData.length);
     setIndex(slideData.length);
-    return { startPosition, endPosition };
+    return slideWidth;
   }, [slideData, windowWidth]);
-  const slideEffect = (startPosition, endPosition) => {
-    slideRef.current.style.transition = `${0}s`;
+  const slideEffect = (slideWidth) => {
     slideRef.current.style.visibility = "hidden";
-    slideRef.current.style.transform = `translate3d(${startPosition}px, 0, 0)`;
+    slideRef.current.style.transition = `${0}s`;
+    slideRef.current.style.transform = `translate3d(-${
+      slideWidth * 3
+    }px, 0, 0)`;
     setTimeout(() => {
       slideRef.current.style.visibility = "visible";
       slideRef.current.style.transition = `${0.5}s`;
-      slideRef.current.style.transform = `translate3d(${endPosition}px, 0, 0)`;
+      slideRef.current.style.transform = `translate3d(0, 0, 0)`;
     }, 500);
   };
 
   useEffect(() => {
-    const { startPosition, endPosition } = initData();
-    slideEffect(startPosition, endPosition);
+    const slideWidth = initData();
+    slideEffect(slideWidth);
     window.removeEventListener("resize", initData);
     window.addEventListener("resize", initData);
     return () => window.removeEventListener("resize", initData);
@@ -97,7 +95,7 @@ export default function Carousel({ slideData, makeElement, windowWidth }) {
             <Dots index={index} size={size}></Dots>
           </Col>
         )}
-        {size >= 5 && windowWidth >= 767 && (
+        {size >= 4 && windowWidth >= 767 && (
           <Col span={1} className={cx("arrow")} align="left">
             {
               <CaretLeftOutlined
@@ -126,20 +124,20 @@ export default function Carousel({ slideData, makeElement, windowWidth }) {
               touchEnd(e);
             }}
           >
-            {(size >= 5 || windowWidth < 767) &&
+            {(size >= 4 || windowWidth < 767) &&
               slideData.map((element, idx) => {
                 return <li key={idx}>{makeElement(element)}</li>;
               })}
             {slideData.map((element, idx) => {
               return <li key={idx}>{makeElement(element)}</li>;
             })}
-            {(size >= 5 || windowWidth < 767) &&
+            {(size >= 4 || windowWidth < 767) &&
               slideData.map((element, idx) => {
                 return <li key={idx}>{makeElement(element)}</li>;
               })}
           </ul>
         </Col>
-        {size >= 5 && windowWidth >= 767 && (
+        {size >= 4 && windowWidth >= 767 && (
           <Col span={1} align="right" className={cx("arrow")}>
             {
               <CaretRightOutlined
@@ -150,7 +148,7 @@ export default function Carousel({ slideData, makeElement, windowWidth }) {
             }
           </Col>
         )}
-        {size >= 5 && windowWidth >= 767 && (
+        {size >= 4 && windowWidth >= 767 && (
           <Col span={24} className={cx("dotsWrapper")}>
             <Dots index={index} size={size}></Dots>
           </Col>

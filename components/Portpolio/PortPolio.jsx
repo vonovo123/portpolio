@@ -1,22 +1,27 @@
-import { Col, Image, Row } from "antd";
 import styles from "../../styles/Portpolio/Portpolio.module.css";
 import classNames from "classnames/bind";
-import BlogPostDetail from "../BlogPostDetail";
 import { useEffect, useState } from "react";
-import Title from "../Title";
 import PortPolioElement from "./PortPolioElement";
 import Carousel from "../Carousel/Carousel";
-import Menus from "../Menus";
+
 const cx = classNames.bind(styles);
 
-export default function Portpolio({
-  html,
-  vanillaJs,
-  vueNuxt,
-  reactNext,
-  view,
-  width,
-}) {
+export default function Portpolio({ portpolios, view, width, menu }) {
+  let html = [],
+    vanillaJs = [],
+    vueNuxt = [],
+    reactNext = [];
+  portpolios.forEach((portpolio) => {
+    if (portpolio.category.type === "html/css") {
+      html.push({ ...portpolio });
+    } else if (portpolio.category.type === "vanillaJs") {
+      vanillaJs.push({ ...portpolio });
+    } else if (portpolio.category.type === "vueNuxt") {
+      vueNuxt.push({ ...portpolio });
+    } else if (portpolio.category.type === "reactNext") {
+      reactNext.push({ ...portpolio });
+    }
+  });
   const [target, setTarget] = useState([
     ...html,
     ...vanillaJs,
@@ -26,7 +31,8 @@ export default function Portpolio({
   const makeElement = (element) => {
     return <PortPolioElement element={element}></PortPolioElement>;
   };
-  const changeMenu = (menu) => {
+
+  useEffect(() => {
     switch (menu) {
       case "HTML / CSS":
         setTarget([...html]);
@@ -44,30 +50,9 @@ export default function Portpolio({
         setTarget([...html, ...vanillaJs, ...vueNuxt, ...reactNext]);
         break;
     }
-  };
-
-  const menus = ["ALL", "HTML / CSS", "Vanilla JS", "Vue", "React"];
-  const [showMenuList, setShowMenuList] = useState(false);
-  const [menu, setMenu] = useState("ALL");
-
+  }, [menu]);
   return (
     <div className={cx("portpolio", { sel: view === "portpolio" })}>
-      <Row className={cx("header")}>
-        <Title
-          view={view}
-          type={"portpolio"}
-          title={"포트폴리오"}
-          show={true}
-        ></Title>
-        <Menus
-          menus={menus}
-          setMenu={setMenu}
-          menu={menu}
-          showMenuList={showMenuList}
-          setShowMenuList={setShowMenuList}
-          changeMenu={changeMenu}
-        ></Menus>
-      </Row>
       <Carousel
         slideData={target}
         makeElement={makeElement}

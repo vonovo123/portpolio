@@ -14,7 +14,7 @@ import { useRef } from "react";
 const cx = classNames.bind(styles);
 export default function Career({ view, career, width, careerRef }) {
   const rowData = career[0];
-  const [hide, setHide] = useState(true);
+  const [hide, setHide] = useState(false);
   const nodeRef = useRef(null);
   const rows = rowData.works.map((work) => {
     return [
@@ -38,8 +38,6 @@ export default function Career({ view, career, width, careerRef }) {
       ref={careerRef}
       data-idx="career"
     >
-      <Title view={view} type={"career"}></Title>
-
       <Row className={cx("description", { sel: view === "career" })}>
         {/* <Chart
                   chartType="Timeline"

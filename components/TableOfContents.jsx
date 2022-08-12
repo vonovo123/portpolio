@@ -4,6 +4,7 @@ import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
 import { useCallback } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { on, off, clear } from "../utils/Swing";
 const cx = classNames.bind(styles);
 export default function TableOfContents({
   outline,
@@ -17,22 +18,12 @@ export default function TableOfContents({
   useEffect(() => {
     let flag = true;
     if (!openToc) {
-      //if (swing.current) return;
-      swing.current = setInterval(() => {
-        if (flag) {
-          titleRef.current.style.transform = `translate3d(${15}px, 0, 0)`;
-        } else {
-          titleRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
-        }
-        flag = !flag;
-      }, 1000);
+      on(swing, titleRef);
     } else {
-      titleRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
-      clearInterval(swing.current);
-      swing.current = null;
+      off(swing, titleRef);
     }
     return () => {
-      clearInterval(swing.current);
+      clear(swing);
     };
   }, [openToc]);
   const getChildrenText = (heading) => {
