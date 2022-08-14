@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import { useCallback } from "react";
 import { useRouter } from "next/router";
 const cx = classNames.bind(styles);
-export default function CarouselElement({ element }) {
+export default function PostElement({ element }) {
   const router = useRouter();
   const goDetail = useCallback(
     (slug) => {

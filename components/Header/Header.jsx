@@ -5,7 +5,7 @@ export default function Header({
   view,
   navClickEvent,
   type,
-  title = "Dev 로그",
+  title = "개발자 블로그",
   width,
   profile,
   menus,

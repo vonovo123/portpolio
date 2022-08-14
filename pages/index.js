@@ -88,14 +88,16 @@ export default function Home({ home, posts, profile, portpolios, career }) {
   }, []);
   return (
     <div className={cx("wrapper")}>
-      <Header
-        view={view}
-        navClickEvent={navClickEvent}
-        type={"index"}
-        profile={profile}
-        width={width}
-        menus={headerMenus}
-      />
+      <div className={cx("header")}>
+        <Header
+          view={view}
+          navClickEvent={navClickEvent}
+          type={"index"}
+          profile={profile}
+          width={width}
+          menus={headerMenus}
+        />
+      </div>
       <div className={cx("container", "title")}>
         <Title
           view={view}

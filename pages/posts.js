@@ -9,11 +9,13 @@ import BreadCrumb from "../components/BreadCrumb";
 import { Col, Row, Image } from "antd";
 import dayjs from "dayjs";
 import Title from "../components/Title";
+import PostElement from "../components/Post/PostElement";
 
 const cx = classNames.bind(styles);
 export default function Posts({ posts, profile }) {
   const router = useRouter();
   profile = profile[0];
+  const devPosts = [...posts, ...posts, ...posts];
   const [width, setWidth] = useState();
   const devRef = useRef(null);
   const lifeRef = useRef(null);
@@ -41,6 +43,13 @@ export default function Posts({ posts, profile }) {
 
   const handleResize = useCallback(() => {
     setWidth(window.innerWidth);
+  }, []);
+  const makeElement = useCallback((element) => {
+    return (
+      <div className={cx("postElement")}>
+        <PostElement element={element}></PostElement>;
+      </div>
+    );
   }, []);
   useEffect(() => {
     handleResize();
@@ -74,23 +83,28 @@ export default function Posts({ posts, profile }) {
   return (
     <>
       <div className={styles.wrapper}>
-        <div className={cx("wrapper")}></div>
-        <Header
-          view={view}
-          width={width}
-          type={"postList"}
-          navClickEvent={navClickEvent}
-          menus={headerMenus}
-          profile={profile}
-        />
+        <div className={cx("header")}>
+          <Header
+            view={view}
+            navClickEvent={navClickEvent}
+            type={"index"}
+            profile={profile}
+            width={width}
+            menus={headerMenus}
+          />
+        </div>
         <div className={cx("container", "title")}>
           <Title view={view} type={view} show={true} menus={titleMenus}></Title>
         </div>
-        <div className={cx("container")} ref={devRef}></div>
-        <div className={cx("container")} ref={lifeRef}></div>
-        <div className={cx("container")} ref={reviewRef}>
-          {" "}
+        <div className={cx("container")} ref={devRef}>
+          <div className={cx("postWrapper")}>
+            {devPosts.map((post, idx) => {
+              return makeElement(post);
+            })}
+          </div>
         </div>
+        <div className={cx("container")} ref={lifeRef}></div>
+        <div className={cx("container")} ref={reviewRef}></div>
         {/* <div className={cx("mb20")}>
             <BreadCrumb params={breadCrumParams}></BreadCrumb>
           </div> */}

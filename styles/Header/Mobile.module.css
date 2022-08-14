@@ -1,11 +1,21 @@
+.about {
+  position: fixed;
+  transition: 0.5s;
+  top: 790px;
+  z-index: 3;
+}
+.about.show {
+  top: 350px;
+  margin-top: 0px;
+}
 .header {
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   --background-color: rgba(255, 255, 255, 1);
   width: 100%;
   position: fixed;
-  bottom: 150px;
-  z-index: 5;
+  z-index: 4;
+  bottom: 0px;
   transition: height 0.5s;
   color: var(--background-color);
   font-weight: bold;
@@ -25,15 +35,4 @@
 }
 .nav.sel {
   color: #efdc37;
-}
-
-.about {
-  position: fixed;
-  transition: 0.5s;
-  top: 640px;
-  z-index: 4;
-}
-.about.show {
-  top: 240px;
-  margin-top: 0px;
 }

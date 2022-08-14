@@ -30,7 +30,7 @@
 }
 .container {
   border-radius: 10px;
-  padding: 6% 1% 0% 1%;
+  padding: 7% 1% 0% 1%;
   width: calc(100% - 300px);
   margin-left: 300px;
   margin-right: 2%;
@@ -39,125 +39,33 @@
   position: fixed;
   border-radius: 0;
   background-color: var(--background-color-09);
-  padding: 2% 3% 1% 3%;
+  padding: 50px 50px 20px 50px;
   z-index: 3;
 }
-
+.header {
+  width: 300px;
+  position: fixed;
+}
 .postWrapper {
-  position: relative;
-  width: 100%;
-  padding: 0px;
-  list-style-type: none;
-  transition: all 1s;
-}
-
-.post {
-  width: 100%;
-}
-.postInner {
-  width: 100%;
-  padding: 20px;
-}
-.postContent {
-  height: 100%;
-  border: 3px solid var(--activated-color);
-  border-left: none;
-  border-radius: 8px;
-  padding: 30px;
-  padding-top: 10px;
-}
-
-.postInfoWrapper {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.postTitleWrapper {
-  margin-bottom: 10px;
-}
-.postTitle {
-  font-size: 25px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.postShort {
-  margin: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-}
-
-.post .postImageWrapper {
-  border: 3px solid var(--activated-color);
-  border-right-style: dotted;
-  border-radius: 8px;
-  transition: all 0.5s;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: scroll;
 }
-.postImage {
-  height: 150px;
-  object-fit: fill;
-  border-radius: 5px;
+.postElement {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 25%;
+  padding: 1%;
 }
-.postCategory {
-  font-size: 13px;
-  text-align: center;
-  color: white;
-  transition: all 0.5s;
-  background-color: grey;
-  border-radius: 5px;
-  padding: 9px;
-  margin-top: 20px;
-  font-weight: bold;
-}
-
-.postTagWrapper {
-  border-top: 3px dotted var(--disabled-color);
-}
-
 @media only screen and (max-width: 767px) {
+  .header {
+    width: 100%;
+    z-index: 3;
+  }
+
   .container {
-    padding: 20px;
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    box-shadow: none;
-  }
-  .post .postImageWrapper {
-    border-right-style: solid;
-    border-bottom-style: dotted;
-  }
-
-  .postImage {
-    height: 100px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  .postContent {
-    height: 100%;
-    border: 3px solid var(--disabled-color);
-    border-top: 0;
-    border-radius: 8px;
-    transition: border 0.5s;
-    padding: 30px;
-    padding-top: 10px;
-  }
-
-  .postTitleWrapper {
-    font-weight: bold;
-    margin-bottom: 10px;
-    margin-top: 20px;
-  }
-
-  .postTitle {
-    font-size: 17px;
-  }
-
-  .postShort {
-    font-size: 15px;
-    margin: 10px;
+    padding: 15% 5% 15% 5%;
+    margin: 0;
+    width: 100%;
   }
 }

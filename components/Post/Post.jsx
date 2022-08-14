@@ -4,12 +4,12 @@ import { useCallback, useState } from "react";
 import Carousel from "../Carousel/Carousel";
 import Title from "../Title";
 import { Row, Col } from "antd";
-import CarouselElement from "./PostElement";
+import PostElement from "./PostElement";
 const cx = classNames.bind(styles);
 export default function PostPreview({ posts, view, width }) {
-  const makeElement = (element) => {
-    return <CarouselElement element={element}></CarouselElement>;
-  };
+  const makeElement = useCallback((element) => {
+    return <PostElement element={element}></PostElement>;
+  }, []);
   const [postList, setPostsList] = useState([...posts]);
 
   // const changeListType = () => {
