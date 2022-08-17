@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 import classNames from "classnames/bind";
 import BreadCrumb from "../../components/BreadCrumb";
 import TableOfContents from "../../components/TableOfContents";
-import { makeHeadings } from "../../utils/makeHeadings";
+import { makeHeadings } from "../../utils/Headings";
 const cx = classNames.bind(styles);
 export default function Post({ slug, post }) {
   const router = useRouter();

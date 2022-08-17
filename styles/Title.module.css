@@ -1,29 +1,5 @@
-.titleWrapper {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-}
-
 .titleText {
   font-size: 25px;
   font-weight: bold;
-  color: var(--disabled-color);
-}
-.moveText {
-  font-size: 15px;
-  padding: 10px;
-  margin-left: 5px;
-  color: var(--disabled-color);
-  cursor: pointer;
-}
-.hide {
-  display: none;
-}
-.titleText.sel {
   color: var(--activated-color);
 }
-
-/* @media only screen and (max-width: 767px) {
-  .titleWrapper {
-    display: none;
-  }
-} */

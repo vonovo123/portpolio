@@ -2,20 +2,12 @@
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   color: var(--activated-color);
-  opacity: 0.5;
   min-height: 500px;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-}
-.career.sel {
-  opacity: 1;
+  padding: 10px;
 }
 
 .description {
   width: 100%;
-  border: 3px solid var(--activated-color);
-  border-radius: 10px;
   font-weight: bold;
   font-size: 15px;
 }
@@ -25,18 +17,17 @@
   height: 50px;
 }
 .descriptionBody {
+  padding: 0px 30px 0px 30px;
   transition: all 0.5s;
-  overflow: scroll;
-  height: 500px;
 }
 .descriptionCol {
   padding: 10px;
-  border-bottom: 2px dotted var(--activated-color);
+  border-bottom: 1px solid var(--disabled-color);
 }
 .descriptionCol.header {
   padding: 5px;
   text-align: center;
-  border-bottom: 2px solid var(--activated-color);
+  border-bottom: 0px solid var(--disabled-color);
 }
 .hide {
   display: none;

@@ -1,11 +1,8 @@
 .breadCrumbWrapper {
-  font-size: 18px;
-  border-radius: 8px;
-  font-weight: bold;
-  padding: 10px;
-  display: flex;
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
+  font-size: 25px;
+  font-weight: bold;
   display: flex;
   align-items: center;
 }
@@ -16,7 +13,7 @@
   display: flex;
 }
 .crumb {
-  margin: 10px;
+  margin: 0px 20px 0px 0px;
   color: grey;
   cursor: pointer;
 }

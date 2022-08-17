@@ -1,25 +1,24 @@
 .header {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-  --background-color: rgba(255, 255, 255, 1);
-  padding: 50px 0 50px 0;
-  height: 1200px;
-  width: 100%;
-  background-color: var(--activated-color);
-  opacity: 0.9;
-  transition: height 0.5s;
   color: var(--background-color);
+  padding: 50px 0 0 0;
+  width: 100%;
+  transition: height 0.5s;
   font-weight: bold;
 }
 .title {
   font-size: 25px;
   font-weight: bold;
-  margin-bottom: 60px;
-  margin-left: 30px;
+  margin-left: 70px;
+  margin-bottom: 50px;
+  cursor: pointer;
 }
 .navWrapper {
+  margin-left: 70px;
+  margin-bottom: 70px;
+}
+.subNavWrapper {
   margin-left: 60px;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .nav {
@@ -28,19 +27,26 @@
   font-weight: bold;
   transition: all 0.5s;
   text-align: left;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .nav.back {
   font-size: 20px;
 }
 .title.sel,
 .nav.sel {
-  color: #efdc37;
+  color: #ffed4d;
 }
-.about {
-  margin-top: 430px;
-  transition: 0.5s;
-}
-.about.show {
-  margin-top: 0px;
+
+@media only screen and (max-width: 767px) {
+  .header {
+  }
+  .title {
+    margin-left: 30px;
+  }
+  .navWrapper {
+    margin-left: 40px;
+  }
+  .subNavWrapper {
+    margin-left: 10px;
+  }
 }

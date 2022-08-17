@@ -3,10 +3,6 @@
   --activated-color: #34495e;
   transition: all 0.5s;
   padding: 10px;
-  opacity: 0.5;
-}
-.portpolio.sel {
-  opacity: 1;
 }
 
 .header {

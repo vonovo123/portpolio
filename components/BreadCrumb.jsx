@@ -8,30 +8,24 @@ export default function BreadCrumb({ params }) {
   const goHome = useCallback(() => {
     router.push("/");
   }, [router]);
-  const renderCategory = (param, sel, idx) => {
+  const renderCategory = (param, sel, idx, size) => {
     return (
       <div className={cx("breadCrumb")} key={idx}>
-        <div className={cx("crumb")}>{">"}</div>
         <div className={cx("crumb", { sel: sel })}>
           {typeof param == "function" && <>{param()}</>}
           {typeof param == "string" && <>{param}</>}
         </div>
+        {idx < size - 1 && <div className={cx("crumb")}>{"-"}</div>}
       </div>
     );
   };
 
   return (
-    <div className={cx("breadCrumbWrapper", "mb10")} span={24}>
-      <div className={cx("breadCrumb")}>
-        <div className={cx("crumb", "home")} onClick={goHome}>
-          {"HOME"}
-        </div>
-      </div>
-
+    <div className={cx("breadCrumbWrapper")} span={24}>
       {params.map((param, idx) => {
         let sel = false;
         if (idx === params.length - 1) sel = true;
-        return renderCategory(param, sel, idx);
+        return renderCategory(param, sel, idx, params.length);
       })}
     </div>
   );

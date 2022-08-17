@@ -2,11 +2,7 @@ import classNames from "classnames/bind";
 import { useState } from "react";
 import styles from "../../styles/Header/Mobile.module.css";
 import { Col, Row } from "antd";
-import {
-  CaretUpOutlined,
-  CaretDownOutlined,
-  RollbackOutlined,
-} from "@ant-design/icons";
+import { RollbackOutlined } from "@ant-design/icons";
 import About from "../About";
 const cx = classNames.bind(styles);
 
@@ -14,7 +10,7 @@ export default function Mobile({
   type,
   view,
   goBack,
-  navClickEvent,
+  setTarget,
   title,
   menus,
   profile,
@@ -40,7 +36,7 @@ export default function Mobile({
                   key={idx}
                   span={8}
                   onClick={() => {
-                    navClickEvent(menu.id);
+                    setTarget(menu.id);
                   }}
                 >
                   <div className={cx("nav", { sel: view === menu.id })}>

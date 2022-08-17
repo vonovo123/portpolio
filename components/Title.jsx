@@ -1,39 +1,30 @@
 import { Col, Row } from "antd";
-import { useRouter } from "next/router";
-import { CaretRightOutlined, RightOutlined } from "@ant-design/icons";
 import styles from "../styles/Title.module.css";
 import classNames from "classnames/bind";
-import { useCallback, useState } from "react";
 import Menus from "./Menus";
 const cx = classNames.bind(styles);
 export default function Title({
-  view,
-  type,
-  show = true,
-  menus,
-  setMenu,
-  menu,
+  titleMenus,
+  viewState,
+  subViewState,
+  typeState,
+  subTitleState,
 }) {
-  const router = useRouter();
-  const goList = useCallback(() => {
-    router.push(`/posts`);
-  }, [router]);
-
-  const portPolioMenus = ["ALL", "HTML / CSS", "Vanilla JS", "Vue", "React"];
-
+  const [view, setView] = viewState;
+  const [subView, setSubView] = subViewState;
+  const [type, setType] = typeState;
+  const [subTitle, setSubTitle] = subTitleState;
   return (
-    <Row className={cx("titleWrapper", { hide: !show })}>
-      <Col className={cx("titleText", { sel: view === type })} span={24}>
+    <Row className={cx("titleWrapper")}>
+      <Col className={cx("titleText")} span={24}>
         <Row>
-          <Col>{menus[view]}</Col>
-          {view === "post" && (
-            <Col className={cx("moveText")} onClick={goList}>
-              {"전체보기"} <RightOutlined />
-            </Col>
+          {titleMenus[type] && titleMenus[type][view] && (
+            <Col>{titleMenus[type][view]}</Col>
           )}
-          {view === "portpolio" && (
-            <Menus menus={portPolioMenus} setMenu={setMenu} menu={menu}></Menus>
+          {titleMenus[type] && titleMenus[type][subView] && (
+            <Col>{titleMenus[type][subView]}</Col>
           )}
+          {subTitle && subTitle}
         </Row>
       </Col>
     </Row>

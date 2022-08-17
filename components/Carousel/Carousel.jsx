@@ -7,43 +7,41 @@ import Dots from "./Dots";
 const cx = classNames.bind(styles);
 export default function Carousel({ slideData, makeElement, windowWidth }) {
   const slideRef = useRef(null);
-  // const [data, setData] = useState([[slideData[0]]]);
-  // console.log(data);
   const [size, setSize] = useState(0);
   const [index, setIndex] = useState(0);
   const [width, setWidth] = useState(0);
+  const [slideWidth, setSlideWidth] = useState(0);
   const [touchStartTime, setTouchStartTime] = useState(null);
   const [touchPosition, setTouchPosition] = useState(null);
   const initData = useCallback(() => {
     const { width } = slideRef.current
       .getElementsByTagName("li")[0]
       .getBoundingClientRect();
-    const slideWidth = width * 3 * slideData.length;
     setWidth(width);
+    setSlideWidth(width * 3 * slideData.length);
     setSize(slideData.length);
     setIndex(slideData.length);
-    return slideWidth;
-  }, [slideData, windowWidth]);
-  const slideEffect = (slideWidth) => {
+    slideEffect(width * 3 * slideData.length, slideData.length);
+  }, [slideData]);
+  const slideEffect = (slideWidth, size) => {
     slideRef.current.style.visibility = "hidden";
     slideRef.current.style.transition = `${0}s`;
-    slideRef.current.style.transform = `translate3d(-${
-      slideWidth * 3
-    }px, 0, 0)`;
+    slideRef.current.style.transform = `translate3d(-${slideWidth}px, 0, 0)`;
     setTimeout(() => {
       slideRef.current.style.visibility = "visible";
       slideRef.current.style.transition = `${0.5}s`;
-      slideRef.current.style.transform = `translate3d(0, 0, 0)`;
+      if (size > 4) {
+        slideRef.current.style.transform = `translate3d(-${
+          slideWidth / 3
+        }px, 0, 0)`;
+      } else {
+        slideRef.current.style.transform = `translate3d(-${0}px, 0, 0)`;
+      }
     }, 500);
   };
-
   useEffect(() => {
-    const slideWidth = initData();
-    slideEffect(slideWidth);
-    window.removeEventListener("resize", initData);
-    window.addEventListener("resize", initData);
-    return () => window.removeEventListener("resize", initData);
-  }, [initData]);
+    initData();
+  }, [initData, windowWidth]);
 
   const moveSlide = useCallback(
     (dir) => {

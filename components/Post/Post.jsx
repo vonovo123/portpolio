@@ -6,7 +6,7 @@ import Title from "../Title";
 import { Row, Col } from "antd";
 import PostElement from "./PostElement";
 const cx = classNames.bind(styles);
-export default function PostPreview({ posts, view, width }) {
+export default function PostPreview({ posts, width }) {
   const makeElement = useCallback((element) => {
     return <PostElement element={element}></PostElement>;
   }, []);
@@ -57,7 +57,7 @@ export default function PostPreview({ posts, view, width }) {
   // };
 
   return (
-    <div className={cx("post", "mb10", { sel: view === "post" })}>
+    <div className={cx("post", "mb10")}>
       <Row className={cx("header")}></Row>
       <Carousel
         slideData={postList}

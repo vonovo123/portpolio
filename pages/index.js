@@ -1,9 +1,8 @@
 import styles from "../styles/Home.module.css";
 import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
-
+import makeObserver from "../utils/Observer";
 import SanityService from "../services/SanityService";
-import Header from "../components/Header/Header";
 import Career from "../components/Career";
 import PortPolio from "../components/Portpolio/PortPolio";
 import Post from "../components/Post/Post";
@@ -11,15 +10,32 @@ import Footer from "../components/Footer";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import GitProfileService from "../services/GitProfileService";
 import _ from "lodash";
-import Title from "../components/Title";
-
-export default function Home({ home, posts, profile, portpolios, career }) {
-  profile = profile[0];
-  const [width, setWidth] = useState();
+import { Col } from "antd";
+import { useRouter } from "next/router";
+export default function Home({
+  posts,
+  portpolios,
+  career,
+  width,
+  typeState,
+  menuState,
+  viewState,
+  subMenuState,
+  subViewState,
+  subTitleState,
+}) {
+  const router = useRouter();
   const [portpolioMenu, setPortpolioMenu] = useState("ALL");
   const postRef = useRef(null);
   const portRef = useRef(null);
   const careerRef = useRef(null);
+  const [type, setType] = typeState;
+  const [menu, setMenu] = menuState;
+  const [subMenu, setSubMenu] = subMenuState;
+  const [view, setView] = viewState;
+  const [subView, setSubView] = subViewState;
+  const [subTitle, setSubTitle] = subTitleState;
+  const [portpoloSubMenuBefore, setPortpoloSubMenuBefore] = useState(null);
   const ref = useMemo(() => {
     return {
       post: postRef,
@@ -27,109 +43,120 @@ export default function Home({ home, posts, profile, portpolios, career }) {
       career: careerRef,
     };
   }, [postRef, portRef, careerRef]);
-  const headerMenus = [
-    { id: "post", name: "최근 글" },
-    { id: "portpolio", name: "포트폴리오" },
-    { id: "career", name: "커리어" },
-  ];
-  const titleMenus = {
-    post: "최근 글",
-    portpolio: "포트폴리오",
-    career: "커리어",
-  };
-  const [view, setView] = useState("post");
-  const handleResize = useCallback(() => {
-    setWidth(window.innerWidth);
-  }, []);
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, []);
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [handleResize]);
-
-  const navClickEvent = useCallback(
-    (target) => {
-      setView(target);
-      if (target === "home" || target === "post") {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      } else {
-        window.scrollTo({
-          top: ref[target].current.offsetTop,
-          behavior: "smooth",
-        });
+  const makeSubTitle = useCallback((menu, subMenu) => {
+    let subTitle = null;
+    if (menu === "post") {
+      subTitle = "최근 5개의 포스트만 표시됩니다.";
+    } else if (menu === "portpolio") {
+      let text = null;
+      switch (subMenu) {
+        case "pub":
+          text = "HTML/CSS";
+          break;
+        case "js":
+          text = "JAVASCRIPT";
+          break;
+        case "vue":
+          text = "VUE.JS";
+          break;
+        case "react":
+          text = "REACT.JS";
+          break;
+        default:
+          text = "프론트엔드 언어 및 Framework";
       }
+      subTitle = `${text}  를(을) 활용한 토이프로젝트입니다.`;
+    } else if (menu === "career") {
+      subTitle = "경력 및 이력사항 입니다.";
+    }
+    return <Col className={cx("postSubtitle")}>{subTitle}</Col>;
+  }, []);
+  const goPosts = useCallback(
+    (menu) => {
+      console.log(menu);
+      setType(null);
+      setMenu(null);
+      setSubView(null);
+      setSubTitle(null);
+      router.push({ pathname: "/posts", query: { menu } });
     },
-    [setView, ref]
+    [router]
   );
-
+  //화면진입 //스크롤로 화면변경
   useEffect(() => {
+    setType("home");
+    router.query.menu ? setMenu(router.query.view) : setMenu("post");
     const option = {
       rootMargin: "-50% 0% -50% 0%",
     };
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setView(entry.target.dataset.idx);
-        }
-      });
-    }, option);
-    io.observe(postRef.current);
-    io.observe(portRef.current);
-    io.observe(careerRef.current);
+    const interSectionCallback = (entry) => {
+      const menu = entry.target.dataset.idx;
+      setView(menu);
+    };
+    const io = makeObserver(option, ref, interSectionCallback);
   }, []);
+  // 메뉴 변경
+  useEffect(() => {
+    if (!menu) return;
+    if (menu === "home") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      setView("post");
+    } else {
+      window.scrollTo({
+        top: ref[menu].current.offsetTop,
+        behavior: "smooth",
+      });
+      setView(menu);
+    }
+  }, [menu]);
+  //하위메뉴 변경
+  useEffect(() => {
+    if (!subMenu) return;
+    if (view === "post" && subMenu !== "new") {
+      goPosts(subMenu);
+    } else if (view === "portpolio") {
+      setSubView(subMenu);
+      setPortpoloSubMenuBefore(subMenu);
+      setPortpolioMenu(subMenu);
+      setSubTitle(makeSubTitle(view, subMenu));
+    }
+  }, [subMenu]);
+  // 화면 변경
+  useEffect(() => {
+    if (view === "post") {
+      setSubView("new");
+    } else if (view === "portpolio") {
+      !portpoloSubMenuBefore
+        ? setSubView("all")
+        : setSubView(portpoloSubMenuBefore);
+    }
+    setSubTitle(makeSubTitle(view, subMenu));
+  }, [view]);
   return (
-    <div className={cx("wrapper")}>
-      <div className={cx("header")}>
-        <Header
-          view={view}
-          navClickEvent={navClickEvent}
-          type={"index"}
-          profile={profile}
-          width={width}
-          menus={headerMenus}
-        />
+    <>
+      <div ref={postRef} data-idx="post" className={cx("componentWrapper")}>
+        <Post posts={posts} width={width} show={true} />
       </div>
-      <div className={cx("container", "title")}>
-        <Title
-          view={view}
-          type={view}
-          show={true}
-          menu={portpolioMenu}
-          setMenu={setPortpolioMenu}
-          menus={titleMenus}
-        ></Title>
-      </div>
-      <div className={cx("container")} ref={postRef} data-idx="post">
-        <Post posts={posts} view={view} width={width} show={true} />
-      </div>
-      <div className={cx("container")} ref={portRef} data-idx="portpolio">
+      <div
+        ref={portRef}
+        data-idx="portpolio"
+        className={cx("componentWrapper")}
+      >
         <PortPolio
           portpolios={portpolios}
-          view={view}
           width={width}
           show={true}
           menu={portpolioMenu}
         />
       </div>
-      <div className={cx("container")} ref={careerRef} data-idx="career">
-        <Career
-          view={view}
-          career={career}
-          width={width}
-          careerRef={careerRef}
-        />
+      <div ref={careerRef} data-idx="career" className={cx("componentWrapper")}>
+        <Career career={career} width={width} />
       </div>
       <Footer />
-    </div>
+    </>
   );
 }
 

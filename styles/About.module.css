@@ -1,9 +1,5 @@
 .about {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-  --background-color: #fbe947;
-  --font-color: #34495e;
-  background-color: var(--background-color);
+  background-color: var(--background-color-about);
   color: var(--font-color);
   font-weight: 500;
   font-size: 15px;

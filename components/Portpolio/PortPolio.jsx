@@ -6,7 +6,7 @@ import Carousel from "../Carousel/Carousel";
 
 const cx = classNames.bind(styles);
 
-export default function Portpolio({ portpolios, view, width, menu }) {
+export default function Portpolio({ portpolios, width, menu }) {
   let html = [],
     vanillaJs = [],
     vueNuxt = [],
@@ -34,16 +34,16 @@ export default function Portpolio({ portpolios, view, width, menu }) {
 
   useEffect(() => {
     switch (menu) {
-      case "HTML / CSS":
+      case "pub":
         setTarget([...html]);
         break;
-      case "Vanilla JS":
+      case "js":
         setTarget([...vanillaJs]);
         break;
-      case "Vue":
+      case "vue":
         setTarget([...vueNuxt]);
         break;
-      case "React":
+      case "react":
         setTarget([...reactNext]);
         break;
       default:
@@ -52,7 +52,7 @@ export default function Portpolio({ portpolios, view, width, menu }) {
     }
   }, [menu]);
   return (
-    <div className={cx("portpolio", { sel: view === "portpolio" })}>
+    <div className={cx("portpolio")}>
       <Carousel
         slideData={target}
         makeElement={makeElement}

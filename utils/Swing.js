@@ -7,7 +7,7 @@ export function on(swing, ref) {
       ref.current.style.transform = `translate3d(0, 0, 0)`;
     }
     flag = !flag;
-  }, 1000);
+  }, 1500);
 }
 
 export function off(swing, ref) {

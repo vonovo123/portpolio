@@ -1,16 +1,26 @@
 .enter {
-  height: 500px;
-  overflow: scroll;
+  height: 900px;
+  overflow-y: scroll;
+}
+.enter::-webkit-scrollbar {
+  display: none;
 }
 
 .enterActive {
-  height: 500px;
-  overflow: scroll;
+  height: 900px;
+  overflow-y: scroll;
+}
+.enterActive::-webkit-scrollbar {
+  display: none;
 }
 
 .enterDone {
-  height: 500px;
-  overflow: scroll;
+  height: 900px;
+  overflow-y: scroll;
+}
+
+.enterDone::-webkit-scrollbar {
+  display: none;
 }
 
 .exitter {

@@ -1,4 +1,4 @@
-import { Card, Col, Row } from "antd";
+import { Col, Row } from "antd";
 import styles from "../styles/About.module.css";
 import classNames from "classnames/bind";
 import { Image } from "antd";
@@ -11,7 +11,7 @@ import {
 import { on, off, clear } from "../utils/Swing";
 import { useEffect, useRef } from "react";
 const cx = classNames.bind(styles);
-export default function About({ view, profile, show }) {
+export default function About({ profile, show }) {
   const swing = useRef(null);
   const aboutRef = useRef(null);
   useEffect(() => {
@@ -35,9 +35,7 @@ export default function About({ view, profile, show }) {
           <Image
             src={profile.thumbnail.imageUrl}
             alt={"profile_image"}
-            className={cx("profileDescImage", {
-              sel: view === "about",
-            })}
+            className={cx("profileDescImage")}
             preview={false}
           ></Image>
         </Col>

@@ -1,10 +1,3 @@
-.wrapper {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-  --background-color: rgba(255, 255, 255, 1);
-  --background-color-09: rgba(255, 255, 255, 0.9);
-  background-color: var(--background-color);
-}
 .mb10 {
   margin-bottom: 10px;
 }
@@ -24,31 +17,20 @@
 .mb50 {
   margin-bottom: 50px;
 }
+.componentWrapper {
+  padding: 100px 50px 100px 50px;
+}
 
-.hide {
-  display: none;
-}
-.container {
-  border-radius: 10px;
-  padding: 7% 1% 0% 1%;
-  width: calc(100% - 300px);
-  margin-left: 300px;
-  margin-right: 2%;
-}
-.container.title {
-  position: fixed;
-  border-radius: 0;
-  background-color: var(--background-color-09);
-  padding: 50px 50px 20px 50px;
-  z-index: 3;
-}
-.header {
-  width: 300px;
-  position: fixed;
+.postSubtitle {
+  font-size: 15px;
+  padding: 10px;
+  margin-left: 5px;
+  color: var(--disabled-color);
+  cursor: pointer;
 }
 .postWrapper {
   display: flex;
-  overflow: scroll;
+  overflow-x: scroll;
 }
 .postElement {
   flex-basis: auto;
@@ -56,16 +38,4 @@
   flex-shrink: 0;
   width: 25%;
   padding: 1%;
-}
-@media only screen and (max-width: 767px) {
-  .header {
-    width: 100%;
-    z-index: 3;
-  }
-
-  .container {
-    padding: 15% 5% 15% 5%;
-    margin: 0;
-    width: 100%;
-  }
 }

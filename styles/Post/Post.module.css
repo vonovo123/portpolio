@@ -5,10 +5,6 @@
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   transition: all 0.5s;
-  opacity: 0.5;
-}
-.post.sel {
-  opacity: 1;
 }
 .hide {
   display: none;

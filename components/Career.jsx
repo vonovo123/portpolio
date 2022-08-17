@@ -12,7 +12,7 @@ import rollTransition from "../styles/transition/roll.module.css";
 
 import { useRef } from "react";
 const cx = classNames.bind(styles);
-export default function Career({ view, career, width, careerRef }) {
+export default function Career({ career, width }) {
   const rowData = career[0];
   const [hide, setHide] = useState(false);
   const nodeRef = useRef(null);
@@ -32,13 +32,8 @@ export default function Career({ view, career, width, careerRef }) {
   ];
   const data = [columns, ...rows];
   return (
-    <div
-      className={cx("career", { sel: view === "career" })}
-      id="career"
-      ref={careerRef}
-      data-idx="career"
-    >
-      <Row className={cx("description", { sel: view === "career" })}>
+    <div className={cx("career")}>
+      <Row className={cx("description")}>
         {/* <Chart
                   chartType="Timeline"
                   data={data}
@@ -79,20 +74,20 @@ export default function Career({ view, career, width, careerRef }) {
                   fontWeight: "bold",
                 }}
               >
-                [{dayjs(rowData.from).format("YYYY / M. DD")} -
-                {dayjs(rowData.to).format("YYYY / M. DD")}]
+                [{dayjs(rowData.from).format("YYYY.M.DD")} -
+                {dayjs(rowData.to).format("YYYY.M.DD")}]
               </span>
             </Col>
             <Col span={2}>
               {!hide && (
-                <CaretUpOutlined
+                <CaretDownOutlined
                   onClick={() => {
                     setHide(!hide);
                   }}
                 />
               )}
               {hide && (
-                <CaretDownOutlined
+                <CaretUpOutlined
                   onClick={() => {
                     setHide(!hide);
                   }}
@@ -119,25 +114,22 @@ export default function Career({ view, career, width, careerRef }) {
               </Col>
               {rowData.works.map((work, idx) => {
                 return (
-                  <Col
-                    key={idx}
-                    span={24}
-                    className={cx("descriptionCol", {
-                      sel: view === "career",
-                    })}
-                  >
+                  <Col key={idx} span={24} className={cx("descriptionCol")}>
                     <Row>
                       <Col span={5}>
                         <Row style={{ paddingTop: 15, textAlign: "center" }}>
                           <Col span={24}>
-                            {dayjs(work.from).format("YYYY / M. DD")}
+                            {dayjs(work.from).format("YYYY.M.DD")}
                           </Col>
                           <Col span={24}>
-                            {dayjs(work.to).format("YYYY / M. DD")}
+                            {dayjs(work.to).format("YYYY.M.DD")}
                           </Col>
                         </Row>
                       </Col>
-                      <Col span={14} style={{ textAlign: "left" }}>
+                      <Col
+                        span={14}
+                        style={{ textAlign: "left", paddingTop: 15 }}
+                      >
                         <div>{work.name}</div>
                         <div>{work.description} </div>
                       </Col>

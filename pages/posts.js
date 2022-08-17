@@ -6,20 +6,33 @@ import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
 import classNames from "classnames/bind";
 import BreadCrumb from "../components/BreadCrumb";
-import { Col, Row, Image } from "antd";
-import dayjs from "dayjs";
-import Title from "../components/Title";
 import PostElement from "../components/Post/PostElement";
+import makeObserver from "../utils/Observer";
+import { Col } from "antd";
 
 const cx = classNames.bind(styles);
-export default function Posts({ posts, profile }) {
+export default function Posts({
+  posts,
+  width,
+  setTarget,
+  typeState,
+  viewState,
+  menuState,
+  subMenuState,
+  subViewState,
+  subTitleState,
+}) {
   const router = useRouter();
-  profile = profile[0];
   const devPosts = [...posts, ...posts, ...posts];
-  const [width, setWidth] = useState();
   const devRef = useRef(null);
   const lifeRef = useRef(null);
   const reviewRef = useRef(null);
+  const [type, setType] = typeState;
+  const [menu, setMenu] = menuState;
+  const [subMenu, setSubMenu] = subMenuState;
+  const [view, setView] = viewState;
+  const [subView, setSubView] = subViewState;
+  const [subTitle, setSubTitle] = subTitleState;
   const ref = useMemo(() => {
     return {
       dev: devRef,
@@ -28,165 +41,107 @@ export default function Posts({ posts, profile }) {
     };
   }, [devRef, lifeRef, reviewRef]);
 
-  const headerMenus = [
-    { id: "dev", name: "개발" },
-    { id: "life", name: "일상" },
-    { id: "review", name: "리뷰" },
-  ];
-  const titleMenus = {
-    dev: "개발",
-    life: "일상",
-    review: "리뷰",
-  };
-  const [view, setView] = useState(router.query.menu || "dev");
-  const [breadCrumParams, setBreadCrumParams] = useState([]);
-
-  const handleResize = useCallback(() => {
-    setWidth(window.innerWidth);
-  }, []);
-  const makeElement = useCallback((element) => {
-    return (
-      <div className={cx("postElement")}>
-        <PostElement element={element}></PostElement>;
-      </div>
-    );
-  }, []);
-  useEffect(() => {
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [handleResize]);
-  const navClickEvent = useCallback(
-    (target) => {
-      if (target === "home" || target === "post") {
-        router.push("/");
-      } else {
-        setView(target);
-        window.scrollTo({
-          top: ref[target].current.offsetTop,
-          behavior: "smooth",
-        });
-      }
-    },
-    [ref, router]
-  );
   const goDetail = useCallback(
     (slug) => {
       router.push(`/post/${slug}`);
     },
     [router]
   );
-  useEffect(() => {
-    setBreadCrumParams(["POSTS"]);
+  const goHome = useCallback(
+    (menu) => {
+      setType(null);
+      setSubMenu(null);
+      setSubTitle(null);
+      router.push({ pathname: "/", query: { menu } });
+    },
+    [router]
+  );
+  const makeSubTitle = useCallback((menu) => {
+    let subTitle = null;
+    if (menu === "dev") {
+      subTitle = "웹 개발에 관련된 것들을 포스팅합니다.";
+    } else if (menu === "life") {
+      subTitle = "일상생활에 관련된 것들을 포스팅합니다.";
+    } else if (menu === "review") {
+      subTitle = "경험에 관련된 것들을 포스팅합니다.";
+    }
+    return <Col className={cx("postSubtitle")}>{subTitle}</Col>;
   }, []);
-
+  const makeElement = useCallback((element, idx) => {
+    return (
+      <div className={cx("postElement")} key={idx}>
+        <PostElement element={element}></PostElement>
+      </div>
+    );
+  }, []);
+  //화면진입 //스크롤로 화면변경
+  useEffect(() => {
+    setType("posts");
+    setMenu("post");
+    router.query.menu ? setSubMenu(router.query.menu) : setSubMenu("dev");
+    const option = {
+      rootMargin: "-50% 0% -50% 0%",
+    };
+    const interSectionCallback = (entry) => {
+      const menu = entry.target.dataset.idx;
+      setMenu(null);
+      setSubView(menu);
+    };
+    const io = makeObserver(option, ref, interSectionCallback);
+  }, []);
+  // 메뉴 변경
+  useEffect(() => {
+    if (!menu || menu === "post") return;
+    if (menu === "home") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      setSubMenu("dev");
+    } else {
+      goHome(menu);
+    }
+  }, [menu]);
+  //하위메뉴 변경
+  useEffect(() => {
+    if (!subMenu) return;
+    if (subMenu === "new") {
+      goHome("post");
+      return;
+    } else {
+      window.scrollTo({
+        top: ref[subMenu].current.offsetTop,
+        behavior: "smooth",
+      });
+      setSubView(subMenu);
+    }
+  }, [subMenu]);
+  // 화면 변경
+  useEffect(() => {
+    setSubTitle(makeSubTitle(subView));
+  }, [subView]);
   return (
     <>
-      <div className={styles.wrapper}>
-        <div className={cx("header")}>
-          <Header
-            view={view}
-            navClickEvent={navClickEvent}
-            type={"index"}
-            profile={profile}
-            width={width}
-            menus={headerMenus}
-          />
+      <div className={cx("componentWrapper")} ref={devRef} data-idx="dev">
+        <div className={cx("postWrapper")}>
+          {devPosts.map((post, idx) => {
+            return makeElement(post, idx);
+          })}
         </div>
-        <div className={cx("container", "title")}>
-          <Title view={view} type={view} show={true} menus={titleMenus}></Title>
+      </div>
+      <div className={cx("componentWrapper")} ref={lifeRef} data-idx="life">
+        <div className={cx("postWrapper")}>
+          {devPosts.map((post, idx) => {
+            return makeElement(post, idx);
+          })}
         </div>
-        <div className={cx("container")} ref={devRef}>
-          <div className={cx("postWrapper")}>
-            {devPosts.map((post, idx) => {
-              return makeElement(post);
-            })}
-          </div>
+      </div>
+      <div className={cx("componentWrapper")} ref={reviewRef} data-idx="review">
+        <div className={cx("postWrapper")}>
+          {devPosts.map((post, idx) => {
+            return makeElement(post, idx);
+          })}
         </div>
-        <div className={cx("container")} ref={lifeRef}></div>
-        <div className={cx("container")} ref={reviewRef}></div>
-        {/* <div className={cx("mb20")}>
-            <BreadCrumb params={breadCrumParams}></BreadCrumb>
-          </div> */}
-        {/* <ul className={cx("postWrapper")}>
-            {posts.map((post, idx) => {
-              return (
-                <li key={idx} className={cx("post")}>
-                  <div className={cx("postInner", "inner")}>
-                    <Row
-                      onClick={() => {
-                        goDetail(post.slug);
-                      }}
-                    >
-                      <Col
-                        className={cx("postImageWrapper")}
-                        xl={{ span: 10 }}
-                        lg={{ span: 10 }}
-                        md={{ span: 24 }}
-                        sm={{ span: 24 }}
-                        xs={{ span: 24 }}
-                      >
-                        <Image
-                          src={post.thumbnail.imageUrl}
-                          alt={post.thumbnail.alt}
-                          className={cx("postImage")}
-                          preview={false}
-                        />
-                      </Col>
-                      <Col
-                        xl={{ span: 14 }}
-                        lg={{ span: 14 }}
-                        md={{ span: 24 }}
-                        sm={{ span: 24 }}
-                        xs={{ span: 24 }}
-                        className={cx("postContent")}
-                      >
-                        <Row>
-                          <Col span={24} className={cx("postContentText")}>
-                            {width >= 767 && (
-                              <div className={cx("postInfoWrapper")}>
-                                <span className={cx("postDate")}>
-                                  {dayjs(post.createdAt).format(
-                                    "MMMM DD / YYYY "
-                                  )}
-                                </span>
-                              </div>
-                            )}
-                            <div className={cx("postTitleWrapper")}>
-                              <div className={cx("postTitle")}>
-                                {post.title}
-                              </div>
-                            </div>
-                            <div className={cx("postShort")}>
-                              {post.shortContent}
-                            </div>
-                          </Col>
-                          <Col className={cx("postTagWrapper")} span={24}>
-                            <Row>
-                              <Col span={24}>
-                                <Row>
-                                  {post.tag.map((tag, idx) => (
-                                    <Col
-                                      className={cx("postCategory")}
-                                      span={4}
-                                      offset={1}
-                                      key={idx}
-                                    >
-                                      {tag.title}
-                                    </Col>
-                                  ))}
-                                </Row>
-                              </Col>
-                            </Row>
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                  </div>
-                </li>
-              );
-            })}
-          </ul> */}
       </div>
       <Footer />
     </>
@@ -200,8 +155,8 @@ export async function getStaticProps() {
   const profile = await sanityService.getProfile();
   return {
     props: {
-      posts,
       profile,
+      posts,
     },
   };
 }
