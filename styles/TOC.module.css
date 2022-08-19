@@ -1,10 +1,7 @@
 .toc {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 
 .read > div {
@@ -20,7 +17,7 @@
   border-radius: 5px;
   display: flex;
   width: 150px;
-  top: 15%;
+  top: 50px;
   z-index: 5;
   background-color: white;
   transition: all 1s;
@@ -44,10 +41,8 @@
   position: fixed;
   z-index: 2;
   width: 270px;
-  top: 5%;
-  height: 95%;
+  height: 100%;
   right: -290px;
-  padding: 25px;
   padding-left: 20px;
   padding-right: 0;
   border: 3px solid var(--disabled-color);
@@ -68,18 +63,16 @@
   width: 290px;
   left: -40px;
   display: flex;
-  transition: right 0s;
-  top: 50px;
+  transition: right 0.5s;
+  top: 40px;
 }
 
 .tocWrapper .tocTitleWrapper.open {
-  transition: right 1s;
   right: 0px;
 }
 .tocContentWrapper {
-  margin-top: 60px;
+  margin-top: 40px;
   overflow-y: scroll;
-  min-width: 90%;
 }
 .orderedList {
   padding-left: 25px;
@@ -90,8 +83,8 @@
   margin-bottom: 15px;
 }
 .list.lv1 {
-  font-weight: bold;
   font-size: 20px;
+  font-weight: bold;
 }
 
 .list.lv2 {
@@ -101,15 +94,15 @@
 
 .list.lv3 {
   font-size: 15px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .list.lv4 {
   font-size: 13px;
-  font-weight: 200;
+  font-weight: 300;
 }
 
 .list.lv5 {
   font-size: 10px;
-  font-weight: 100;
+  font-weight: 200;
 }

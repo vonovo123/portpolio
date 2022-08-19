@@ -19,7 +19,7 @@ export default function PostElement({ element }) {
         goDetail(element.slug);
       }}
     >
-      <Col span={24}>
+      <Col span={24} className={cx("postImageWrapper")}>
         <Image
           src={element.thumbnail.imageUrl}
           alt={element.thumbnail.alt}

@@ -5,6 +5,8 @@
   --background-color-09: rgba(255, 255, 255, 0.9);
   --font-color: #34495e;
   --header-font-color: #ffffff;
+  --fold-btn-color: #ff7d8c;
+  --fold-btn-font-color: #ffffff;
   --background-color-about: #ffed4d;
   background-color: var(--background-color);
 }
@@ -32,58 +34,82 @@
 }
 .header {
   position: fixed;
-  display: flex;
   width: 300px;
   height: 100%;
   z-index: 3;
-  background-color: var(--activated-color);
+  left: 0px;
   opacity: 0.9;
+  transition: all 0.5s;
+  padding-top: 30px;
+  padding-left: 70px;
+  background-color: var(--activated-color);
 }
-.headerInner {
-  width: 80%;
+.header.fold {
+  left: -290px;
 }
 .headerBtn {
-  width: 20%;
-  height: 100px;
-  color: var(--background-color);
-  padding: 10px 10px 0px 0px;
+  left: 300px;
+  position: fixed;
+  z-index: 3;
+  width: 70px;
+  height: 70px;
+  transition: all 0.5s;
+  padding-top: 20px;
+  background-color: var(--fold-btn-color);
+  color: var(--fold-btn-font-color);
   font-weight: bold;
   font-size: 15px;
-  text-align: right;
+  text-align: center;
+  border-bottom-right-radius: 5px;
 }
-.title {
-  position: fixed;
-  width: 100%;
-  padding: 30px;
-  margin-left: 300px;
-  background-color: var(--background-color-09);
-  z-index: 2;
+.headerBtn.fold {
+  left: 10px;
 }
+
 .about {
   position: fixed;
-  width: 300px;
+  width: 350px;
   z-index: 4;
-  transition: 0.5s;
+  transition: all 0.5s;
   bottom: -500px;
+}
+.about.fold {
+  bottom: -800px;
 }
 .about.show {
   bottom: -100px;
 }
-.container {
+
+.contentWrapper {
+  transition: all 0.5s;
   width: 100%;
   padding-left: 300px;
 }
+.contentWrapper.fold {
+  width: 100%;
+  padding-left: 60px;
+}
 
+.title {
+  position: fixed;
+  width: 100%;
+  padding: 5px 50px 5px 90px;
+  background-color: var(--background-color-09);
+  z-index: 2;
+}
 @media only screen and (max-width: 767px) {
   .header {
-    width: 200px;
   }
-  .title {
-    margin-left: 0px;
-  }
-  .container {
+  .contentWrapper {
     padding-left: 0px;
   }
+  .contentWrapper.fold {
+    padding-left: 0px;
+  }
+  .title {
+    padding-left: 90px;
+  }
+
   .about {
     width: 100%;
   }

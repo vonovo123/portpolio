@@ -6,55 +6,11 @@ import Title from "../Title";
 import { Row, Col } from "antd";
 import PostElement from "./PostElement";
 const cx = classNames.bind(styles);
-export default function PostPreview({ posts, width }) {
+export default function PostPreview({ posts, windowWidth, contentWidth }) {
   const makeElement = useCallback((element) => {
     return <PostElement element={element}></PostElement>;
   }, []);
   const [postList, setPostsList] = useState([...posts]);
-
-  // const changeListType = () => {
-  //   if (listType === "slide") {
-  //     setListType("list");
-  //     arrowRef.current.style.transition = `${0.5}s ease-out`;
-  //     arrowRef.current.style.transform = `translate3d(${-300}px, 0, 0)`;
-  //     postsRef.current.style.transition = `${0}s ease-out`;
-  //     postsRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
-  //     postsRef.current.childNodes.forEach((child, idx) => {
-  //       if (idx === 0) return;
-  //       if (idx === 1) return;
-  //       if (idx === 6) return;
-  //       child.style.transform = `translate3d(${-width * (idx - 1)}px,0, 0)`;
-  //       setTimeout(() => {
-  //         child.style.transition = `${0.5}s ease-out`;
-  //         child.style.transform = `translate3d(0,0,0)`;
-  //       }, 50 * (idx - 1));
-  //     });
-  //   } else {
-  //     postsRef.current.childNodes.forEach((child, idx) => {
-  //       if (idx === 0) return;
-  //       if (idx === 1) return;
-  //       if (idx === 6) return;
-  //       setTimeout(() => {
-  //         child.style.transform = `translate3d(${-width * (idx - 1)}px,0, 0)`;
-  //       }, 50 * (6 - idx));
-  //     });
-
-  //     setTimeout(() => {
-  //       postsRef.current.childNodes.forEach((child, idx) => {
-  //         if (idx === 0) return;
-  //         if (idx === 1) return;
-  //         if (idx === 6) return;
-  //         child.style.transition = `none`;
-  //         child.style.transform = `translate3d(0,0, 0)`;
-  //       });
-  //       setListType("slide");
-  //       arrowRef.current.style.transform = `translate3d(${0}px, 0, 0)`;
-  //       postsRef.current.style.transform = `translate3d(${
-  //         -postElWidth * postIndex
-  //       }px, 0, 0)`;
-  //     }, 500);
-  //   }
-  // };
 
   return (
     <div className={cx("post", "mb10")}>
@@ -62,7 +18,8 @@ export default function PostPreview({ posts, width }) {
       <Carousel
         slideData={postList}
         makeElement={makeElement}
-        windowWidth={width}
+        windowWidth={windowWidth}
+        contentWidth={contentWidth}
       ></Carousel>
     </div>
   );

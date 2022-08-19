@@ -1,6 +1,5 @@
 .header {
   color: var(--background-color);
-  padding: 50px 0 0 0;
   width: 100%;
   transition: height 0.5s;
   font-weight: bold;
@@ -8,17 +7,12 @@
 .title {
   font-size: 25px;
   font-weight: bold;
-  margin-left: 70px;
   margin-bottom: 50px;
   cursor: pointer;
 }
-.navWrapper {
-  margin-left: 70px;
-  margin-bottom: 70px;
-}
 .subNavWrapper {
-  margin-left: 60px;
-  margin-bottom: 50px;
+  margin-left: 20px;
+  margin-bottom: 30px;
 }
 
 .nav {
@@ -27,26 +21,13 @@
   font-weight: bold;
   transition: all 0.5s;
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
-.nav.back {
-  font-size: 20px;
-}
+
 .title.sel,
 .nav.sel {
   color: #ffed4d;
 }
 
 @media only screen and (max-width: 767px) {
-  .header {
-  }
-  .title {
-    margin-left: 30px;
-  }
-  .navWrapper {
-    margin-left: 40px;
-  }
-  .subNavWrapper {
-    margin-left: 10px;
-  }
 }

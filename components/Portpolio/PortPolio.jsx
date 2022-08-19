@@ -6,7 +6,13 @@ import Carousel from "../Carousel/Carousel";
 
 const cx = classNames.bind(styles);
 
-export default function Portpolio({ portpolios, width, menu }) {
+export default function Portpolio({
+  portpolios,
+  windowWidth,
+  contentWidth,
+  menu,
+  headerFold,
+}) {
   let html = [],
     vanillaJs = [],
     vueNuxt = [],
@@ -56,7 +62,9 @@ export default function Portpolio({ portpolios, width, menu }) {
       <Carousel
         slideData={target}
         makeElement={makeElement}
-        windowWidth={width}
+        windowWidth={windowWidth}
+        contentWidth={contentWidth}
+        headerFold={headerFold}
       ></Carousel>
     </div>
   );

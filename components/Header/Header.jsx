@@ -7,12 +7,10 @@ export default function Header({
   subMenuState,
   subViewState,
   profile,
-  width,
   menus,
 }) {
   return (
     <>
-      {/* {width >= 767 && ( */}
       <Desktop
         title={"개발블로그"}
         menuState={menuState}
@@ -22,16 +20,6 @@ export default function Header({
         profile={profile}
         menus={menus}
       ></Desktop>
-      {/* )} */}
-      {/* {width < 767 && (
-        <Mobile
-          view={view}
-          setTarget={setTarget}
-          title={title}
-          menus={menus}
-          profile={profile}
-        ></Mobile>
-      )} */}
     </>
   );
 }

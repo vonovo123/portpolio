@@ -16,7 +16,8 @@ export default function Home({
   posts,
   portpolios,
   career,
-  width,
+  windowWidth,
+  contentWidth,
   typeState,
   menuState,
   viewState,
@@ -73,7 +74,6 @@ export default function Home({
   }, []);
   const goPosts = useCallback(
     (menu) => {
-      console.log(menu);
       setType(null);
       setMenu(null);
       setSubView(null);
@@ -138,7 +138,11 @@ export default function Home({
   return (
     <>
       <div ref={postRef} data-idx="post" className={cx("componentWrapper")}>
-        <Post posts={posts} width={width} show={true} />
+        <Post
+          posts={posts}
+          windowWidth={windowWidth}
+          contentWidth={contentWidth}
+        />
       </div>
       <div
         ref={portRef}
@@ -147,13 +151,17 @@ export default function Home({
       >
         <PortPolio
           portpolios={portpolios}
-          width={width}
-          show={true}
+          windowWidth={windowWidth}
+          contentWidth={contentWidth}
           menu={portpolioMenu}
         />
       </div>
       <div ref={careerRef} data-idx="career" className={cx("componentWrapper")}>
-        <Career career={career} width={width} />
+        <Career
+          career={career}
+          windowWidth={windowWidth}
+          contentWidth={contentWidth}
+        />
       </div>
       <Footer />
     </>

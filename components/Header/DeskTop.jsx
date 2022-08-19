@@ -30,37 +30,35 @@ export default function Desktop({
         {title}
       </Col>
       <Col span={24} className={cx("navWrapper")}>
-        <div>
-          {menus.map((menuObj, idx) => (
-            <div key={idx} span={24}>
-              <div
-                className={cx("nav", { sel: view === menuObj.id })}
-                onClick={(e) => {
-                  setMenu(menuObj.id);
-                }}
-              >
-                {menuObj.name}
-              </div>
-              <div className={cx("subNavWrapper")}>
-                {menuObj.sub &&
-                  view === menuObj.id &&
-                  menuObj.sub.map((subMenuObj, idx) => (
-                    <div
-                      key={idx}
-                      className={cx("nav", {
-                        sel: subView === subMenuObj.id,
-                      })}
-                      onClick={(e) => {
-                        setSubMenu(subMenuObj.id);
-                      }}
-                    >
-                      {subMenuObj.name}
-                    </div>
-                  ))}
-              </div>
+        {menus.map((menuObj, idx) => (
+          <div key={idx} span={24}>
+            <div
+              className={cx("nav", { sel: view === menuObj.id })}
+              onClick={(e) => {
+                setMenu(menuObj.id);
+              }}
+            >
+              {menuObj.name}
             </div>
-          ))}
-        </div>
+            <div className={cx("subNavWrapper")}>
+              {menuObj.sub &&
+                view === menuObj.id &&
+                menuObj.sub.map((subMenuObj, idx) => (
+                  <div
+                    key={idx}
+                    className={cx("nav", {
+                      sel: subView === subMenuObj.id,
+                    })}
+                    onClick={(e) => {
+                      setSubMenu(subMenuObj.id);
+                    }}
+                  >
+                    {subMenuObj.name}
+                  </div>
+                ))}
+            </div>
+          </div>
+        ))}
       </Col>
     </Row>
   );

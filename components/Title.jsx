@@ -19,12 +19,12 @@ export default function Title({
       <Col className={cx("titleText")} span={24}>
         <Row>
           {titleMenus[type] && titleMenus[type][view] && (
-            <Col>{titleMenus[type][view]}</Col>
+            <Col span={24}>{titleMenus[type][view]}</Col>
           )}
           {titleMenus[type] && titleMenus[type][subView] && (
-            <Col>{titleMenus[type][subView]}</Col>
+            <Col span={24}>{titleMenus[type][subView]}</Col>
           )}
-          {subTitle && subTitle}
+          <Col span={24}>{subTitle && subTitle}</Col>
         </Row>
       </Col>
     </Row>

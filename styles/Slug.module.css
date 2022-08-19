@@ -19,32 +19,12 @@
 }
 .em {
   font-style: normal;
-  background-color: var(--activated-color);
-  color: white;
-  padding: 4px;
-  border-radius: 3px;
-}
-.slug {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-  width: 100%;
-  overflow: hidden;
+  font-size: 15px;
+  font-weight: bold;
+  color: grey;
 }
 .wrapper {
-  width: 100%;
-  background-image: url(../assets/pattern.png);
   padding-top: 80px;
-}
-.container {
-  width: 60%;
-  margin-left: 20%;
-  margin-right: 20%;
-  min-height: 1100px;
-  border: 3px solid var(--disabled-color);
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 1);
-  overflow-x: hidden;
-  position: relative;
 }
 
 .contentHeaderWrapper {

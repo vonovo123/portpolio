@@ -46,7 +46,7 @@ export default function PortPolioElement({ element }) {
                 />
               ))}
             </div>
-            <Col span={24} className={cx()}>
+            <Col span={24} className={cx("imageWrapper")}>
               <Image
                 src={thumbnail.imageUrl}
                 alt={thumbnail.alt}

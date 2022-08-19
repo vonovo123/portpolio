@@ -14,18 +14,6 @@ export default function TableOfContents({
   fixed,
 }) {
   const titleRef = useRef(null);
-  const swing = useRef(null);
-  useEffect(() => {
-    let flag = true;
-    if (!openToc) {
-      on(swing, titleRef);
-    } else {
-      off(swing, titleRef);
-    }
-    return () => {
-      clear(swing);
-    };
-  }, [openToc]);
   const getChildrenText = (heading) => {
     return heading.el.innerText;
   };

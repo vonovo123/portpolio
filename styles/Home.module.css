@@ -1,11 +1,17 @@
 .componentWrapper {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 150px;
+  padding-bottom: 50px;
+  width: 100%;
 }
 .postSubtitle {
   font-size: 15px;
-  padding: 10px;
-  margin-left: 5px;
   color: var(--disabled-color);
   cursor: pointer;
+}
+
+/* md < */
+@media only screen and (max-width: 767px) {
+  .componentWrapper {
+    /* padding-top: 20%; */
+  }
 }

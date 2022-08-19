@@ -59,11 +59,11 @@ export default function Posts({
   const makeSubTitle = useCallback((menu) => {
     let subTitle = null;
     if (menu === "dev") {
-      subTitle = "웹 개발에 관련된 것들을 포스팅합니다.";
+      subTitle = "웹 개발에 대한 글을 기록하는 곳입니다..";
     } else if (menu === "life") {
-      subTitle = "일상생활에 관련된 것들을 포스팅합니다.";
+      subTitle = "일상생활을 기록하는 곳입니다.";
     } else if (menu === "review") {
-      subTitle = "경험에 관련된 것들을 포스팅합니다.";
+      subTitle = "즐거운 경험을 기록하는 곳입니다.";
     }
     return <Col className={cx("postSubtitle")}>{subTitle}</Col>;
   }, []);

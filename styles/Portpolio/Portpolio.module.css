@@ -3,17 +3,5 @@
   --activated-color: #34495e;
   transition: all 0.5s;
   padding: 10px;
-}
-
-.header {
-  margin-bottom: 15px;
-  margin-left: 84%;
-}
-
-.hide {
-  display: none;
-}
-
-.body {
-  margin: 30px;
+  width: 100%;
 }

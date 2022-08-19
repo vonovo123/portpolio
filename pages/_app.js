@@ -9,7 +9,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import About from "../components/About";
 import { Col, Row } from "antd";
-import { CaretLeftOutlined, LeftOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 function MyApp({ Component, pageProps }) {
   //page 타임
@@ -24,8 +23,12 @@ function MyApp({ Component, pageProps }) {
   const subViewState = useState(null);
   const subTitleState = useState(null);
   // 뷰포트 화면 크기
-  const [width, setWidth] = useState();
+  const [windowWidth, setWindowWidth] = useState(null);
+  const [contentWidth, setContentWidth] = useState();
   const [showAbout, setShowAbout] = useState(false);
+  const [headerFold, setHeaderFold] = useState(false);
+
+  const contentRef = useRef(null);
   const titleMenus = useMemo(
     () => ({
       home: {
@@ -68,59 +71,74 @@ function MyApp({ Component, pageProps }) {
     ];
   }, []);
   const handleResize = useCallback(() => {
-    setWidth(window.innerWidth);
+    setWindowWidth(window.innerWidth);
+    setContentWidth(contentRef.current.getBoundingClientRect().width);
   }, []);
   useEffect(() => {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
+  useEffect(() => {
+    setTimeout(() => {
+      console.log(contentRef.current.getBoundingClientRect().width);
+      setContentWidth(contentRef.current.getBoundingClientRect().width);
+    }, 500);
+  }, [headerFold]);
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("header")}>
-        <div className={cx("headerInner")}>
-          <Header
-            menuState={menuState}
-            subMenuState={subMenuState}
-            viewState={viewState}
-            subViewState={subViewState}
-            profile={pageProps.profile[0]}
-            width={width}
-            menus={headerMenus}
-          />
-        </div>
-        <div className={cx("headerBtn")}>{"접기"}</div>
+      <div className={cx("header", { fold: headerFold })}>
+        <Header
+          menuState={menuState}
+          subMenuState={subMenuState}
+          viewState={viewState}
+          subViewState={subViewState}
+          profile={pageProps.profile[0]}
+          menus={headerMenus}
+        />
       </div>
       <div
-        className={cx("about", { show: showAbout })}
+        className={cx("headerBtn", { fold: headerFold })}
+        onClick={() => {
+          setHeaderFold(!headerFold);
+        }}
+      >
+        {headerFold ? "펼치기" : "접기"}
+      </div>
+      <div
+        className={cx("about", { show: showAbout }, { fold: headerFold })}
         onClick={(e) => {
           setShowAbout(!showAbout);
         }}
       >
         <About profile={pageProps.profile[0]} show={showAbout} />
       </div>
-      <div className={cx("title")}>
-        <Title
-          titleMenus={titleMenus}
-          viewState={viewState}
-          subViewState={subViewState}
-          typeState={typeState}
-          subTitleState={subTitleState}
-        ></Title>
-      </div>
-      <div className={cx("container")}>
-        <Component
-          {...pageProps}
-          width={width}
-          typeState={typeState}
-          menuState={menuState}
-          viewState={viewState}
-          subMenuState={subMenuState}
-          subViewState={subViewState}
-          subTitleState={subTitleState}
-        />
+      <div className={cx("contentWrapper", { fold: headerFold })}>
+        <div className={cx("content")} ref={contentRef}>
+          <div className={cx("title")}>
+            <Title
+              titleMenus={titleMenus}
+              viewState={viewState}
+              subViewState={subViewState}
+              typeState={typeState}
+              subTitleState={subTitleState}
+            ></Title>
+          </div>
+          <Component
+            {...pageProps}
+            windowWidth={windowWidth}
+            contentWidth={contentWidth}
+            typeState={typeState}
+            menuState={menuState}
+            viewState={viewState}
+            subMenuState={subMenuState}
+            subViewState={subViewState}
+            subTitleState={subTitleState}
+          />
+        </div>
       </div>
     </div>
   );
 }
+
 export default MyApp;

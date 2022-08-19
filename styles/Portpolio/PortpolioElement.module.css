@@ -16,6 +16,11 @@
 .skills {
   height: 30px;
 }
+.imageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .elementImage {
   border-radius: 8px;
   width: 100%;
