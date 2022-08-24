@@ -10,12 +10,14 @@ import Footer from "../components/Footer";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import GitProfileService from "../services/GitProfileService";
 import _ from "lodash";
-import { Col } from "antd";
+import { Col, Row } from "antd";
 import { useRouter } from "next/router";
+import Menus from "../components/Menus";
 export default function Home({
   posts,
   portpolios,
   career,
+  home,
   windowWidth,
   contentWidth,
   typeState,
@@ -23,10 +25,10 @@ export default function Home({
   viewState,
   subMenuState,
   subViewState,
+  mainTitleState,
   subTitleState,
 }) {
   const router = useRouter();
-  const [portpolioMenu, setPortpolioMenu] = useState("ALL");
   const postRef = useRef(null);
   const portRef = useRef(null);
   const careerRef = useRef(null);
@@ -35,8 +37,8 @@ export default function Home({
   const [subMenu, setSubMenu] = subMenuState;
   const [view, setView] = viewState;
   const [subView, setSubView] = subViewState;
+  const [mainTitle, setMainTitle] = mainTitleState;
   const [subTitle, setSubTitle] = subTitleState;
-  const [portpoloSubMenuBefore, setPortpoloSubMenuBefore] = useState(null);
   const ref = useMemo(() => {
     return {
       post: postRef,
@@ -44,6 +46,39 @@ export default function Home({
       career: careerRef,
     };
   }, [postRef, portRef, careerRef]);
+  const portpoliMenu = [
+    { id: "pub", name: "퍼블리싱" },
+    { id: "js", name: "자바스크립트" },
+    { id: "vue", name: "뷰" },
+    { id: "react", name: "리엑트" },
+  ];
+  const makeMainTitle = useCallback((menu, subMenu) => {
+    let title = null;
+    if (menu === "post") {
+      title = (
+        <>
+          <div className={cx("mainTitleText")}>{"최신 포스트"}</div>
+        </>
+      );
+    } else if (menu === "portpolio") {
+      title = (
+        <>
+          <Menus
+            menus={portpoliMenu}
+            menu={subMenu}
+            setMenu={setSubMenu}
+          ></Menus>
+        </>
+      );
+    } else if (menu === "career") {
+      title = (
+        <Col span={24} className={cx("mainTitleText")}>
+          {"커리어"}
+        </Col>
+      );
+    }
+    return <div>{title}</div>;
+  }, []);
   const makeSubTitle = useCallback((menu, subMenu) => {
     let subTitle = null;
     if (menu === "post") {
@@ -70,7 +105,7 @@ export default function Home({
     } else if (menu === "career") {
       subTitle = "경력 및 이력사항 입니다.";
     }
-    return <Col className={cx("postSubtitle")}>{subTitle}</Col>;
+    return <div className={cx("subTitle")}>{subTitle}</div>;
   }, []);
   const goPosts = useCallback(
     (menu) => {
@@ -87,7 +122,7 @@ export default function Home({
     setType("home");
     router.query.menu ? setMenu(router.query.view) : setMenu("post");
     const option = {
-      rootMargin: "-50% 0% -50% 0%",
+      rootMargin: "-20% 0% -80% 0%",
     };
     const interSectionCallback = (entry) => {
       const menu = entry.target.dataset.idx;
@@ -114,26 +149,18 @@ export default function Home({
   }, [menu]);
   //하위메뉴 변경
   useEffect(() => {
-    if (!subMenu) return;
-    if (view === "post" && subMenu !== "new") {
-      goPosts(subMenu);
-    } else if (view === "portpolio") {
-      setSubView(subMenu);
-      setPortpoloSubMenuBefore(subMenu);
-      setPortpolioMenu(subMenu);
-      setSubTitle(makeSubTitle(view, subMenu));
+    setSubView(subMenu);
+    if (view === "portpolio") {
+      setMainTitle(makeMainTitle(view, subMenu));
     }
   }, [subMenu]);
   // 화면 변경
   useEffect(() => {
-    if (view === "post") {
-      setSubView("new");
-    } else if (view === "portpolio") {
-      !portpoloSubMenuBefore
-        ? setSubView("all")
-        : setSubView(portpoloSubMenuBefore);
+    let subView = null;
+    setMainTitle(makeMainTitle(view, subMenu));
+    if (view === "post" || view == "career") {
+      setSubMenu(null);
     }
-    setSubTitle(makeSubTitle(view, subMenu));
   }, [view]);
   return (
     <>
@@ -142,6 +169,16 @@ export default function Home({
           posts={posts}
           windowWidth={windowWidth}
           contentWidth={contentWidth}
+          subTitle={
+            <>
+              <div className={cx("subTitle")}>
+                <div className={cx("subText")}>
+                  {"최근 5개의 포스트만 표시됩니다."}
+                </div>
+                <div className={cx("subText")}>{"전체보기 >"}</div>
+              </div>
+            </>
+          }
         />
       </div>
       <div
@@ -153,7 +190,7 @@ export default function Home({
           portpolios={portpolios}
           windowWidth={windowWidth}
           contentWidth={contentWidth}
-          menu={portpolioMenu}
+          subMenuState={subMenuState}
         />
       </div>
       <div ref={careerRef} data-idx="career" className={cx("componentWrapper")}>

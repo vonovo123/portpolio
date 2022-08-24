@@ -1,5 +1,7 @@
-.titleText {
-  font-size: 25px;
-  font-weight: bold;
-  color: var(--activated-color);
+.titleWrapper {
+  height: 100%;
+  color: var(--header-font-color);
+}
+.subTitle {
+  margin-left: 60px;
 }

@@ -1,8 +1,10 @@
 import styles from "../../styles/Portpolio/Portpolio.module.css";
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PortPolioElement from "./PortPolioElement";
 import Carousel from "../Carousel/Carousel";
+import BreadCrumb from "../BreadCrumb";
+import makeObserver from "../../utils/Observer";
 
 const cx = classNames.bind(styles);
 
@@ -10,62 +12,89 @@ export default function Portpolio({
   portpolios,
   windowWidth,
   contentWidth,
-  menu,
+  subMenuState,
   headerFold,
 }) {
-  let html = [],
-    vanillaJs = [],
-    vueNuxt = [],
-    reactNext = [];
+  const [subMenu, setSubMenu] = subMenuState;
+  const portArr = {
+    pub: { name: "퍼블리싱", value: [], ref: useRef(null) },
+    js: { name: "자바스크립트", value: [], ref: useRef(null) },
+    vue: { name: "뷰", value: [], ref: useRef(null) },
+    react: { name: "리엑트", value: [], ref: useRef(null) },
+  };
   portpolios.forEach((portpolio) => {
     if (portpolio.category.type === "html/css") {
-      html.push({ ...portpolio });
+      portArr.pub.value.push({ ...portpolio });
     } else if (portpolio.category.type === "vanillaJs") {
-      vanillaJs.push({ ...portpolio });
+      portArr.js.value.push({ ...portpolio });
     } else if (portpolio.category.type === "vueNuxt") {
-      vueNuxt.push({ ...portpolio });
+      portArr.vue.value.push({ ...portpolio });
     } else if (portpolio.category.type === "reactNext") {
-      reactNext.push({ ...portpolio });
+      portArr.react.value.push({ ...portpolio });
     }
   });
-  const [target, setTarget] = useState([
-    ...html,
-    ...vanillaJs,
-    ...vueNuxt,
-    ...reactNext,
-  ]);
+
   const makeElement = (element) => {
     return <PortPolioElement element={element}></PortPolioElement>;
   };
 
-  useEffect(() => {
-    switch (menu) {
+  const makeSubTitle = useCallback((subMenu) => {
+    let subTitle = null;
+    let text = null;
+    switch (subMenu) {
       case "pub":
-        setTarget([...html]);
+        text = "HTML/CSS";
         break;
       case "js":
-        setTarget([...vanillaJs]);
+        text = "JAVASCRIPT";
         break;
       case "vue":
-        setTarget([...vueNuxt]);
+        text = "VUE.JS";
         break;
       case "react":
-        setTarget([...reactNext]);
+        text = "REACT.JS";
         break;
       default:
-        setTarget([...html, ...vanillaJs, ...vueNuxt, ...reactNext]);
-        break;
+        text = "프론트엔드 언어 및 Framework";
     }
-  }, [menu]);
+    subTitle = `${text}  를(을) 활용한 토이프로젝트입니다.`;
+    return subTitle;
+  });
+  useEffect(() => {
+    const option = {
+      rootMargin: "-20% 0% -80% 0%",
+    };
+    const interSectionCallback = (entry) => {
+      const menu = entry.target.dataset.idx;
+      setSubMenu(menu);
+      //setView(menu);
+    };
+    const ref = {};
+    Object.entries(portArr).map(([key, port], idx) => {
+      ref[port.name] = port.ref;
+    });
+    const io = makeObserver(option, ref, interSectionCallback);
+  }, []);
   return (
-    <div className={cx("portpolio")}>
-      <Carousel
-        slideData={target}
-        makeElement={makeElement}
-        windowWidth={windowWidth}
-        contentWidth={contentWidth}
-        headerFold={headerFold}
-      ></Carousel>
+    <div className={cx("portpolioWrapper")}>
+      {Object.entries(portArr).map(([key, port], idx) => (
+        <div
+          className={cx("portpolio")}
+          key={idx}
+          ref={port.ref}
+          data-idx={key}
+        >
+          {/* <BreadCrumb params={["포트폴리오", port.name]}></BreadCrumb> */}
+          {makeSubTitle(key)}
+          <Carousel
+            data={port.value}
+            makeElement={makeElement}
+            windowWidth={windowWidth}
+            contentWidth={contentWidth}
+            headerFold={headerFold}
+          ></Carousel>
+        </div>
+      ))}
     </div>
   );
 }

@@ -1,15 +1,17 @@
 .career {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
+  background-color: var(--background-color);
   color: var(--activated-color);
-  min-height: 500px;
-  padding: 10px;
+  padding-top: 20px;
+  min-height: 700px;
+  border-radius: 8px;
 }
 
 .description {
-  width: 100%;
+  margin: 50px;
   font-weight: bold;
   font-size: 15px;
+  background-color: var(--background-color);
+  border-radius: 8px;
 }
 .descriptionHeader {
   padding: 10px;

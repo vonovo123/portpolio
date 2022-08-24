@@ -31,7 +31,7 @@ export default function PortPolioElement({ element }) {
     setDetail(!detail);
   }, [detail]);
   return (
-    <div>
+    <div className={cx("wrapper")}>
       <div className={cx("elementWrapper")}>
         <div className={cx("elementInnerWrapper")} ref={elRef}>
           <Row className={cx("element")}>

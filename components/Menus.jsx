@@ -7,7 +7,7 @@ import fadeTransition from "../styles/transition/fade.module.css";
 import { useRef, useState } from "react";
 const cx = classNames.bind(styles);
 
-export default function Menus({ menus, setMenu, menu, changeMenu }) {
+export default function Menus({ menus, menu, setMenu }) {
   const nodeRef = useRef(null);
   const [showMenuList, setShowMenuList] = useState(false);
   return (
@@ -18,7 +18,9 @@ export default function Menus({ menus, setMenu, menu, changeMenu }) {
           setShowMenuList(!showMenuList);
         }}
       >
-        <div className={cx("selMenuText")}>{menu}</div>
+        <div className={cx("selMenuText")}>
+          {menu && menus.find((el) => el.id === menu).name}
+        </div>
         {!showMenuList && <CaretDownOutlined className={cx("selMenuArrow")} />}
         {showMenuList && <CaretUpOutlined className={cx("selMenuArrow")} />}
       </div>
@@ -36,13 +38,13 @@ export default function Menus({ menus, setMenu, menu, changeMenu }) {
               <Col
                 key={idx}
                 span={24}
-                className={cx("menu", { sel: option === menu })}
+                className={cx("menu", { sel: option.id === menu })}
                 onClick={() => {
-                  setMenu(menus[idx]);
+                  setMenu(option.id);
                   setShowMenuList(false);
                 }}
               >
-                {option}
+                {option.name}
               </Col>
             ))}
           </Row>

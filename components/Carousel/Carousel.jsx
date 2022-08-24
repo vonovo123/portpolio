@@ -3,13 +3,14 @@ import { useCallback, useState, useEffect, useRef } from "react";
 import classNames from "classnames/bind";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import styles from "../../styles/Carousel/Carousel.module.css";
-import Dots from "./Dots";
+import Nav from "./Nav";
 const cx = classNames.bind(styles);
 export default function Carousel({
-  slideData,
+  data,
   makeElement,
   windowWidth,
   contentWidth,
+  infinite,
 }) {
   const slideRef = useRef(null);
   const [size, setSize] = useState(0);
@@ -18,10 +19,8 @@ export default function Carousel({
   const [width, setWidth] = useState(0);
   const [touchStartTime, setTouchStartTime] = useState(null);
   const [touchPosition, setTouchPosition] = useState(null);
-  let slideEffect = useCallback((slideWidth, size) => {}, [limitSize]);
   useEffect(() => {
-    console.log("change");
-    let size = slideData.length;
+    let size = data.length;
     const { width } = slideRef.current
       .getElementsByTagName("div")[0]
       .getBoundingClientRect();
@@ -46,10 +45,9 @@ export default function Carousel({
     setLimitSize(limitSize);
     setSize(size);
     setIndex(size);
-  }, [slideData, contentWidth]);
-  useEffect(() => {}, [width]);
+  }, [data, contentWidth]);
 
-  const moveSlide = useCallback(
+  const move = useCallback(
     (dir) => {
       const nextIdx = index + dir;
       slideRef.current.style.transition = `${0.5}s ease-out`;
@@ -86,56 +84,16 @@ export default function Carousel({
       if (dx === 0) {
         return;
       }
-      dx > 0 ? moveSlide(-1) : moveSlide(1);
+      dx > 0 ? move(-1) : move(1);
     },
-    [moveSlide, touchPosition]
+    [move, touchPosition]
   );
   return (
     <>
-      {size >= limitSize && (
-        <div className={cx("navigation")}>
-          {windowWidth < 767 && (
-            <div className={cx("arrow")}>
-              {
-                <LeftCircleOutlined
-                  onClick={() => {
-                    moveSlide(-1);
-                  }}
-                />
-              }
-            </div>
-          )}
-          <div className={cx("dotsWrapper")}>
-            <Dots index={index} size={size}></Dots>
-          </div>
-          {windowWidth < 767 && (
-            <div className={cx("arrow")}>
-              {
-                <RightCircleOutlined
-                  onClick={() => {
-                    moveSlide(1);
-                  }}
-                />
-              }
-            </div>
-          )}
-        </div>
-      )}
       <div className={cx("carouselWrapper")}>
-        {size >= limitSize && windowWidth > 767 && (
-          <div className={cx("arrow")} align="left">
-            {
-              <LeftCircleOutlined
-                onClick={() => {
-                  moveSlide(-1);
-                }}
-              />
-            }
-          </div>
-        )}
         <div className={cx("carousel")}>
           <Row
-            className={cx("slide")}
+            className={cx("row")}
             ref={slideRef}
             onTouchStart={(e) => {
               touchStart(e);
@@ -145,42 +103,32 @@ export default function Carousel({
             }}
           >
             {(size >= limitSize || windowWidth < 767) &&
-              slideData.map((element, idx) => {
+              data.map((element, idx) => {
                 return (
-                  <Col key={idx} className={cx("slideElement")}>
+                  <Col key={idx} className={cx("col")}>
                     {makeElement(element)}
                   </Col>
                 );
               })}
-            {slideData.map((element, idx) => {
+            {data.map((element, idx) => {
               return (
-                <Col key={idx} className={cx("slideElement")}>
+                <Col key={idx} className={cx("col")}>
                   {makeElement(element)}
                 </Col>
               );
             })}
             {(size >= limitSize || windowWidth < 767) &&
-              slideData.map((element, idx) => {
+              data.map((element, idx) => {
                 return (
-                  <Col key={idx} className={cx("slideElement")}>
+                  <Col key={idx} className={cx("col")}>
                     {makeElement(element)}
                   </Col>
                 );
               })}
           </Row>
         </div>
-        {size >= limitSize && windowWidth > 767 && (
-          <Col align="right" className={cx("arrow")}>
-            {
-              <RightCircleOutlined
-                onClick={() => {
-                  moveSlide(1);
-                }}
-              />
-            }
-          </Col>
-        )}
       </div>
+      {size >= limitSize && <Nav index={index} size={size} move={move}></Nav>}
     </>
   );
 }

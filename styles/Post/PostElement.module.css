@@ -1,8 +1,9 @@
 .post {
   width: 100%;
   transition: all 0.5s;
-  background-color: white;
+  background-color: var(--background-color);
   padding: 20px;
+  border-radius: 8px;
 }
 .postImageWrapper {
   display: flex;

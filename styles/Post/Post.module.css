@@ -1,40 +1,10 @@
-.mb10 {
-  margin-bottom: 10px;
-}
 .post {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
   transition: all 0.5s;
+  border-radius: 8px;
+  background-color: var(--background-color);
+  padding-top: 150px;
+  padding-bottom: 50px;
 }
 .hide {
   display: none;
-}
-.header {
-  margin-bottom: 15px;
-  margin-left: 2%;
-}
-.infoText {
-  font-size: 15px;
-  font-weight: bold;
-  color: var(--disabled-color);
-  padding-left: 10px;
-  margin-right: 10px;
-  cursor: pointer;
-}
-
-.arrowWrapper {
-  margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  display: none;
-}
-.listArrow {
-  font-size: 15px;
-}
-@media only screen and (max-width: 767px) {
-  .arrowWrapper {
-    margin-top: 30px;
-    display: flex;
-  }
 }

@@ -1,13 +1,16 @@
-.mb30 {
-  margin-bottom: 30px;
+.wrapper {
+  background-color: var(--background-color);
+  padding: 20px;
+  border-radius: 8px;
 }
 .elementWrapper {
   height: 530px;
   overflow: hidden;
   margin-bottom: 30px;
+
+  transition: all 0.5s;
 }
 .elementInnerWrapper {
-  transition: all 0.5s;
 }
 .element {
   text-align: center;

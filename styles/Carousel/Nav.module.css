@@ -1,0 +1,34 @@
+.navigation {
+  display: flex;
+  justify-content: center;
+}
+.wrapper {
+  background-color: var(--background-color);
+  border-radius: 10px;
+  justify-content: center;
+  display: flex;
+  transition: all 0.5s;
+  padding: 20px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin: 0px 10px 0px 10px;
+  background-color: var(--disabled-color);
+  transition: all 0.5s;
+}
+
+.dot.sel {
+  background-color: var(--activated-color);
+}
+
+.arrow {
+  width: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin: 0px 20px 0px 20px;
+}

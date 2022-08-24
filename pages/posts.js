@@ -1,6 +1,4 @@
 import SanityService from "../services/SanityService";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer";
 import styles from "../styles/Posts.module.css";
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
@@ -20,6 +18,7 @@ export default function Posts({
   menuState,
   subMenuState,
   subViewState,
+  mainTitleState,
   subTitleState,
 }) {
   const router = useRouter();
@@ -32,6 +31,7 @@ export default function Posts({
   const [subMenu, setSubMenu] = subMenuState;
   const [view, setView] = viewState;
   const [subView, setSubView] = subViewState;
+  const [mainTitle, setMainTitle] = mainTitleState;
   const [subTitle, setSubTitle] = subTitleState;
   const ref = useMemo(() => {
     return {
@@ -56,6 +56,17 @@ export default function Posts({
     },
     [router]
   );
+  const makeMainTitle = useCallback((menu) => {
+    let title = null;
+    if (menu === "dev") {
+      title = "개발";
+    } else if (menu === "life") {
+      title = "일상";
+    } else if (menu === "review") {
+      title = "리뷰";
+    }
+    return <BreadCrumb params={["포스트", title]}></BreadCrumb>;
+  }, []);
   const makeSubTitle = useCallback((menu) => {
     let subTitle = null;
     if (menu === "dev") {
@@ -118,6 +129,7 @@ export default function Posts({
   }, [subMenu]);
   // 화면 변경
   useEffect(() => {
+    setMainTitle(makeMainTitle(subView));
     setSubTitle(makeSubTitle(subView));
   }, [subView]);
   return (
@@ -143,7 +155,6 @@ export default function Posts({
           })}
         </div>
       </div>
-      <Footer />
     </>
   );
 }

@@ -9,6 +9,7 @@ export default function Desktop({
   viewState,
   subMenuState,
   subViewState,
+  typeState,
   profile,
   menus,
   title,
@@ -17,18 +18,10 @@ export default function Desktop({
   const [view, setView] = viewState;
   const [subMenu, setSubMenu] = subMenuState;
   const [subView, setSubView] = subViewState;
+  const [type, setType] = typeState;
 
   return (
     <Row className={cx("header")}>
-      <Col
-        span={24}
-        onClick={() => {
-          setMenu("home");
-        }}
-        className={cx("title")}
-      >
-        {title}
-      </Col>
       <Col span={24} className={cx("navWrapper")}>
         {menus.map((menuObj, idx) => (
           <div key={idx} span={24}>
@@ -42,20 +35,23 @@ export default function Desktop({
             </div>
             <div className={cx("subNavWrapper")}>
               {menuObj.sub &&
-                view === menuObj.id &&
-                menuObj.sub.map((subMenuObj, idx) => (
-                  <div
-                    key={idx}
-                    className={cx("nav", {
-                      sel: subView === subMenuObj.id,
-                    })}
-                    onClick={(e) => {
-                      setSubMenu(subMenuObj.id);
-                    }}
-                  >
-                    {subMenuObj.name}
-                  </div>
-                ))}
+                menuObj.sub.map((subMenuObj, idx) => {
+                  if (subMenuObj.type !== "all" && subMenuObj.type !== type)
+                    return;
+                  return (
+                    <div
+                      key={idx}
+                      className={cx("subNav", {
+                        sel: subView === subMenuObj.id && menuObj.id === view,
+                      })}
+                      onClick={(e) => {
+                        setSubMenu(subMenuObj.id);
+                      }}
+                    >
+                      {subMenuObj.name}
+                    </div>
+                  );
+                })}
             </div>
           </div>
         ))}

@@ -1,7 +1,11 @@
-.portpolio {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
+.portpolioWrapper {
   transition: all 0.5s;
-  padding: 10px;
-  width: 100%;
+  border-radius: 8px;
+}
+.portpolio {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-top: 50px;
+  padding-left: 30px;
+  background-color: var(--background-color);
 }

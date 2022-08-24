@@ -14,23 +14,21 @@ const cx = classNames.bind(styles);
 export default function About({ profile, show }) {
   const swing = useRef(null);
   const aboutRef = useRef(null);
-  useEffect(() => {
-    let flag = true;
-    if (!show) {
-      on(swing, aboutRef);
-    } else {
-      off(swing, aboutRef);
-    }
-    return () => {
-      clear(swing);
-    };
-  }, [show]);
+  // useEffect(() => {
+  //   let flag = true;
+  //   if (!show) {
+  //     on(swing, aboutRef);
+  //   } else {
+  //     off(swing, aboutRef);
+  //   }
+  //   return () => {
+  //     clear(swing);
+  //   };
+  // }, [show]);
   return (
     <div className={cx("about")} ref={aboutRef}>
       <Row className={cx("profileWrapper")}>
-        <Col className={cx("profilTitle")} span={24}>
-          ABOUT ME
-        </Col>
+        <Col className={cx("profilTitle")} span={24}></Col>
         <Col className={cx("profileDescImageWrapper")} span={24}>
           <Image
             src={profile.thumbnail.imageUrl}
