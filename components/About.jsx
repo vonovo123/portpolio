@@ -14,21 +14,23 @@ const cx = classNames.bind(styles);
 export default function About({ profile, show }) {
   const swing = useRef(null);
   const aboutRef = useRef(null);
-  // useEffect(() => {
-  //   let flag = true;
-  //   if (!show) {
-  //     on(swing, aboutRef);
-  //   } else {
-  //     off(swing, aboutRef);
-  //   }
-  //   return () => {
-  //     clear(swing);
-  //   };
-  // }, [show]);
+  useEffect(() => {
+    let flag = true;
+    if (!show) {
+      on(swing, aboutRef);
+    } else {
+      off(swing, aboutRef);
+    }
+    return () => {
+      clear(swing);
+    };
+  }, [show]);
   return (
     <div className={cx("about")} ref={aboutRef}>
       <Row className={cx("profileWrapper")}>
-        <Col className={cx("profilTitle")} span={24}></Col>
+        <Col className={cx("profileTitle")} span={24}>
+          {"ABOUT"}
+        </Col>
         <Col className={cx("profileDescImageWrapper")} span={24}>
           <Image
             src={profile.thumbnail.imageUrl}
@@ -41,9 +43,7 @@ export default function About({ profile, show }) {
           <Row>
             <Col span={24} className={cx("profileDescInfoDetail")}>
               <TeamOutlined />
-              <span className={cx("text")}>
-                {profile.company + " " + "권현우"}
-              </span>
+              <span className={cx("text")}>{profile.company}</span>
             </Col>
             <Col span={24} className={cx("profileDescInfoDetail")}>
               <EnvironmentOutlined />

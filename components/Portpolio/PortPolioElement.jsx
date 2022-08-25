@@ -7,7 +7,10 @@ import {
   DeploymentUnitOutlined,
   EllipsisOutlined,
   GithubOutlined,
+  PaperClipOutlined,
+  VerticalAlignTopOutlined,
 } from "@ant-design/icons";
+import BlogMarkDown from "../BlogMarkDown";
 
 const cx = classNames.bind(styles);
 export default function PortPolioElement({ element }) {
@@ -16,8 +19,8 @@ export default function PortPolioElement({ element }) {
   const [detail, setDetail] = useState(false);
   const {
     author,
-    content,
-    createdAt,
+    shortContent,
+    portpolioContent,
     demoUrl,
     repoUrl,
     skills,
@@ -26,7 +29,7 @@ export default function PortPolioElement({ element }) {
   } = element;
   const moveElement = useCallback(() => {
     elRef.current.style.transition = `${0.5}s ease-out`;
-    if (!detail) elRef.current.style.transform = `translate3d(0, ${-450}px, 0)`;
+    if (!detail) elRef.current.style.transform = `translate3d(0, ${-430}px, 0)`;
     else elRef.current.style.transform = `translate3d(0, 0px, 0)`;
     setDetail(!detail);
   }, [detail]);
@@ -35,17 +38,6 @@ export default function PortPolioElement({ element }) {
       <div className={cx("elementWrapper")}>
         <div className={cx("elementInnerWrapper")} ref={elRef}>
           <Row className={cx("element")}>
-            <div className={cx("skills")} align={"left"}>
-              {skills.map((skill, idx) => (
-                <Image
-                  key={idx}
-                  className={styles.skill}
-                  src={skill.iconUrl}
-                  alt={skill.name}
-                  preview={false}
-                />
-              ))}
-            </div>
             <Col span={24} className={cx("imageWrapper")}>
               <Image
                 src={thumbnail.imageUrl}
@@ -57,27 +49,37 @@ export default function PortPolioElement({ element }) {
             <Col span={24} className={cx("elementTitle")}>
               {title}
             </Col>
+            <Col span={24} className={cx("elementShortContent")}>
+              {shortContent}
+            </Col>
+            {/* <Col className={cx("skills")} span={24} align="center">
+              {skills.map((skill, idx) => (
+                <Image
+                  key={idx}
+                  className={styles.skill}
+                  src={skill.iconUrl}
+                  alt={skill.name}
+                  preview={false}
+                />
+              ))}
+              <div>활용기술</div>
+            </Col> */}
           </Row>
           <Row className={cx("element")}>
             <Col span={24} className={cx("elementContent")}>
-              {<div>test</div>}
-              {<div>test</div>}
-              {<div>test</div>}
-              {<div>test</div>}
-              {<div>test</div>}
-              {<div>test</div>}
-              {<div>test</div>}
-              {<div>test</div>}
-              {<div>test</div>}
+              <BlogMarkDown markdown={portpolioContent.markdown} />
             </Col>
-          </Row>
-        </div>
-      </div>
-      <Row>
-        <Col span={24} className={cx("description")}>
-          <Row>
+            <Col span={24}>
+              <Row className={cx("tagWrapper")}>
+                {skills.map((tag, idx) => (
+                  <Col className={cx("tag")} key={idx} span={6}>
+                    {tag.name}
+                  </Col>
+                ))}
+              </Row>
+            </Col>
             <Col
-              span={8}
+              span={12}
               align="center"
               onClick={() => {
                 window.location.href = repoUrl;
@@ -87,17 +89,22 @@ export default function PortPolioElement({ element }) {
               <div>레포지토리</div>
             </Col>
             <Col
-              span={8}
+              span={12}
               align="center"
               onClick={() => {
                 window.location.href = demoUrl;
               }}
             >
-              <DeploymentUnitOutlined className={styles.icon} />
+              <PaperClipOutlined className={styles.icon} />
               <div>데모페이지</div>
             </Col>
-            <Col span={8} align="center" onClick={moveElement}>
-              <EllipsisOutlined className={styles.icon} />
+          </Row>
+        </div>
+      </div>
+      <Row>
+        <Col span={24} className={cx("description")}>
+          <Row>
+            <Col span={24} align="center" onClick={moveElement}>
               <div>상세 보기</div>
             </Col>
           </Row>

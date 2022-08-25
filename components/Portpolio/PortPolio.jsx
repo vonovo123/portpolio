@@ -14,6 +14,7 @@ export default function Portpolio({
   contentWidth,
   subMenuState,
   headerFold,
+  makeSubTitle,
 }) {
   const [subMenu, setSubMenu] = subMenuState;
   const portArr = {
@@ -38,28 +39,6 @@ export default function Portpolio({
     return <PortPolioElement element={element}></PortPolioElement>;
   };
 
-  const makeSubTitle = useCallback((subMenu) => {
-    let subTitle = null;
-    let text = null;
-    switch (subMenu) {
-      case "pub":
-        text = "HTML/CSS";
-        break;
-      case "js":
-        text = "JAVASCRIPT";
-        break;
-      case "vue":
-        text = "VUE.JS";
-        break;
-      case "react":
-        text = "REACT.JS";
-        break;
-      default:
-        text = "프론트엔드 언어 및 Framework";
-    }
-    subTitle = `${text}  를(을) 활용한 토이프로젝트입니다.`;
-    return subTitle;
-  });
   useEffect(() => {
     const option = {
       rootMargin: "-20% 0% -80% 0%",

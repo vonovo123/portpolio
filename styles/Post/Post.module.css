@@ -2,7 +2,7 @@
   transition: all 0.5s;
   border-radius: 8px;
   background-color: var(--background-color);
-  padding-top: 150px;
+  padding-top: 80px;
   padding-bottom: 50px;
 }
 .hide {

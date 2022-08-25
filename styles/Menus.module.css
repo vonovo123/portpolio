@@ -1,14 +1,15 @@
 .menuWrapper {
   position: relative;
-  font-size: 17px;
+  font-size: 15px;
   font-weight: bold;
 }
 .selMenu {
   display: flex;
-  padding: 8px 5px 5px 5px;
-  width: 140px;
-  color: var(--activated-color);
+  padding: 5px 10px 10px 10px;
+  width: 200px;
+  color: var(---header-font-color);
   cursor: pointer;
+  text-align: center;
 }
 .selMenuText {
   width: 120px;

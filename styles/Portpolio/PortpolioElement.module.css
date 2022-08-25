@@ -4,9 +4,8 @@
   border-radius: 8px;
 }
 .elementWrapper {
-  height: 530px;
+  height: 430px;
   overflow: hidden;
-  margin-bottom: 30px;
 
   transition: all 0.5s;
 }
@@ -14,40 +13,54 @@
 }
 .element {
   text-align: center;
-  height: 530px;
+  height: 430px;
 }
-.skills {
-  height: 30px;
-}
+
 .imageWrapper {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 .elementImage {
   border-radius: 8px;
-  width: 100%;
-  height: 400px;
+  height: 300px;
   object-fit: cover;
   opacity: 0.9;
-  margin-bottom: 50px;
 }
 
 .elementTitle {
-  height: 50px;
   font-size: 16px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
-
+.elementShortContent {
+  font-size: 14x;
+  margin-bottom: 10px;
+}
 .description {
   height: 70px;
 }
 
 .elementContent {
-  padding-top: 30px;
-  height: 530px;
+  padding-top: 10px;
+}
+.tagWrapper {
+}
+.tag {
+  font-size: 10px;
+  text-align: center;
+  color: white;
+  background-color: grey;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 4px;
+  font-weight: bold;
 }
 
+.skills {
+  height: 30px;
+}
 .skill {
   width: 25px;
   height: 25px;

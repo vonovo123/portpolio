@@ -2,7 +2,7 @@ export function on(swing, ref) {
   let flag = true;
   swing.current = setInterval(() => {
     if (flag) {
-      ref.current.style.transform = `translate3d(0, ${-30}px, 0)`;
+      ref.current.style.transform = `translate3d(0, ${30}px, 0)`;
     } else {
       ref.current.style.transform = `translate3d(0, 0, 0)`;
     }

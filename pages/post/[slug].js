@@ -1,6 +1,6 @@
 import SanityService from "../../services/SanityService";
 import styles from "../../styles/Slug.module.css";
-import BlogPostDetail from "../../components/BlogPostDetail";
+import BlogMarkDown from "../../components/BlogMarkDown";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { Col, Image, Row } from "antd";
@@ -112,15 +112,11 @@ export default function Post({ slug, post }) {
             </div>
           </Col>
           <div ref={observed} className={cx("observe")}>
-            obs
+            observe
           </div>
         </Row>
         <div className={cx("contentBody")}>
-          <BlogPostDetail
-            blocks={post.content}
-            markdown={post.postContent.markdown}
-            heading={heading}
-          />
+          <BlogMarkDown markdown={post.postContent.markdown} />
         </div>
       </div>
     </>

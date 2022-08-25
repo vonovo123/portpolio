@@ -57,12 +57,14 @@ export default function Home({
     if (menu === "post") {
       title = (
         <>
-          <div className={cx("mainTitleText")}>{"최신 포스트"}</div>
+          <div className={cx("mainTitleText")}>{"새로운 글"}</div>
+          <div className={cx("mainSubTitleText")}>{"전체글 보기 > "}</div>
         </>
       );
     } else if (menu === "portpolio") {
       title = (
         <>
+          <div className={cx("mainTitleText")}>{"포트폴리오"}</div>
           <Menus
             menus={portpoliMenu}
             menu={subMenu}
@@ -77,36 +79,34 @@ export default function Home({
         </Col>
       );
     }
-    return <div>{title}</div>;
+    return <div className={cx("mainTitle")}>{title}</div>;
   }, []);
-  const makeSubTitle = useCallback((menu, subMenu) => {
+  const makeSubTitle = useCallback((subMenu) => {
     let subTitle = null;
-    if (menu === "post") {
-      subTitle = "최근 5개의 포스트만 표시됩니다.";
-    } else if (menu === "portpolio") {
-      let text = null;
-      switch (subMenu) {
-        case "pub":
-          text = "HTML/CSS";
-          break;
-        case "js":
-          text = "JAVASCRIPT";
-          break;
-        case "vue":
-          text = "VUE.JS";
-          break;
-        case "react":
-          text = "REACT.JS";
-          break;
-        default:
-          text = "프론트엔드 언어 및 Framework";
-      }
-      subTitle = `${text}  를(을) 활용한 토이프로젝트입니다.`;
-    } else if (menu === "career") {
-      subTitle = "경력 및 이력사항 입니다.";
+    let text = null;
+    switch (subMenu) {
+      case "pub":
+        text = "퍼블리싱";
+        break;
+      case "js":
+        text = "자바스크립트";
+        break;
+      case "vue":
+        text = "뷰";
+        break;
+      case "react":
+        text = "리엑트";
+        break;
+      default:
+        text = "프론트엔드 언어 및 Framework";
     }
-    return <div className={cx("subTitle")}>{subTitle}</div>;
-  }, []);
+    subTitle = `${text}을(를) 활용해 제작한 웹 어플리케이션`;
+    return (
+      <div className={cx("subTitle")}>
+        <div className={cx("subText")}>{subTitle}</div>
+      </div>
+    );
+  });
   const goPosts = useCallback(
     (menu) => {
       setType(null);
@@ -173,9 +173,8 @@ export default function Home({
             <>
               <div className={cx("subTitle")}>
                 <div className={cx("subText")}>
-                  {"최근 5개의 포스트만 표시됩니다."}
+                  {"최근 작성된 다섯개의 새로운 글"}
                 </div>
-                <div className={cx("subText")}>{"전체보기 >"}</div>
               </div>
             </>
           }
@@ -191,6 +190,7 @@ export default function Home({
           windowWidth={windowWidth}
           contentWidth={contentWidth}
           subMenuState={subMenuState}
+          makeSubTitle={makeSubTitle}
         />
       </div>
       <div ref={careerRef} data-idx="career" className={cx("componentWrapper")}>

@@ -26,7 +26,7 @@ import styles from "../styles/Slug.module.css";
 //     },
 //   },
 // };
-export default function BlogPostDetail({ blocks, markdown }) {
+export default function BlogMarkDown({ markdown }) {
   return (
     <div id="content">
       <ReactMarkdown

@@ -1,14 +1,22 @@
 .componentWrapper {
   width: 100%;
 }
-.mainTitleText {
+.mainTitle {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
   padding-top: 5px;
-  font-size: 20px;
-  font-weight: bold;
-  color: var(--activated-color);
+  margin-left: 20px;
+}
+.mainTitleText {
+}
+.mainSubTitleText {
+  padding-top: 5px;
+  font-size: 15px;
+  margin-left: 20px;
 }
 .subTitle {
-  padding-left: 70px;
+  padding-left: 30px;
   font-size: 18px;
   color: var(--activated-color);
   font-weight: bold;

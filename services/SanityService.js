@@ -13,10 +13,7 @@ const profileUrl = `
 `;
 const homeUrl = `*[_type == 'home']{
   title,
-  'content':content[]{ 
-  ...,
-  ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-  }
+  homeContent
 }`;
 const devLogUrl = `*[_type == 'devLog']{
   name,
@@ -32,10 +29,6 @@ const postsUrl = `
   'category' : category -> {
     name,
     type
-  },
-  'content':content[]{ 
-    ...,
-    ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
   },
   'slug': slug.current,
   'thumbnail' : {
@@ -60,6 +53,7 @@ const portpolioUrl = `
       name,
       type
     },
+    shortContent,
     'skills': skills[]{
       _type == 'reference' => @ -> {
         name,
@@ -74,10 +68,7 @@ const portpolioUrl = `
     },
     repoUrl,
     demoUrl,
-    'content':content[]{ 
-      ...,
-      ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-    },
+    portpolioContent,
     createdAt,
     'thumbnail' : {
       'alt' : thumbnail.alt,
@@ -136,3 +127,18 @@ export default class SanityService {
     return await this._client.fetch(profileUrl);
   }
 }
+
+// 'content':content[]{
+//   ...,
+//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+// },
+
+// 'content':content[]{
+//   ...,
+//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+//   }
+
+// 'content':content[]{
+//   ...,
+//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+// },

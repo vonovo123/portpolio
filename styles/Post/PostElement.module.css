@@ -12,7 +12,7 @@
 }
 .postImage {
   border-radius: 8px;
-  height: 400px;
+  height: 300px;
   object-fit: cover;
   margin-bottom: 20px;
 }

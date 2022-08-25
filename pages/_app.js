@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }) {
     return [
       {
         id: "post",
-        name: "최신 포스트",
+        name: "새로운 글",
         sub: [
           { type: "posts", id: "dev", name: "개발" },
           { type: "posts", id: "life", name: "일상" },
@@ -74,6 +74,14 @@ function MyApp({ Component, pageProps }) {
           {"블로그 이름 뭐라고 짓지.....ㅠ3ㅠ"}
         </div>
       </div>
+      <div
+        className={cx("aboutWrapper", { show: showAbout, fold: menuFold })}
+        onClick={() => {
+          setShowAbout(!showAbout);
+        }}
+      >
+        <About profile={pageProps.profile[0]} show={showAbout} />
+      </div>
       <div className={cx("menuWrapper", { fold: menuFold })}>
         <div className={cx("menuContent")}>
           <Menu
@@ -85,7 +93,6 @@ function MyApp({ Component, pageProps }) {
             menus={headerMenus}
             typeState={typeState}
           />
-          <About profile={pageProps.profile[0]} show={showAbout} />
         </div>
         <div className={cx("menuBtnWrapper", { fold: menuFold })}>
           <div
@@ -94,30 +101,18 @@ function MyApp({ Component, pageProps }) {
               setMenuFold(!menuFold);
             }}
           >
-            {menuFold ? "펼치기" : "접기"}
+            {menuFold ? ">" : "<"}
           </div>
-          {/* <div
-            className={cx("btn", "aboutBtn", { fold: menuFold })}
-            onClick={() => {
-              //setHeaderType("about");
-            }}
-          >
-            {"ABOUT"}
-          </div> */}
         </div>
       </div>
-      {/* <div
-        className={cx("about", { show: showAbout }, { fold: menuFold })}
-        onClick={(e) => {
-          setShowAbout(!showAbout);
-        }}
-      ></div> */}
-
+      ㄴ
       <div className={cx("contentWrapper", { fold: menuFold })}>
-        <div className={cx("title")}>
+        <div className={cx("title", { fold: !menuFold })}>
           <Title
             mainTitleState={mainTitleState}
             subTitleState={subTitleState}
+            setMenuFold={setMenuFold}
+            menuFold={menuFold}
           ></Title>
         </div>
         <div className={cx("content")} ref={contentRef}>

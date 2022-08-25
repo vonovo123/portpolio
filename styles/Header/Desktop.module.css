@@ -2,7 +2,6 @@
   color: var(--background-color);
   width: 100%;
   transition: height 0.5s;
-  padding-left: 65px;
   background-color: var(--menu-color);
   height: 100%;
   font-weight: bold;

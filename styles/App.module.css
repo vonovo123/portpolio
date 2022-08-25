@@ -2,14 +2,16 @@
   --disabled-color: rgb(192, 191, 191);
   --activated-color: #34495e;
   --background-color: #ffffff;
+  --title-color: #34495e;
   --background-color-09: rgba(255, 255, 255, 0.9);
   --nav-color: #ffffff;
   --font-color: #34495e;
   --header-font-color: #ffffff;
+  --title-font-color: #ffffff;
   --header-nav-sel-font-color: #eda5a5;
   --header-sub-nav-sel-font-color: #65c3f9;
   --toggle-color: #34495e;
-  --toggle-btn-color: #b25ef7;
+  --toggle-btn-color: #ff5c9b;
   --menu-color: #34495e;
   --about-color: #a2f7f6;
   --about-font-color: #34495e;
@@ -45,7 +47,7 @@
   background-color: var(--activated-color);
   color: var(--header-font-color);
   padding-top: 15px;
-  padding-left: 50px;
+  padding-left: 100px;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
@@ -60,19 +62,34 @@
   width: 250px;
   height: 100%;
   padding-top: 60px;
-  z-index: 3;
   left: 0px;
   opacity: 0.9;
   transition: all 0.5s;
-  background-color: var(--activated-color);
+  z-index: 3;
 }
 .menuWrapper.fold {
   left: -200px;
 }
-
+.aboutWrapper {
+  position: fixed;
+  width: 250px;
+  height: 100%;
+  z-index: 4;
+  transition: all 1s;
+  top: 88%;
+}
+.aboutWrapper.show {
+  top: 30%;
+}
+.aboutWrapper.fold {
+  top: 100%;
+}
 .menuContent {
   width: 80%;
   height: 100%;
+  padding-top: 40px;
+  padding-left: 40px;
+  background-color: var(--activated-color);
 }
 .menuBtnWrapper {
   width: 20%;
@@ -82,8 +99,9 @@
   padding-top: 10px;
   color: var(--header-font-color);
   font-weight: bold;
-  font-size: 15px;
+  font-size: 20px;
   text-align: center;
+  background-color: var(--toggle-btn-color);
 }
 .toggleBtn {
 }
@@ -94,22 +112,35 @@
   background-color: var(--about-color);
 }
 .contentWrapper {
-  padding-top: 60px;
+  padding-top: 40px;
   transition: all 0.5s;
   width: 100%;
-  padding-left: 250px;
+  margin-left: 250px;
 }
 .contentWrapper.fold {
   width: 100%;
-  padding-left: 50px;
+  margin-left: 50px;
 }
+/* .contentWrapper .content {
+  padding-left: 40px;
+}
+.contentWrapper.fold .content {
+  padding-left: 0px;
+} */
 .title {
   position: fixed;
   width: 100%;
   padding-top: 5px;
   height: 50px;
-  background-color: var(--background-color);
+  background-color: var(--title-color);
+  padding-left: 30px;
   z-index: 2;
+  top: 60px;
+  transition: all 0.5s;
+  opacity: 0.9;
+}
+.title.fold {
+  top: 0px;
 }
 
 @media only screen and (max-width: 767px) {
@@ -121,6 +152,13 @@
     padding-left: 0px;
   }
   .title {
-    /* padding-left: 80px; */
+    padding-left: 80px;
+  }
+  .aboutWrapper {
+    width: 100%;
+    top: 91%;
+  }
+  .aboutWrapper.show {
+    top: 45%;
   }
 }

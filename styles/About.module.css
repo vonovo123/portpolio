@@ -1,4 +1,5 @@
 .about {
+  border-radius: 8px;
   background-color: var(--about-color);
   color: var(--about-font-color);
   font-weight: 500;
@@ -6,7 +7,6 @@
   transition: all 1s;
   width: 100%;
   height: 100%;
-  padding-bottom: 100px;
   font-weight: bold;
 }
 .aTag {
@@ -16,7 +16,7 @@
 .profileWrapper {
   padding: 20px;
 }
-.profilTitle {
+.profileTitle {
   margin-bottom: 50px;
   font-size: 23px;
 

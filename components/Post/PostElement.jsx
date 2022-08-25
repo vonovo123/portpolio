@@ -34,7 +34,7 @@ export default function PostElement({ element }) {
         <Col span={24} className={cx("postShort")}>
           {element.shortContent}
         </Col>
-        <Row className={cx("postTagWrapper")} span={24}>
+        <Row className={cx("postTagWrapper")}>
           {element.tag.map((tag, idx) => (
             <Col className={cx("postTag")} key={idx}>
               {tag.title}
