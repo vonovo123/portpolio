@@ -18,6 +18,7 @@ export default function Home({
   portpolios,
   career,
   home,
+  menuFold,
   windowWidth,
   contentWidth,
   typeState,
@@ -27,6 +28,7 @@ export default function Home({
   subViewState,
   mainTitleState,
   subTitleState,
+  setChangeMenu,
 }) {
   const router = useRouter();
   const postRef = useRef(null);
@@ -47,66 +49,11 @@ export default function Home({
     };
   }, [postRef, portRef, careerRef]);
   const portpoliMenu = [
-    { id: "pub", name: "퍼블리싱" },
-    { id: "js", name: "자바스크립트" },
-    { id: "vue", name: "뷰" },
-    { id: "react", name: "리엑트" },
+    { id: "pub", name: "HTML&CSS" },
+    { id: "js", name: "VanillaJs" },
+    { id: "vue", name: "VueJs" },
+    { id: "react", name: "ReactJs" },
   ];
-  const makeMainTitle = useCallback((menu, subMenu) => {
-    let title = null;
-    if (menu === "post") {
-      title = (
-        <>
-          <div className={cx("mainTitleText")}>{"새로운 글"}</div>
-          <div className={cx("mainSubTitleText")}>{"전체글 보기 > "}</div>
-        </>
-      );
-    } else if (menu === "portpolio") {
-      title = (
-        <>
-          <div className={cx("mainTitleText")}>{"포트폴리오"}</div>
-          <Menus
-            menus={portpoliMenu}
-            menu={subMenu}
-            setMenu={setSubMenu}
-          ></Menus>
-        </>
-      );
-    } else if (menu === "career") {
-      title = (
-        <Col span={24} className={cx("mainTitleText")}>
-          {"커리어"}
-        </Col>
-      );
-    }
-    return <div className={cx("mainTitle")}>{title}</div>;
-  }, []);
-  const makeSubTitle = useCallback((subMenu) => {
-    let subTitle = null;
-    let text = null;
-    switch (subMenu) {
-      case "pub":
-        text = "퍼블리싱";
-        break;
-      case "js":
-        text = "자바스크립트";
-        break;
-      case "vue":
-        text = "뷰";
-        break;
-      case "react":
-        text = "리엑트";
-        break;
-      default:
-        text = "프론트엔드 언어 및 Framework";
-    }
-    subTitle = `${text}을(를) 활용해 제작한 웹 어플리케이션`;
-    return (
-      <div className={cx("subTitle")}>
-        <div className={cx("subText")}>{subTitle}</div>
-      </div>
-    );
-  });
   const goPosts = useCallback(
     (menu) => {
       setType(null);
@@ -117,12 +64,89 @@ export default function Home({
     },
     [router]
   );
+  const makeMainTitle = useCallback(
+    (menu, subMenu) => {
+      let title = null;
+      if (menu === "post") {
+        title = (
+          <>
+            <div className={cx("mainTitleText")}>{"새로운 글"}</div>
+            <div className={cx("mainSubTitleText")} onClick={goPosts}>
+              {"더 많은 글 보러가기 > "}
+            </div>
+          </>
+        );
+      } else if (menu === "portpolio") {
+        title = (
+          <>
+            <div className={cx("mainTitleText")}>{"포트폴리오"}</div>
+            <Menus
+              menus={portpoliMenu}
+              menu={subView}
+              setMenu={setSubMenu}
+            ></Menus>
+          </>
+        );
+      } else if (menu === "career") {
+        title = (
+          <Col span={24} className={cx("mainTitleText")}>
+            {"커리어"}
+          </Col>
+        );
+      }
+      return <div className={cx("title", "main")}>{title}</div>;
+    },
+    [subView]
+  );
+  const makeSubTitle = useCallback((menu, subMenu) => {
+    let subTitle = null;
+    if (menu === "post") {
+      subTitle = (
+        <>
+          <div className={cx("mainTitleText")}>{"새로운 글"}</div>
+          <div className={cx("mainSubTitleText")} onClick={goPosts}>
+            {"더 많은 글 보러가기 > "}
+          </div>
+        </>
+      );
+    } else if (menu === "portpolio") {
+      let text = null;
+      switch (subMenu) {
+        case "pub":
+          text = "HTML&CSS";
+          break;
+        case "js":
+          text = "VanillaJs";
+          break;
+        case "vue":
+          text = "VueJs";
+          break;
+        case "react":
+          text = "ReactJs";
+          break;
+        default:
+          text = "프론트엔드 언어 및 Framework";
+      }
+      subTitle = <div className={cx("mainTitleText")}>{text}</div>;
+    } else if (menu === "career") {
+      subTitle = (
+        <Col span={24} className={cx("mainTitleText")}>
+          {"커리어"}
+        </Col>
+      );
+    }
+    return (
+      <div className={cx("title", "sub", { hide: menuFold })}>{subTitle}</div>
+    );
+  });
   //화면진입 //스크롤로 화면변경
   useEffect(() => {
     setType("home");
-    router.query.menu ? setMenu(router.query.view) : setMenu("post");
+    router.query.menu
+      ? setMenu({ id: router.query.view })
+      : setMenu({ id: "post" });
     const option = {
-      rootMargin: "-20% 0% -80% 0%",
+      rootMargin: "-40% 0% -60% 0%",
     };
     const interSectionCallback = (entry) => {
       const menu = entry.target.dataset.idx;
@@ -130,10 +154,13 @@ export default function Home({
     };
     const io = makeObserver(option, ref, interSectionCallback);
   }, []);
-  // 메뉴 변경
+
+  // 메뉴  변경
   useEffect(() => {
     if (!menu) return;
-    if (menu === "home") {
+    const { id } = menu;
+    if (!id) return;
+    if (id === "home" || id === "post") {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
@@ -141,19 +168,13 @@ export default function Home({
       setView("post");
     } else {
       window.scrollTo({
-        top: ref[menu].current.offsetTop,
+        top: ref[id].current.offsetTop,
         behavior: "smooth",
       });
-      setView(menu);
+      setView(id);
     }
   }, [menu]);
-  //하위메뉴 변경
-  useEffect(() => {
-    setSubView(subMenu);
-    if (view === "portpolio") {
-      setMainTitle(makeMainTitle(view, subMenu));
-    }
-  }, [subMenu]);
+
   // 화면 변경
   useEffect(() => {
     let subView = null;
@@ -162,6 +183,12 @@ export default function Home({
       setSubMenu(null);
     }
   }, [view]);
+
+  useEffect(() => {
+    if (view === "portpolio") {
+      setMainTitle(makeMainTitle(view, subMenu));
+    }
+  }, [subView]);
   return (
     <>
       <div ref={postRef} data-idx="post" className={cx("componentWrapper")}>
@@ -169,15 +196,7 @@ export default function Home({
           posts={posts}
           windowWidth={windowWidth}
           contentWidth={contentWidth}
-          subTitle={
-            <>
-              <div className={cx("subTitle")}>
-                <div className={cx("subText")}>
-                  {"최근 작성된 다섯개의 새로운 글"}
-                </div>
-              </div>
-            </>
-          }
+          makeSubTitle={makeSubTitle}
         />
       </div>
       <div
@@ -190,6 +209,7 @@ export default function Home({
           windowWidth={windowWidth}
           contentWidth={contentWidth}
           subMenuState={subMenuState}
+          subViewState={subViewState}
           makeSubTitle={makeSubTitle}
         />
       </div>
@@ -198,6 +218,7 @@ export default function Home({
           career={career}
           windowWidth={windowWidth}
           contentWidth={contentWidth}
+          makeSubTitle={makeSubTitle}
         />
       </div>
       <Footer />

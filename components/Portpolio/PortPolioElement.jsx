@@ -28,17 +28,17 @@ export default function PortPolioElement({ element }) {
     title,
   } = element;
   const moveElement = useCallback(() => {
-    elRef.current.style.transition = `${0.5}s ease-out`;
-    if (!detail) elRef.current.style.transform = `translate3d(0, ${-430}px, 0)`;
-    else elRef.current.style.transform = `translate3d(0, 0px, 0)`;
+    // elRef.current.style.transition = `${0.5}s ease-out`;
+    // if (!detail) elRef.current.style.transform = `translate3d(0, ${-430}px, 0)`;
+    // else elRef.current.style.transform = `translate3d(0, 0px, 0)`;
     setDetail(!detail);
   }, [detail]);
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("elementWrapper")}>
+      <div className={cx("elementWrapper", { detail: detail })}>
         <div className={cx("elementInnerWrapper")} ref={elRef}>
           <Row className={cx("element")}>
-            <Col span={24} className={cx("imageWrapper")}>
+            <Col span={24} className={cx("imageWrapper", "mb20")}>
               <Image
                 src={thumbnail.imageUrl}
                 alt={thumbnail.alt}
@@ -46,31 +46,18 @@ export default function PortPolioElement({ element }) {
                 preview={false}
               />
             </Col>
-            <Col span={24} className={cx("elementTitle")}>
+            <Col span={24} className={cx("elementTitle", "pb20")}>
               {title}
             </Col>
-            <Col span={24} className={cx("elementShortContent")}>
+            <Col span={24} className={cx("elementShortContent", "pb20")}>
               {shortContent}
             </Col>
-            {/* <Col className={cx("skills")} span={24} align="center">
-              {skills.map((skill, idx) => (
-                <Image
-                  key={idx}
-                  className={styles.skill}
-                  src={skill.iconUrl}
-                  alt={skill.name}
-                  preview={false}
-                />
-              ))}
-              <div>활용기술</div>
-            </Col> */}
-          </Row>
-          <Row className={cx("element")}>
-            <Col span={24} className={cx("elementContent")}>
+
+            {/* <Col span={24} className={cx("elementContent")}>
               <BlogMarkDown markdown={portpolioContent.markdown} />
-            </Col>
-            <Col span={24}>
-              <Row className={cx("tagWrapper")}>
+            </Col> */}
+            <Col span={24} className={cx("mb20")}>
+              <Row className={cx("tagWrapper")} align={"center"}>
                 {skills.map((tag, idx) => (
                   <Col className={cx("tag")} key={idx} span={6}>
                     {tag.name}
@@ -78,6 +65,7 @@ export default function PortPolioElement({ element }) {
                 ))}
               </Row>
             </Col>
+
             <Col
               span={12}
               align="center"

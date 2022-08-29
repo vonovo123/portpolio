@@ -7,7 +7,7 @@
   display: flex;
   padding: 5px 10px 10px 10px;
   width: 200px;
-  color: var(---header-font-color);
+  color: var(--sel-font-color);
   cursor: pointer;
   text-align: center;
 }
@@ -32,15 +32,14 @@
   z-index: 2;
 }
 .menu {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: var(--disabled-color);
+  background-color: var(--background-color);
+  color: var(--font-color);
   border-bottom: none;
   padding: 10px;
 }
 .menu.sel {
-  color: var(--activated-color);
+  color: var(--font-color);
 }
 .menu:hover {
-  color: var(--activated-color);
-  background-color: var(--disabled-color);
+  color: var(--sel-font-color);
 }

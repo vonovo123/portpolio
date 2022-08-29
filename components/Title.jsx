@@ -11,17 +11,5 @@ export default function Title({
 }) {
   const [mainTitle, mainSubTitle] = mainTitleState;
   const [subTitle, setSubTitle] = subTitleState;
-  return (
-    <Row className={cx("titleWrapper")}>
-      {/* <div
-        className={cx("mainTitleArrow")}
-        onClick={() => {
-          setMenuFold(!menuFold);
-        }}
-      >
-        {">"}
-      </div> */}
-      {mainTitle && mainTitle}
-    </Row>
-  );
+  return <Row className={cx("titleWrapper")}>{mainTitle && mainTitle}</Row>;
 }

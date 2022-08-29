@@ -1,9 +1,7 @@
 .post {
-  transition: all 0.5s;
-  border-radius: 8px;
   background-color: var(--background-color);
-  padding-top: 80px;
-  padding-bottom: 50px;
+  padding: 0 2% 0 2%;
+  height: 90vh;
 }
 .hide {
   display: none;

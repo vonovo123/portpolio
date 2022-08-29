@@ -1,28 +1,36 @@
 .componentWrapper {
   width: 100%;
 }
-.mainTitle {
-  width: 100%;
+
+.title {
   display: flex;
   flex-wrap: nowrap;
+  font-size: 20px;
+  color: var(--font-color);
+  font-weight: bold;
+  transition: all 0.5s;
+  opacity: 1;
   padding-top: 5px;
-  margin-left: 20px;
 }
-.mainTitleText {
+
+.main {
+  padding-left: 20px;
+  padding-top: 20px;
 }
+.sub {
+  height: 50px;
+  padding-left: 30px;
+}
+.sub.hide {
+  opacity: 0;
+  padding: 0;
+  height: 0px;
+}
+
 .mainSubTitleText {
+  color: var(--sub-font-color);
   padding-top: 5px;
   font-size: 15px;
   margin-left: 20px;
-}
-.subTitle {
-  padding-left: 30px;
-  font-size: 18px;
-  color: var(--activated-color);
-  font-weight: bold;
   cursor: pointer;
-  display: flex;
-}
-.subText {
-  margin-right: 10px;
 }

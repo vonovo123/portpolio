@@ -1,6 +1,4 @@
 .breadCrumbWrapper {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
   font-size: 20px;
   font-weight: bold;
   display: flex;
@@ -14,17 +12,9 @@
 }
 .crumb {
   margin: 0px 20px 0px 0px;
-  color: grey;
+  color: var(--font-color);
   cursor: pointer;
 }
 .crumb.sel {
-  color: #34495e;
-}
-
-.crumb.home {
-  cursor: pointer;
-}
-
-.crumb.home:hover {
-  color: #34495e;
+  color: var(--sel-font-color);
 }

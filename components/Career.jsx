@@ -4,165 +4,111 @@ import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import styles from "../styles/Career.module.css";
 import classNames from "classnames/bind";
-import Title from "../components/Title";
 import { useState } from "react";
 import { CSSTransition } from "react-transition-group";
-import fadeTransition from "../styles/transition/fade.module.css";
 import rollTransition from "../styles/transition/roll.module.css";
 
 import { useRef } from "react";
 const cx = classNames.bind(styles);
-export default function Career({ career, width }) {
-  const rowData = career[0];
+export default function Career({ career, makeSubTitle }) {
   const [hide, setHide] = useState(false);
   const nodeRef = useRef(null);
-  const rows = rowData.works.map((work) => {
-    return [
-      rowData.name,
-      work.name.trim(),
-      new Date(work.from),
-      new Date(work.to),
-    ];
-  });
+  // const rows = rowData.works.map((work) => {
+  //   return [
+  //     rowData.name,
+  //     work.name.trim(),
+  //     new Date(work.from),
+  //     new Date(work.to),
+  //   ];
+  // });
   const columns = [
     { type: "string", id: "name" },
     { type: "string", id: "Content" },
     { type: "date", id: "Start" },
     { type: "date", id: "End" },
   ];
-  const data = [columns, ...rows];
+  //const data = [columns, ...rows];
   return (
     <div className={cx("career")}>
-      <Row className={cx("description")}>
-        {/* <Chart
-                  chartType="Timeline"
-                  data={data}
-                  width="1200px"
-                  height="100px"
-                  chartEvents={[
-                    {
-                      eventName: "ready",
-                      callback: ({ chartWrapper, google }) => {
-                        google.visualization.events.addListener(
-                          const chart = chartWrapper.getChart();
-                          chart,
-                          "select",
-                          (e) => {
-                            const test = chart.getSelection();
-                          }
-                        );
-                      },
-                    },
-                  ]}/> */}
-
-        <Col span={24} className={cx("descriptionHeader")}>
-          <Row>
-            <Col span={1}></Col>
-            <Col span={21}>
-              <span
-                style={{
-                  fontSize: 18,
-                  fontWeight: "bold",
-                  marginRight: 10,
-                }}
-              >
-                {rowData.name}
-              </span>
-              <span
-                style={{
-                  fontSize: 15,
-                  fontWeight: "bold",
-                }}
-              >
+      {makeSubTitle("career")}
+      <div className={cx("descriptionWrapper")}>
+        {career.map((rowData, idx) => (
+          <div className={cx("description")} key={idx}>
+            <div className={cx("descriptionHeader")}>
+              <div className={cx("el")}>{rowData.name}</div>
+              <div className={cx("el")}>
                 [{dayjs(rowData.from).format("YYYY.M.DD")} -
                 {dayjs(rowData.to).format("YYYY.M.DD")}]
-              </span>
-            </Col>
-            <Col span={2}>
+              </div>
               {!hide && (
-                <CaretDownOutlined
+                <CaretUpOutlined
+                  className={cx("el", "arrow")}
                   onClick={() => {
                     setHide(!hide);
                   }}
                 />
               )}
               {hide && (
-                <CaretUpOutlined
+                <CaretDownOutlined
+                  className={cx("el", "arrow")}
                   onClick={() => {
                     setHide(!hide);
                   }}
                 />
               )}
-            </Col>
-          </Row>
-        </Col>
-        <CSSTransition
-          in={hide}
-          classNames={rollTransition}
-          timeout={500}
-          mountOnEnter
-          nodeRef={nodeRef}
-        >
-          <Col span={24} className={cx("descriptionBody")} ref={nodeRef}>
-            <Row>
-              <Col span={24} className={cx("descriptionCol", "header")}>
-                <Row>
+            </div>
+            <CSSTransition
+              in={!hide}
+              classNames={rollTransition}
+              timeout={500}
+              mountOnEnter
+              nodeRef={nodeRef}
+            >
+              <div className={cx("descriptionBody")} ref={nodeRef}>
+                <Row className={cx("descriptionBodyHeader")}>
                   <Col span={6}>기간</Col>
-                  <Col span={12}>업무</Col>
-                  <Col span={6}>활용 기술</Col>
+                  <Col span={11}>업무</Col>
+                  <Col span={7}>활용 기술</Col>
                 </Row>
-              </Col>
-              {rowData.works.map((work, idx) => {
-                return (
-                  <Col key={idx} span={24} className={cx("descriptionCol")}>
-                    <Row>
-                      <Col span={5}>
-                        <Row style={{ paddingTop: 15, textAlign: "center" }}>
-                          <Col span={24}>
-                            {dayjs(work.from).format("YYYY.M.DD")}
-                          </Col>
-                          <Col span={24}>
-                            {dayjs(work.to).format("YYYY.M.DD")}
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col
-                        span={14}
-                        style={{ textAlign: "left", paddingTop: 15 }}
-                      >
-                        <div>{work.name}</div>
-                        <div>{work.description} </div>
-                      </Col>
-                      <Col span={5}>
-                        <Row className={styles.skills}>
-                          {work.skills.map((skill, idx) => (
-                            <Col
-                              key={idx}
-                              xl={{ span: 6 }}
-                              lg={{ span: 6 }}
-                              md={{ span: 8 }}
-                              sm={{ span: 8 }}
-                              xs={{ span: 8 }}
-                            >
-                              <Image
-                                key={idx}
-                                className={styles.skillImage}
-                                src={skill.iconUrl}
-                                alt={skill.name}
-                                preview={false}
-                              />
+                {rowData.works.map((work, idx) => {
+                  return (
+                    <>
+                      <Row className={cx("descriptionCol")}>
+                        <Col span={5}>
+                          <Row style={{ paddingTop: 15, textAlign: "center" }}>
+                            <Col span={24}>
+                              {dayjs(work.from).format("YYYY.M.DD")}
                             </Col>
-                          ))}
-                        </Row>
-                      </Col>
-                    </Row>
-                  </Col>
-                );
-              })}
-            </Row>
-          </Col>
-        </CSSTransition>
-      </Row>
+                            <Col span={24}>
+                              {dayjs(work.to).format("YYYY.M.DD")}
+                            </Col>
+                          </Row>
+                        </Col>
+                        <Col
+                          span={12}
+                          style={{ textAlign: "left", padding: 15 }}
+                        >
+                          <div>{work.name}</div>
+                          <div>{work.description} </div>
+                        </Col>
+                        <Col span={7}>
+                          <Row className={cx("tagWrapper")}>
+                            {work.skills.map((skill, idx) => (
+                              <Col key={idx} className={cx("tag")}>
+                                {skill.name}
+                              </Col>
+                            ))}
+                          </Row>
+                        </Col>
+                      </Row>
+                    </>
+                  );
+                })}
+              </div>
+            </CSSTransition>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

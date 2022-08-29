@@ -1,9 +1,13 @@
 .post {
   width: 100%;
   transition: all 0.5s;
-  background-color: var(--background-color);
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
+  box-shadow: -10px 5px 10px var(--border-color);
+}
+.post:hover {
+  box-shadow: -5px 5px 10px var(--border-color);
 }
 .postImageWrapper {
   display: flex;
@@ -12,7 +16,7 @@
 }
 .postImage {
   border-radius: 8px;
-  height: 300px;
+  height: 35vh;
   object-fit: cover;
   margin-bottom: 20px;
 }
@@ -38,7 +42,7 @@
 .postTag {
   font-size: 10px;
   text-align: center;
-  color: white;
+  color: var(--tag-font-color);
   background-color: grey;
   border-radius: 5px;
   padding: 9px;

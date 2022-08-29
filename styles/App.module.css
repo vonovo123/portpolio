@@ -1,22 +1,17 @@
 .wrapper {
-  --disabled-color: rgb(192, 191, 191);
-  --activated-color: #34495e;
-  --background-color: #ffffff;
-  --title-color: #34495e;
-  --background-color-09: rgba(255, 255, 255, 0.9);
-  --nav-color: #ffffff;
-  --font-color: #34495e;
-  --header-font-color: #ffffff;
-  --title-font-color: #ffffff;
-  --header-nav-sel-font-color: #eda5a5;
-  --header-sub-nav-sel-font-color: #65c3f9;
-  --toggle-color: #34495e;
-  --toggle-btn-color: #ff5c9b;
-  --menu-color: #34495e;
-  --about-color: #a2f7f6;
-  --about-font-color: #34495e;
-  background-color: var(--background-color);
-  background-image: url(../assets/pattern.png);
+  --background-colorA: #fffffff3;
+  --background-colorB: #f9fafb;
+  --tag-color: #83878c;
+  --tag-font-color: #ffffff;
+  --border-color: #e7e1e1;
+  --font-color: #191f28;
+  --sub-font-color: #cacaca;
+  --sel-font-color: #191f28;
+  --nav-dot-color: #83878c;
+  --nav-dot-sel-color: #34495e;
+  --border-width: 1px;
+  background-color: var(--background-colorA);
+  color: var(--font-color);
 }
 .mb10 {
   margin-bottom: 10px;
@@ -40,39 +35,9 @@
 .hide {
   display: none;
 }
-.headerWrapper {
-  position: fixed;
-  width: 100%;
-  height: 60px;
-  background-color: var(--activated-color);
-  color: var(--header-font-color);
-  padding-top: 15px;
-  padding-left: 100px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 4;
-}
-.header {
-}
-
-.menuWrapper {
-  position: fixed;
-  display: flex;
-  width: 250px;
-  height: 100%;
-  padding-top: 60px;
-  left: 0px;
-  opacity: 0.9;
-  transition: all 0.5s;
-  z-index: 3;
-}
-.menuWrapper.fold {
-  left: -200px;
-}
 .aboutWrapper {
   position: fixed;
-  width: 250px;
+  width: 300px;
   height: 100%;
   z-index: 4;
   transition: all 1s;
@@ -84,75 +49,104 @@
 .aboutWrapper.fold {
   top: 100%;
 }
+
+.headerWrapper {
+  position: fixed;
+  width: 100%;
+  height: 50px;
+  background-color: var(--background-colorB);
+  padding-top: 6px;
+  padding-left: 60px;
+  font-size: 25px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 4;
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+.headerWrapper.fold {
+  background-color: var(--background-colorA);
+}
+
+.menuWrapper {
+  position: fixed;
+  display: flex;
+  width: 250px;
+  height: 100%;
+  padding-top: 50px;
+  left: 0px;
+  opacity: 0.9;
+  transition: all 0.5s;
+  z-index: 3;
+  background-color: var(--background-colorB);
+  color: var(--sub-font-color);
+}
+.menuWrapper.fold {
+  left: -250px;
+}
+
 .menuContent {
   width: 80%;
   height: 100%;
-  padding-top: 40px;
-  padding-left: 40px;
-  background-color: var(--activated-color);
-}
-.menuBtnWrapper {
-  width: 20%;
+  padding-top: 50px;
+  padding-left: 70px;
 }
 .btn {
+  width: 50px;
   height: 50px;
   padding-top: 10px;
-  color: var(--header-font-color);
+  color: var(--font-color);
   font-weight: bold;
   font-size: 20px;
   text-align: center;
-  background-color: var(--toggle-btn-color);
-}
-.toggleBtn {
-}
-.menuBtn {
-  background-color: var(--menu-color);
-}
-.aboutBtn {
-  background-color: var(--about-color);
-}
-.contentWrapper {
-  padding-top: 40px;
   transition: all 0.5s;
-  width: 100%;
+}
+
+.menuBtnWrapper {
+  width: 20%;
+  border-right: var(--border-width) solid var(--border-color);
+}
+
+.bodyWrapper {
+  transition: all 0.5s;
   margin-left: 250px;
+  padding-top: 10vh;
 }
-.contentWrapper.fold {
-  width: 100%;
-  margin-left: 50px;
+.bodyWrapper.fold {
+  margin-left: 0px;
+  padding-top: 20vh;
 }
-/* .contentWrapper .content {
-  padding-left: 40px;
-}
-.contentWrapper.fold .content {
-  padding-left: 0px;
-} */
+
 .title {
   position: fixed;
+  display: flex;
+  height: 70px;
   width: 100%;
-  padding-top: 5px;
-  height: 50px;
-  background-color: var(--title-color);
-  padding-left: 30px;
+  background-color: var(--background-colorB);
   z-index: 2;
-  top: 60px;
+  top: 50px;
   transition: all 0.5s;
   opacity: 0.9;
 }
 .title.fold {
-  top: 0px;
+  top: -20px;
+}
+.title .btn {
+  padding-top: 20px;
 }
 
 @media only screen and (max-width: 767px) {
-  .contentWrapper {
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-  .contentWrapper.fold {
+  .headerWrapper {
     padding-left: 0px;
   }
+  .bodyWrapper {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .bodyWrapper.fold {
+    margin-left: 0px;
+  }
+
   .title {
-    padding-left: 80px;
   }
   .aboutWrapper {
     width: 100%;

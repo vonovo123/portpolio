@@ -1,16 +1,17 @@
 .about {
-  border-radius: 8px;
-  background-color: var(--about-color);
-  color: var(--about-font-color);
+  color: var(--font-color);
   font-weight: 500;
   font-size: 12px;
   transition: all 1s;
   width: 100%;
   height: 100%;
   font-weight: bold;
+  border-radius: 8px;
+  background-color: var(--background-colorA);
+  border: 2px solid var(--border-color);
 }
 .aTag {
-  color: var(--about-font-color);
+  color: var(--font-color);
 }
 
 .profileWrapper {

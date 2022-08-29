@@ -1,9 +1,10 @@
 .carouselWrapper {
   width: 100%;
   display: flex;
+  margin-bottom: 20px;
 }
 .carousel {
-  width: 96%;
+  width: 100%;
   overflow: hidden;
 }
 

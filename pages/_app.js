@@ -6,8 +6,12 @@ import classNames from "classnames/bind";
 import Menu from "../components/Header/Menu";
 import Title from "../components/Title";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import BreadCrumb from "../components/BreadCrumb";
 import About from "../components/About";
+import {
+  CaretLeftOutlined,
+  CaretRightOutlined,
+  CaretUpOutlined,
+} from "@ant-design/icons";
 const cx = classNames.bind(styles);
 function MyApp({ Component, pageProps }) {
   //page 타임
@@ -27,7 +31,7 @@ function MyApp({ Component, pageProps }) {
   const [contentWidth, setContentWidth] = useState();
   const [showAbout, setShowAbout] = useState(false);
   const [menuFold, setMenuFold] = useState(false);
-
+  const [changeMenu, setChangeMenu] = useState(null);
   const contentRef = useRef(null);
   const headerMenus = useMemo(() => {
     return [
@@ -44,10 +48,10 @@ function MyApp({ Component, pageProps }) {
         id: "portpolio",
         name: "포트폴리오",
         sub: [
-          { type: "all", id: "pub", name: "퍼블리싱" },
-          { type: "all", id: "js", name: "자바스크립트" },
-          { type: "all", id: "vue", name: "뷰" },
-          { type: "all", id: "react", name: "리엑트" },
+          { type: "all", id: "pub", name: "HTML&CSS" },
+          { type: "all", id: "js", name: "VanillaJs" },
+          { type: "all", id: "vue", name: "VueJs" },
+          { type: "all", id: "react", name: "ReactJs" },
         ],
       },
       { type: "", id: "career", name: "커리어", sub: [] },
@@ -69,10 +73,8 @@ function MyApp({ Component, pageProps }) {
   }, [menuFold]);
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("headerWrapper")}>
-        <div className={cx("header")}>
-          {"블로그 이름 뭐라고 짓지.....ㅠ3ㅠ"}
-        </div>
+      <div className={cx("headerWrapper", { fold: menuFold })}>
+        <div className={cx("header")}>{"뚝딱뚝딱 개발공장 🏭 "}</div>
       </div>
       <div
         className={cx("aboutWrapper", { show: showAbout, fold: menuFold })}
@@ -92,22 +94,30 @@ function MyApp({ Component, pageProps }) {
             profile={pageProps.profile[0]}
             menus={headerMenus}
             typeState={typeState}
+            changeMenu={changeMenu}
           />
         </div>
         <div className={cx("menuBtnWrapper", { fold: menuFold })}>
           <div
-            className={cx("btn", "toggleBtn")}
+            className={cx("btn")}
             onClick={() => {
               setMenuFold(!menuFold);
             }}
           >
-            {menuFold ? ">" : "<"}
+            {menuFold ? <CaretRightOutlined /> : <CaretLeftOutlined />}
           </div>
         </div>
       </div>
-      ㄴ
-      <div className={cx("contentWrapper", { fold: menuFold })}>
+      <div className={cx("bodyWrapper", { fold: menuFold })}>
         <div className={cx("title", { fold: !menuFold })}>
+          <div
+            className={cx("btn")}
+            onClick={() => {
+              setMenuFold(!menuFold);
+            }}
+          >
+            <CaretRightOutlined />
+          </div>
           <Title
             mainTitleState={mainTitleState}
             subTitleState={subTitleState}
@@ -127,6 +137,8 @@ function MyApp({ Component, pageProps }) {
             subViewState={subViewState}
             mainTitleState={mainTitleState}
             subTitleState={subTitleState}
+            menuFold={menuFold}
+            setChangeMenu={setChangeMenu}
           />
         </div>
       </div>

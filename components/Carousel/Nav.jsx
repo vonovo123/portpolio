@@ -1,7 +1,7 @@
 import styles from "../../styles/Carousel/Nav.module.css";
 import classNames from "classnames/bind";
 import { useRef } from "react";
-import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 export default function Nav({ index, size, move }) {
   const arrowRef = useRef(null);
@@ -18,24 +18,22 @@ export default function Nav({ index, size, move }) {
   return (
     <div className={cx("navigation")}>
       <div className={cx("wrapper")} ref={arrowRef}>
-        <div className={cx("arrow")}>
-          {
-            <LeftCircleOutlined
-              onClick={() => {
-                move(-1);
-              }}
-            />
-          }
+        <div
+          className={cx("arrow")}
+          onClick={() => {
+            move(-1);
+          }}
+        >
+          {<CaretLeftOutlined />}
         </div>
         {drawDots()}
-        <div className={cx("arrow")}>
-          {
-            <RightCircleOutlined
-              onClick={() => {
-                move(1);
-              }}
-            />
-          }
+        <div
+          className={cx("arrow")}
+          onClick={() => {
+            move(1);
+          }}
+        >
+          {<CaretRightOutlined />}
         </div>
       </div>
     </div>

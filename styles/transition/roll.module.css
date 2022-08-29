@@ -1,22 +1,16 @@
 .enter {
-  height: 900px;
-  overflow-y: scroll;
 }
 .enter::-webkit-scrollbar {
   display: none;
 }
 
 .enterActive {
-  height: 900px;
-  overflow-y: scroll;
 }
 .enterActive::-webkit-scrollbar {
   display: none;
 }
 
 .enterDone {
-  height: 900px;
-  overflow-y: scroll;
 }
 
 .enterDone::-webkit-scrollbar {

@@ -1,9 +1,6 @@
 .titleWrapper {
   width: 100%;
   height: 100%;
-  font-size: 20px;
-  color: var(--title-font-color);
-  font-weight: bold;
 }
 .mainTitleArrow {
   width: 50px;

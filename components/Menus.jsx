@@ -40,7 +40,7 @@ export default function Menus({ menus, menu, setMenu }) {
                 span={24}
                 className={cx("menu", { sel: option.id === menu })}
                 onClick={() => {
-                  setMenu(option.id);
+                  setMenu({ id: option.id });
                   setShowMenuList(false);
                 }}
               >

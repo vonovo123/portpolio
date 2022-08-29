@@ -10,22 +10,23 @@ export default function PostPreview({
   posts,
   windowWidth,
   contentWidth,
-  subTitle,
+  makeSubTitle,
 }) {
   const makeElement = useCallback((element) => {
     return <PostElement element={element}></PostElement>;
   }, []);
   const [postList, setPostsList] = useState([...posts]);
-
   return (
     <div className={cx("post")}>
-      {subTitle}
-      <Carousel
-        data={postList}
-        makeElement={makeElement}
-        windowWidth={windowWidth}
-        contentWidth={contentWidth}
-      ></Carousel>
+      {makeSubTitle("post")}
+      <div className={cx("carouselWrapper")}>
+        <Carousel
+          data={postList}
+          makeElement={makeElement}
+          windowWidth={windowWidth}
+          contentWidth={contentWidth}
+        ></Carousel>
+      </div>
     </div>
   );
 }
