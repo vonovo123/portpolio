@@ -2,7 +2,7 @@ import styles from "../../styles/Portpolio/Portpolio.module.css";
 import classNames from "classnames/bind";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import PortPolioElement from "./PortPolioElement";
-import Carousel from "../Carousel/Carousel";
+import Slide from "../Slide/Slide";
 import makeObserver from "../../utils/Observer";
 
 const cx = classNames.bind(styles);
@@ -13,26 +13,37 @@ export default function Portpolio({
   contentWidth,
   subViewState,
   subMenuState,
-  headerFold,
   makeSubTitle,
 }) {
   const [subView, setSubView] = subViewState;
   const [subMenu, setSubMenu] = subMenuState;
-  const portArr = {
-    pub: { name: "퍼블리싱", value: [], ref: useRef(null) },
-    js: { name: "자바스크립트", value: [], ref: useRef(null) },
-    vue: { name: "뷰", value: [], ref: useRef(null) },
-    react: { name: "리엑트", value: [], ref: useRef(null) },
+  const [loadState, setLoadState] = useState({
+    pub: false,
+    js: false,
+    vue: false,
+    react: false,
+  });
+  const refObj = {
+    pub: useRef(null),
+    js: useRef(null),
+    vue: useRef(null),
+    react: useRef(null),
+  };
+  const dataObj = {
+    pub: { name: "퍼블리싱", value: [] },
+    js: { name: "자바스크립트", value: [] },
+    vue: { name: "뷰", value: [] },
+    react: { name: "리엑트", value: [] },
   };
   portpolios.forEach((portpolio) => {
     if (portpolio.category.type === "html/css") {
-      portArr.pub.value.push({ ...portpolio });
+      dataObj.pub.value.push({ ...portpolio });
     } else if (portpolio.category.type === "vanillaJs") {
-      portArr.js.value.push({ ...portpolio });
+      dataObj.js.value.push({ ...portpolio });
     } else if (portpolio.category.type === "vueNuxt") {
-      portArr.vue.value.push({ ...portpolio });
+      dataObj.vue.value.push({ ...portpolio });
     } else if (portpolio.category.type === "reactNext") {
-      portArr.react.value.push({ ...portpolio });
+      dataObj.react.value.push({ ...portpolio });
     }
   });
 
@@ -41,51 +52,54 @@ export default function Portpolio({
   };
 
   useEffect(() => {
-    const option = {
-      rootMargin: "-50% 0% -50% 0%",
-    };
-    const interSectionCallback = (entry) => {
-      const menu = entry.target.dataset.idx;
-      setSubView(menu);
-    };
-    const ref = {};
-    Object.entries(portArr).map(([key, port], idx) => {
-      ref[port.name] = port.ref;
-    });
-    const io = makeObserver(option, ref, interSectionCallback);
+    makeObserver(
+      {
+        rootMargin: "-70% 0% -30% 0%",
+      },
+      refObj,
+      (entry) => {
+        const menu = entry.target.dataset.idx;
+        setSubView(menu);
+      }
+    );
   }, []);
   //하위메뉴 변경
   useEffect(() => {
     if (!subMenu) return;
     const { id } = subMenu;
-    if (!id) return;
+    setSubView(id);
     window.scrollTo({
-      top: portArr[id].ref.current.offsetTop,
+      top: refObj[id].current.offsetTop - 50,
       behavior: "smooth",
     });
-    setSubView(id);
   }, [subMenu]);
+  useEffect(() => {
+    const newLoadState = { ...loadState };
+    newLoadState[subView] = true;
+    setLoadState({ ...newLoadState });
+  }, [subView]);
   return (
-    <div className={cx("portpolioWrapper")}>
-      {Object.entries(portArr).map(([key, port], idx) => (
+    <>
+      {Object.entries(dataObj).map(([key, data], idx) => (
         <div
-          className={cx("portpolio", { typeA: idx % 2 === 1 })}
+          className={cx("portpolioWrapper", { typeA: idx % 2 === 1 })}
+          ref={refObj[key]}
           key={idx}
-          ref={port.ref}
           data-idx={key}
         >
-          {makeSubTitle("portpolio", key)}
-          <div className={cx("carouselWrapper")}>
-            <Carousel
-              data={port.value}
-              makeElement={makeElement}
-              windowWidth={windowWidth}
-              contentWidth={contentWidth}
-              headerFold={headerFold}
-            ></Carousel>
+          <div className={cx("portpolio", "animate", { load: loadState[key] })}>
+            {makeSubTitle("portpolio", key)}
+            <div className={cx("carouselWrapper")}>
+              <Slide
+                data={data.value}
+                makeElement={makeElement}
+                windowWidth={windowWidth}
+                contentWidth={contentWidth}
+              ></Slide>
+            </div>
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }

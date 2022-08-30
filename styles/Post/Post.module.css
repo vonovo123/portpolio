@@ -1,7 +1,6 @@
 .post {
-  background-color: var(--background-color);
   padding: 0 2% 0 2%;
-  height: 90vh;
+  height: 80vh;
 }
 .hide {
   display: none;

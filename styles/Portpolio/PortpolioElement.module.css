@@ -10,32 +10,24 @@
 .wrapper {
   padding: 20px;
   border-radius: 8px;
-  box-shadow: -10px 5px 10px var(--border-color);
+  box-shadow: 10px 5px 10px var(--border-color);
   transition: all 0.5s;
 }
 .wrapper:hover {
-  box-shadow: -5px 5px 10px var(--border-color);
+  box-shadow: 5px 5px 10px var(--border-color);
 }
 .elementWrapper {
-  height: 55vh;
-  overflow: hidden;
-  transition: all 0.5s;
-}
-.elementWrapper.detail {
-  height: 60vh;
-}
-.elementInnerWrapper {
 }
 .element {
   text-align: center;
 }
 
 .imageWrapper {
-  height: 40vh;
+  height: 35vh;
 }
 .elementImage {
   border-radius: 8px;
-  height: 40vh;
+  height: 35vh;
   object-fit: cover;
   opacity: 0.9;
 }
@@ -47,19 +39,11 @@
   margin-bottom: 10px;
 }
 .elementShortContent {
-  height: 70px;
+  height: 80px;
   font-size: 14x;
   margin-bottom: 10px;
   padding: 0px 20px 0px 20px;
 }
-.description {
-  height: 35px;
-  font-size: 15px;
-  font-weight: bold;
-  text-align: center;
-  border-radius: 5px;
-}
-
 .elementContent {
   padding-top: 10px;
 }

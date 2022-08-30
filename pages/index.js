@@ -17,7 +17,6 @@ export default function Home({
   posts,
   portpolios,
   career,
-  home,
   menuFold,
   windowWidth,
   contentWidth,
@@ -28,12 +27,9 @@ export default function Home({
   subViewState,
   mainTitleState,
   subTitleState,
-  setChangeMenu,
 }) {
   const router = useRouter();
-  const postRef = useRef(null);
-  const portRef = useRef(null);
-  const careerRef = useRef(null);
+
   const [type, setType] = typeState;
   const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
@@ -41,13 +37,16 @@ export default function Home({
   const [subView, setSubView] = subViewState;
   const [mainTitle, setMainTitle] = mainTitleState;
   const [subTitle, setSubTitle] = subTitleState;
-  const ref = useMemo(() => {
-    return {
-      post: postRef,
-      portpolio: portRef,
-      career: careerRef,
-    };
-  }, [postRef, portRef, careerRef]);
+  const [loadState, setLoadState] = useState({
+    post: false,
+    portpolio: true,
+    career: false,
+  });
+  const refObj = {
+    post: useRef(null),
+    portpolio: useRef(null),
+    career: useRef(null),
+  };
   const portpoliMenu = [
     { id: "pub", name: "HTML&CSS" },
     { id: "js", name: "VanillaJs" },
@@ -139,6 +138,7 @@ export default function Home({
       <div className={cx("title", "sub", { hide: menuFold })}>{subTitle}</div>
     );
   });
+
   //화면진입 //스크롤로 화면변경
   useEffect(() => {
     setType("home");
@@ -152,7 +152,7 @@ export default function Home({
       const menu = entry.target.dataset.idx;
       setView(menu);
     };
-    const io = makeObserver(option, ref, interSectionCallback);
+    makeObserver(option, refObj, interSectionCallback);
   }, []);
 
   // 메뉴  변경
@@ -168,7 +168,7 @@ export default function Home({
       setView("post");
     } else {
       window.scrollTo({
-        top: ref[id].current.offsetTop,
+        top: refObj[id].current.offsetTop - 40,
         behavior: "smooth",
       });
       setView(id);
@@ -177,50 +177,70 @@ export default function Home({
 
   // 화면 변경
   useEffect(() => {
-    let subView = null;
+    if (!view) return;
     setMainTitle(makeMainTitle(view, subMenu));
+    const newLoadState = { ...loadState };
+    newLoadState[view] = true;
+    setLoadState({ ...newLoadState });
     if (view === "post" || view == "career") {
       setSubMenu(null);
     }
   }, [view]);
 
   useEffect(() => {
+    if (!subView) return;
     if (view === "portpolio") {
       setMainTitle(makeMainTitle(view, subMenu));
     }
   }, [subView]);
   return (
     <>
-      <div ref={postRef} data-idx="post" className={cx("componentWrapper")}>
-        <Post
-          posts={posts}
-          windowWidth={windowWidth}
-          contentWidth={contentWidth}
-          makeSubTitle={makeSubTitle}
-        />
+      <div className={cx("componentWrapper", "post")}>
+        <div
+          ref={refObj["post"]}
+          data-idx="post"
+          className={cx("component", "animate", { load: loadState["post"] })}
+        >
+          <Post
+            posts={posts}
+            windowWidth={windowWidth}
+            contentWidth={contentWidth}
+            makeSubTitle={makeSubTitle}
+          />
+        </div>
       </div>
-      <div
-        ref={portRef}
-        data-idx="portpolio"
-        className={cx("componentWrapper")}
-      >
-        <PortPolio
-          portpolios={portpolios}
-          windowWidth={windowWidth}
-          contentWidth={contentWidth}
-          subMenuState={subMenuState}
-          subViewState={subViewState}
-          makeSubTitle={makeSubTitle}
-        />
+      <div className={cx("componentWrapper", "portpolio")}>
+        <div
+          ref={refObj["portpolio"]}
+          data-idx="portpolio"
+          className={cx("component")}
+        >
+          <PortPolio
+            portpolios={portpolios}
+            windowWidth={windowWidth}
+            contentWidth={contentWidth}
+            subMenuState={subMenuState}
+            subViewState={subViewState}
+            makeSubTitle={makeSubTitle}
+          />
+        </div>
       </div>
-      <div ref={careerRef} data-idx="career" className={cx("componentWrapper")}>
-        <Career
-          career={career}
-          windowWidth={windowWidth}
-          contentWidth={contentWidth}
-          makeSubTitle={makeSubTitle}
-        />
+
+      <div className={cx("componentWrapper", "career")}>
+        <div
+          ref={refObj["career"]}
+          data-idx="career"
+          className={cx("component", "animate", { load: loadState["career"] })}
+        >
+          <Career
+            career={career}
+            windowWidth={windowWidth}
+            contentWidth={contentWidth}
+            makeSubTitle={makeSubTitle}
+          />
+        </div>
       </div>
+
       <Footer />
     </>
   );

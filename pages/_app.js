@@ -74,7 +74,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("headerWrapper", { fold: menuFold })}>
-        <div className={cx("header")}>{"뚝딱뚝딱 개발공장 🏭 "}</div>
+        <div className={cx("header")}>{" 🛠️   뚝딱뚝딱 개발공간"}</div>
       </div>
       <div
         className={cx("aboutWrapper", { show: showAbout, fold: menuFold })}

@@ -1,7 +1,6 @@
 .career {
   min-height: 700px;
   padding: 30px 2% 10px 2%;
-  background-color: var(--background-colorB);
 }
 .descriptionWrapper {
   width: 100%;
@@ -10,16 +9,17 @@
 .description {
   width: 100%;
   background-color: var(--background-colorA);
-  padding: 30px 50px 0px 50px;
+  padding: 30px 50px 20px 50px;
   font-size: 15px;
   border-radius: 8px;
-  box-shadow: -10px 5px 10px var(--border-color);
+  box-shadow: 10px 5px 10px var(--border-color);
 }
 .descriptionHeader {
   display: flex;
   font-size: 17px;
   font-weight: bold;
-  padding-bottom: 30px;
+  padding-bottom: 15px;
+  padding-left: 30px;
 }
 .descriptionHeader .el {
   margin-right: 20px;
@@ -31,12 +31,11 @@
   transition: all 0.5s;
 }
 .descriptionBodyHeader {
-  text-align: center;
   margin-bottom: 30px;
 }
 .descriptionCol {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .tag {
@@ -54,4 +53,9 @@
 }
 
 @media only screen and (max-width: 767px) {
+  .description {
+    padding: 20px 10px 20px 10px;
+  }
+  .descriptionHeader {
+  }
 }

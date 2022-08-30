@@ -18,6 +18,7 @@ export default function Carousel({
   const [width, setWidth] = useState(0);
   useEffect(() => {
     let size = data.length;
+    console.log(width);
     const { width } = slideRef.current
       .getElementsByTagName("div")[0]
       .getBoundingClientRect();
@@ -32,38 +33,33 @@ export default function Carousel({
     } else {
       limitSize = 4;
     }
-    if (size >= limitSize) {
-      slideRef.current.style.transform = `translate3d(-${
-        (width * 3 * size) / 3
-      }px, 0, 0)`;
-    } else {
-      slideRef.current.style.transform = `translate3d(-${0}px, 0, 0)`;
-    }
+    slideRef.current.style.transform = `translate3d(-${0}px, 0, 0)`;
     setLimitSize(limitSize);
     setSize(size);
-    setIndex(size);
-  }, [data, contentWidth]);
+    setIndex(0);
+  }, [contentWidth]);
 
   const move = useCallback(
     (dir) => {
       const nextIdx = index + dir;
-      slideRef.current.style.transition = `${0.5}s ease-out`;
-      slideRef.current.style.transform = `translate3d(${
-        -width * nextIdx
-      }px, 0, 0)`;
-      setIndex(nextIdx);
-      if (nextIdx === size * 2 || nextIdx === 0) {
-        setTimeout(() => {
-          nextIdx = size;
-          slideRef.current.style.transition = `${0}s ease-out`;
+      if (dir === 1) {
+        if (nextIdx >= limitSize) {
+          slideRef.current.style.transition = `${0.5}s ease-out`;
           slideRef.current.style.transform = `translate3d(${
-            -width * nextIdx
+            -width * (nextIdx - (limitSize - 1))
           }px, 0, 0)`;
-          setIndex(nextIdx);
-        }, 500);
+        }
+      } else {
+        if (nextIdx % limitSize === limitSize - 1) {
+          slideRef.current.style.transition = `${0.5}s ease-out`;
+          slideRef.current.style.transform = `translate3d(${
+            -(width * limitSize) * Math.floor(nextIdx / limitSize)
+          }px, 0, 0)`;
+        }
       }
+      setIndex(nextIdx);
     },
-    [index, size, width]
+    [index, width, limitSize]
   );
 
   return (
@@ -80,29 +76,13 @@ export default function Carousel({
               Touch.touchEnd(e, move);
             }}
           >
-            {(size >= limitSize || windowWidth < 767) &&
-              data.map((element, idx) => {
-                return (
-                  <Col key={idx} className={cx("col")}>
-                    {makeElement(element)}
-                  </Col>
-                );
-              })}
             {data.map((element, idx) => {
               return (
-                <Col key={idx} className={cx("col")}>
+                <Col key={idx} className={cx("col", { sel: idx === index })}>
                   {makeElement(element)}
                 </Col>
               );
             })}
-            {(size >= limitSize || windowWidth < 767) &&
-              data.map((element, idx) => {
-                return (
-                  <Col key={idx} className={cx("col")}>
-                    {makeElement(element)}
-                  </Col>
-                );
-              })}
           </Row>
         </div>
       </div>

@@ -4,10 +4,10 @@
   background-color: #ffffff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: -10px 5px 10px var(--border-color);
+  box-shadow: 10px 5px 10px var(--border-color);
 }
 .post:hover {
-  box-shadow: -5px 5px 10px var(--border-color);
+  box-shadow: 5px 5px 10px var(--border-color);
 }
 .postImageWrapper {
   display: flex;
