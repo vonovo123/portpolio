@@ -47,8 +47,8 @@ export default function Portpolio({
     }
   });
 
-  const makeElement = (element) => {
-    return <PortPolioElement element={element}></PortPolioElement>;
+  const makeElement = (element, sel) => {
+    return <PortPolioElement element={element} sel={sel}></PortPolioElement>;
   };
 
   useEffect(() => {

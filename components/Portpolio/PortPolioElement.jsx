@@ -7,9 +7,8 @@ import { GithubOutlined, PaperClipOutlined } from "@ant-design/icons";
 import BlogMarkDown from "../BlogMarkDown";
 
 const cx = classNames.bind(styles);
-export default function PortPolioElement({ element }) {
+export default function PortPolioElement({ element, sel }) {
   const router = useRouter();
-  const [detail, setDetail] = useState(false);
   const {
     author,
     shortContent,
@@ -20,58 +19,51 @@ export default function PortPolioElement({ element }) {
     thumbnail,
     title,
   } = element;
-  const moveElement = useCallback(() => {
-    setDetail(!detail);
-  }, [detail]);
   return (
-    <div className={cx("wrapper")}>
-      <div className={cx("elementWrapper", { detail: detail })}>
-        <Row className={cx("element")}>
-          <Col span={24} className={cx("imageWrapper", "mb20")}>
-            <Image
-              src={thumbnail.imageUrl}
-              alt={thumbnail.alt}
-              className={cx("elementImage")}
-              preview={false}
-            />
-          </Col>
-          <Col span={24} className={cx("elementTitle", "pb20")}>
-            {title}
-          </Col>
-          <Col span={24} className={cx("elementShortContent", "pb20")}>
-            {shortContent}
-          </Col>
-          {/* <Col span={24} className={cx("mb20")}>
-            <Row className={cx("tagWrapper")} align={"center"}>
-              {skills.map((tag, idx) => (
-                <Col className={cx("tag")} key={idx} span={6}>
-                  {tag.name}
-                </Col>
-              ))}
-            </Row>
-          </Col> */}
+    <div className={cx("elementWrapper")}>
+      <div className={cx("element")}>
+        <Image
+          src={thumbnail.imageUrl}
+          alt={thumbnail.alt}
+          className={cx("elementImage")}
+          preview={false}
+        />
+        <div className={cx("contentWrapper", { sel: sel })}>
+          <div className={cx("contentTitleWrapper")}>
+            <div className={cx("title")}>{title}</div>
+            <div className={cx("shortContent")}>{shortContent}</div>
+          </div>
+          <BlogMarkDown markdown={portpolioContent.markdown} />
+        </div>
 
-          <Col
-            span={12}
-            align="center"
+        <div className={cx("btnWrapper")}>
+          <Row className={cx("tagWrapper")}>
+            {skills.map((tag, idx) => (
+              <Col className={cx("tag")} key={idx} span={5}>
+                {tag.name}
+              </Col>
+            ))}
+          </Row>
+          <div
+            className={cx("btn")}
             onClick={() => {
               window.location.href = repoUrl;
             }}
           >
             <GithubOutlined className={styles.icon} />
             <div>레포지토리</div>
-          </Col>
-          <Col
-            span={12}
+          </div>
+          <div
             align="center"
+            className={cx("btn")}
             onClick={() => {
               window.location.href = demoUrl;
             }}
           >
             <PaperClipOutlined className={styles.icon} />
             <div>데모페이지</div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
     </div>
   );

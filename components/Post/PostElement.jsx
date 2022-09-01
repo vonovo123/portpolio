@@ -13,35 +13,33 @@ export default function PostElement({ element }) {
     [router]
   );
   return (
-    <Row
-      className={cx("post", {})}
+    <div
+      className={cx("elementWrapper")}
       onClick={() => {
         goDetail(element.slug);
       }}
     >
-      <Col span={24} className={cx("postImageWrapper")}>
+      <div className={cx("element")}>
         <Image
           src={element.thumbnail.imageUrl}
           alt={element.thumbnail.alt}
-          className={cx("postImage")}
+          className={cx("elementImage")}
           preview={false}
         />
-      </Col>
-      <Row className={cx("postWrapper")}>
-        <Col span={24} className={cx("postTitle")}>
-          {element.title}
-        </Col>
-        <Col span={24} className={cx("postShort")}>
-          {element.shortContent}
-        </Col>
-        <Row className={cx("postTagWrapper")}>
-          {element.tag.map((tag, idx) => (
-            <Col className={cx("postTag")} key={idx}>
-              {tag.title}
-            </Col>
-          ))}
-        </Row>
-      </Row>
-    </Row>
+        <div className={cx("contentWrapper")}>
+          <div className={cx("postTitle")}>{element.title}</div>
+          <div s className={cx("postShort")}>
+            {element.shortContent}
+          </div>
+          <Row className={cx("tagWrapper")}>
+            {element.tag.map((tag, idx) => (
+              <Col className={cx("tag")} key={idx} span={5}>
+                {tag.title}
+              </Col>
+            ))}
+          </Row>
+        </div>
+      </div>
+    </div>
   );
 }

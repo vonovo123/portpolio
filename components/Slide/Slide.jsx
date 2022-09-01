@@ -78,15 +78,15 @@ export default function Carousel({
           >
             {data.map((element, idx) => {
               return (
-                <Col key={idx} className={cx("col", { sel: idx === index })}>
-                  {makeElement(element)}
+                <Col key={idx} className={cx("col")}>
+                  {makeElement(element, idx === index)}
                 </Col>
               );
             })}
           </Row>
         </div>
       </div>
-      {size >= limitSize && <Nav index={index} size={size} move={move}></Nav>}
+      {<Nav index={index} size={size} move={move}></Nav>}
     </>
   );
 }

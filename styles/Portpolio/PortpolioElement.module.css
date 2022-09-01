@@ -7,56 +7,98 @@
 .mb20 {
   margin-bottom: 20px;
 }
-.wrapper {
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 10px 5px 10px var(--border-color);
-  transition: all 0.5s;
-}
-.wrapper:hover {
-  box-shadow: 5px 5px 10px var(--border-color);
-}
 .elementWrapper {
+  position: relative;
+  width: 100%;
+  height: 65vh;
+  padding: 20px;
+  overflow: hidden;
+  box-shadow: 10px 5px 10px var(--border-color);
+  border-radius: 8px;
+  background-color: var(--background-colorA);
 }
 .element {
+  height: 100%;
+  width: 100%;
+  transition: all 0.5s;
+  display: flex;
+  justify-content: center;
+}
+
+.elementImage {
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+}
+.contentWrapper {
+  position: absolute;
+  background-color: var(--background-colorA);
+  opacity: 0.9;
+  width: 100%;
+  bottom: -20%;
+  height: 70%;
+  padding: 30px 20px 0px 20px;
+  z-index: 2;
+  transition: all 0.5s;
+}
+.contentWrapper.sel {
+  bottom: 30%;
+  overflow-y: scroll;
+}
+.contentWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.contentTitleWrapper {
+  height: 15%;
+  margin-bottom: 50px;
   text-align: center;
 }
-
-.imageWrapper {
-  height: 35vh;
-}
-.elementImage {
-  border-radius: 8px;
-  height: 35vh;
-  object-fit: cover;
-  opacity: 0.9;
-}
-
-.elementTitle {
-  height: 40px;
+.title {
   font-size: 15px;
   font-weight: bold;
   margin-bottom: 10px;
 }
-.elementShortContent {
-  height: 80px;
+.shortContent {
   font-size: 14x;
   margin-bottom: 10px;
-  padding: 0px 20px 0px 20px;
 }
 .elementContent {
   padding-top: 10px;
 }
+.btnWrapper {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  bottom: 0%;
+  height: 30%;
+  padding: 10px 40px 10px 40px;
+  z-index: 3;
+  background-color: var(--background-colorA);
+  border-radius: 8px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.btn {
+  width: 50%;
+}
 .tagWrapper {
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
 }
 .tag {
   font-size: 10px;
-  text-align: center;
-  color: white;
+
+  color: var(--tag-font-color);
   background-color: grey;
   border-radius: 5px;
-  padding: 5px;
-  margin: 4px;
+  padding-top: 3px;
+  margin: 2px;
+  height: 20px;
   font-weight: bold;
 }
 
