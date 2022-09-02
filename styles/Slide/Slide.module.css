@@ -38,7 +38,10 @@
 /* md < */
 @media only screen and (max-width: 767px) {
   .col {
-    width: 98%;
-    padding: 1%;
+    width: 97%;
+    padding: 0 2% 0 1%;
+  }
+  .col:last-child {
+    padding: 0 1% 0 1%;
   }
 }

@@ -1,6 +1,6 @@
 .wrapper {
   --background-colorA: #ffffff;
-  --background-colorB: #f9fafb;
+  --background-colorB: #fefafa;
   --tag-color: #83878c;
   --tag-font-color: #ffffff;
   --border-color: #e7e1e1;
@@ -9,6 +9,7 @@
   --sel-font-color: #191f28;
   --nav-dot-color: #83878c;
   --nav-dot-sel-color: #34495e;
+  --nav-dot-last-color: #ffbc49;
   --border-width: 1px;
   background-color: var(--background-colorA);
   color: var(--font-color);
@@ -141,9 +142,10 @@
   .bodyWrapper {
     margin-left: 0px;
     margin-right: 0px;
+    padding-top: 5vh;
   }
   .bodyWrapper.fold {
-    margin-left: 0px;
+    padding-top: 10vh;
   }
 
   .title {

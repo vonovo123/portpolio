@@ -44,6 +44,7 @@ export default function Portpolio({
       dataObj.vue.value.push({ ...portpolio });
     } else if (portpolio.category.type === "reactNext") {
       dataObj.react.value.push({ ...portpolio });
+      dataObj.react.value.push({ ...portpolio });
     }
   });
 

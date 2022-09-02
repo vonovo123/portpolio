@@ -27,8 +27,8 @@ export default function PostElement({ element }) {
           preview={false}
         />
         <div className={cx("contentWrapper")}>
-          <div className={cx("postTitle")}>{element.title}</div>
-          <div s className={cx("postShort")}>
+          <div className={cx("title")}>{element.title}</div>
+          <div s className={cx("short")}>
             {element.shortContent}
           </div>
           <Row className={cx("tagWrapper")}>

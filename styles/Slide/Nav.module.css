@@ -21,12 +21,21 @@
   border-radius: 100%;
   margin: 5px 10px 5px 10px;
   background-color: var(--nav-dot-color);
-  transition: all 1s;
+  transition: all 0.5s;
 }
+
 .dot.sel {
-  width: 30px;
-  height: 13px;
-  border-radius: 0%;
+  width: 40px;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: 10%;
+  background-color: var(--nav-dot-sel-color);
+}
+
+.dot.last {
+  background-color: var(--nav-dot-last-color);
+}
+.dot.last.sel {
   background-color: var(--nav-dot-sel-color);
 }
 
@@ -39,4 +48,9 @@
   cursor: pointer;
   font-size: 18px;
   margin: 5px 20px 5px 20px;
+}
+@media only screen and (max-width: 767px) {
+  .navigation {
+    display: none;
+  }
 }

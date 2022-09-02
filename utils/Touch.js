@@ -17,7 +17,7 @@ export default (function Touch() {
       if (Math.abs(dx) <= 1) {
         return;
       }
-      dx > 0 ? move(-1) : move(1);
+      dx > 0 ? move("prev") : move("next");
     },
   };
 })();

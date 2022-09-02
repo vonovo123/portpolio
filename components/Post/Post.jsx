@@ -15,7 +15,7 @@ export default function PostPreview({
   const makeElement = useCallback((element) => {
     return <PostElement element={element}></PostElement>;
   }, []);
-  const [postList, setPostsList] = useState([...posts]);
+  const [postList, setPostsList] = useState([...posts, ...posts, ...posts]);
   return (
     <div className={cx("post")}>
       {makeSubTitle("post")}

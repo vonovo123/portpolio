@@ -1,18 +1,32 @@
-import styles from "../../styles/Carousel/Nav.module.css";
+import styles from "../../styles/Slide/Nav.module.css";
 import classNames from "classnames/bind";
 import { useRef } from "react";
 import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
-export default function Nav({ index, size, move }) {
+export default function Nav({ index, size, move, limitSize }) {
   const arrowRef = useRef(null);
   const drawDots = () => {
     const result = [];
     for (let i = 0; i < size; i++) {
       result.push(
-        <div key={i} className={cx("dot", { sel: i === index })}></div>
+        <div
+          key={i}
+          className={cx(
+            "dot",
+            { sel: i === index },
+            {
+              last:
+                (size < limitSize && i === size - 1) ||
+                (size >= limitSize && i % limitSize === limitSize - 1),
+            }
+          )}
+          onClick={() => {
+            move(i);
+          }}
+        ></div>
       );
     }
-    return result;
+    return <div className={cx("dots")}>{result}</div>;
   };
 
   return (
@@ -22,7 +36,7 @@ export default function Nav({ index, size, move }) {
           {index > 0 && (
             <CaretLeftOutlined
               onClick={() => {
-                move(-1);
+                move("prev");
               }}
             />
           )}
@@ -32,7 +46,7 @@ export default function Nav({ index, size, move }) {
           {index < size - 1 && (
             <CaretRightOutlined
               onClick={() => {
-                move(1);
+                move("next");
               }}
             />
           )}

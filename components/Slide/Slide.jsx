@@ -1,7 +1,7 @@
 import { Row, Col } from "antd";
 import { useCallback, useState, useEffect, useRef } from "react";
 import classNames from "classnames/bind";
-import styles from "../../styles/Carousel/Carousel.module.css";
+import styles from "../../styles/Slide/Slide.module.css";
 import Touch from "../../utils/Touch";
 import Nav from "./Nav";
 const cx = classNames.bind(styles);
@@ -41,23 +41,21 @@ export default function Carousel({
 
   const move = useCallback(
     (dir) => {
-      const nextIdx = index + dir;
-      if (dir === 1) {
-        if (nextIdx >= limitSize) {
-          slideRef.current.style.transition = `${0.5}s ease-out`;
-          slideRef.current.style.transform = `translate3d(${
-            -width * (nextIdx - (limitSize - 1))
-          }px, 0, 0)`;
-        }
+      const nextIdx = 0;
+      if (dir === "prev") {
+        nextIdx = index - 1;
+      } else if (dir === "next") {
+        nextIdx = index + 1;
       } else {
-        if (nextIdx % limitSize === limitSize - 1) {
-          slideRef.current.style.transition = `${0.5}s ease-out`;
-          slideRef.current.style.transform = `translate3d(${
-            -(width * limitSize) * Math.floor(nextIdx / limitSize)
-          }px, 0, 0)`;
-        }
+        nextIdx = dir;
       }
       setIndex(nextIdx);
+      slideRef.current.style.transition = `${0.5}s ease-out`;
+      if (dir === "next" && nextIdx % limitSize !== 0) return;
+      if (dir === "prev" && nextIdx % limitSize !== limitSize - 1) return;
+      slideRef.current.style.transform = `translate3d(${
+        -(width * limitSize) * Math.floor(nextIdx / limitSize)
+      }px, 0, 0)`;
     },
     [index, width, limitSize]
   );
@@ -86,7 +84,7 @@ export default function Carousel({
           </Row>
         </div>
       </div>
-      {<Nav index={index} size={size} move={move}></Nav>}
+      {<Nav index={index} size={size} move={move} limitSize={limitSize}></Nav>}
     </>
   );
 }

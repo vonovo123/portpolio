@@ -46,7 +46,15 @@ export default function Carousel({
 
   const move = useCallback(
     (dir) => {
-      const nextIdx = index + dir;
+      const nextIdx = 0;
+      if (dir === "prev") {
+        nextIdx = index - 1;
+      } else if (dir === "next") {
+        nextIdx = index + 1;
+      } else {
+        nextIdx = size + dir;
+      }
+      console.log(nextIdx);
       slideRef.current.style.transition = `${0.5}s ease-out`;
       slideRef.current.style.transform = `translate3d(${
         -width * nextIdx
@@ -106,7 +114,9 @@ export default function Carousel({
           </Row>
         </div>
       </div>
-      {size >= limitSize && <Nav index={index} size={size} move={move}></Nav>}
+      {size >= limitSize && (
+        <Nav index={index} size={size} move={move} limitSize={limitSize}></Nav>
+      )}
     </>
   );
 }
