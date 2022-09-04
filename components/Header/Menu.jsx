@@ -7,49 +7,47 @@ export default function Menu({
   viewState,
   subMenuState,
   subViewState,
-  menus,
-  typeState,
+  menuInfoState,
 }) {
   const [menu, setMenu] = menuState;
   const [view, setView] = viewState;
   const [subMenu, setSubMenu] = subMenuState;
   const [subView, setSubView] = subViewState;
-  const [type, setType] = typeState;
+  const [menuInfo, setMenuInfo] = menuInfoState;
   return (
     <Row className={cx("header")}>
       <Col span={24} className={cx("navWrapper")}>
-        {menus.map((menuObj, idx) => (
-          <div key={idx} span={24}>
-            <div
-              className={cx("nav", { sel: view === menuObj.id })}
-              onClick={(e) => {
-                setMenu({ id: menuObj.id });
-              }}
-            >
-              {menuObj.name}
+        {menuInfo &&
+          menuInfo.map((menuObj, idx) => (
+            <div key={idx} span={24}>
+              <div
+                className={cx("nav", { sel: view === menuObj.id })}
+                onClick={(e) => {
+                  setMenu({ id: menuObj.id });
+                }}
+              >
+                {menuObj.name}
+              </div>
+              <div className={cx("subNavWrapper")}>
+                {menuObj.sub &&
+                  menuObj.sub.map((subMenuObj, idx) => {
+                    return (
+                      <div
+                        key={idx}
+                        className={cx("subNav", {
+                          sel: subView === subMenuObj.id && menuObj.id === view,
+                        })}
+                        onClick={(e) => {
+                          setSubMenu({ id: subMenuObj.id });
+                        }}
+                      >
+                        {subMenuObj.name}
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
-            <div className={cx("subNavWrapper")}>
-              {menuObj.sub &&
-                menuObj.sub.map((subMenuObj, idx) => {
-                  if (subMenuObj.type !== "all" && subMenuObj.type !== type)
-                    return;
-                  return (
-                    <div
-                      key={idx}
-                      className={cx("subNav", {
-                        sel: subView === subMenuObj.id && menuObj.id === view,
-                      })}
-                      onClick={(e) => {
-                        setSubMenu({ id: subMenuObj.id });
-                      }}
-                    >
-                      {subMenuObj.name}
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-        ))}
+          ))}
       </Col>
     </Row>
   );

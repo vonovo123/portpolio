@@ -7,18 +7,16 @@ import Menu from "../components/Header/Menu";
 import Title from "../components/Title";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import About from "../components/About";
-import {
-  CaretLeftOutlined,
-  CaretRightOutlined,
-  CaretUpOutlined,
-} from "@ant-design/icons";
+import { CaretLeftOutlined, CaretRightOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 function MyApp({ Component, pageProps }) {
   //page 타임
   const typeState = useState(null);
+  //해더인포
+  const menuInfoState = useState(null);
   //헤더 선택 메뉴
   const menuState = useState(null);
-  //헤더 서브 메뉴
+  //헤더 서브선택 메뉴
   const subMenuState = useState(null);
   //화면 선택 메뉴
   const viewState = useState(null);
@@ -32,31 +30,8 @@ function MyApp({ Component, pageProps }) {
   const [showAbout, setShowAbout] = useState(false);
   const [menuFold, setMenuFold] = useState(false);
   const [changeMenu, setChangeMenu] = useState(null);
+
   const contentRef = useRef(null);
-  const headerMenus = useMemo(() => {
-    return [
-      {
-        id: "post",
-        name: "새로운 글",
-        sub: [
-          { type: "posts", id: "dev", name: "개발" },
-          { type: "posts", id: "life", name: "일상" },
-          { type: "posts", id: "review", name: "리뷰" },
-        ],
-      },
-      {
-        id: "portpolio",
-        name: "포트폴리오",
-        sub: [
-          { type: "all", id: "pub", name: "HTML&CSS" },
-          { type: "all", id: "js", name: "VanillaJs" },
-          { type: "all", id: "vue", name: "VueJs" },
-          { type: "all", id: "react", name: "ReactJs" },
-        ],
-      },
-      { type: "", id: "career", name: "커리어", sub: [] },
-    ];
-  }, []);
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
     setContentWidth(contentRef.current.getBoundingClientRect().width);
@@ -92,7 +67,7 @@ function MyApp({ Component, pageProps }) {
             viewState={viewState}
             subViewState={subViewState}
             profile={pageProps.profile[0]}
-            menus={headerMenus}
+            menuInfoState={menuInfoState}
             typeState={typeState}
             changeMenu={changeMenu}
           />
@@ -137,8 +112,8 @@ function MyApp({ Component, pageProps }) {
             subViewState={subViewState}
             mainTitleState={mainTitleState}
             subTitleState={subTitleState}
+            menuInfoState={menuInfoState}
             menuFold={menuFold}
-            setChangeMenu={setChangeMenu}
           />
         </div>
       </div>

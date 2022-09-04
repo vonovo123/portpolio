@@ -11,21 +11,22 @@ import { Col } from "antd";
 const cx = classNames.bind(styles);
 export default function Posts({
   posts,
-  width,
-  setTarget,
+  portpolios,
+  career,
+  windowWidth,
+  contentWidth,
   typeState,
-  viewState,
   menuState,
+  viewState,
   subMenuState,
   subViewState,
   mainTitleState,
   subTitleState,
+  menuInfoState,
+  menuFold,
 }) {
   const router = useRouter();
   const devPosts = [...posts, ...posts, ...posts];
-  const devRef = useRef(null);
-  const lifeRef = useRef(null);
-  const reviewRef = useRef(null);
   const [type, setType] = typeState;
   const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
@@ -33,29 +34,18 @@ export default function Posts({
   const [subView, setSubView] = subViewState;
   const [mainTitle, setMainTitle] = mainTitleState;
   const [subTitle, setSubTitle] = subTitleState;
-  const ref = useMemo(() => {
-    return {
-      dev: devRef,
-      life: lifeRef,
-      review: reviewRef,
-    };
-  }, [devRef, lifeRef, reviewRef]);
+  const [menuInfo, setMenuInfo] = menuInfoState;
+  const [loadState, setLoadState] = useState({
+    dev: false,
+    life: false,
+    review: false,
+  });
+  const refObj = {
+    dev: useRef(null),
+    life: useRef(null),
+    review: useRef(null),
+  };
 
-  const goDetail = useCallback(
-    (slug) => {
-      router.push(`/post/${slug}`);
-    },
-    [router]
-  );
-  const goHome = useCallback(
-    (menu) => {
-      setType(null);
-      setSubMenu(null);
-      setSubTitle(null);
-      router.push({ pathname: "/", query: { menu } });
-    },
-    [router]
-  );
   const makeMainTitle = useCallback((menu) => {
     let title = null;
     if (menu === "dev") {
@@ -85,71 +75,112 @@ export default function Posts({
       </div>
     );
   }, []);
+  const goDetail = useCallback(
+    (slug) => {
+      router.push(`/post/${slug}`);
+    },
+    [router]
+  );
+  const goHome = useCallback(
+    (menu) => {
+      setType(null);
+      setSubMenu(null);
+      setSubTitle(null);
+      router.push({ pathname: "/", query: { menu } });
+    },
+    [router]
+  );
   //화면진입 //스크롤로 화면변경
   useEffect(() => {
     setType("posts");
-    setMenu("post");
-    router.query.menu ? setSubMenu(router.query.menu) : setSubMenu("dev");
+    setMenuInfo([
+      {
+        id: "dev",
+        name: "개발",
+        sub: [],
+      },
+      {
+        id: "life",
+        name: "일상",
+        sub: [],
+      },
+      {
+        id: "review",
+        name: "후기",
+        sub: [],
+      },
+    ]);
+    setMenu({ id: "dev" });
     const option = {
-      rootMargin: "-50% 0% -50% 0%",
+      rootMargin: "-40% 0% -60% 0%",
     };
     const interSectionCallback = (entry) => {
-      const menu = entry.target.dataset.idx;
-      setMenu(null);
-      setSubView(menu);
+      const { view } = entry.target.dataset;
+      setView(view);
     };
-    const io = makeObserver(option, ref, interSectionCallback);
+    makeObserver(option, refObj, interSectionCallback);
   }, []);
-  // 메뉴 변경
+  //메뉴 변경
   useEffect(() => {
-    if (!menu || menu === "post") return;
-    if (menu === "home") {
+    if (!menu) return;
+    const { id } = menu;
+    if (!id) return;
+    if (id === "home" || id === "dev") {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
-      setSubMenu("dev");
+      setView("dev");
     } else {
-      goHome(menu);
+      window.scrollTo({
+        top: refObj[id].current.offsetTop - 40,
+        behavior: "smooth",
+      });
+      setView(id);
     }
   }, [menu]);
   //하위메뉴 변경
   useEffect(() => {
-    if (!subMenu) return;
-    if (subMenu === "new") {
-      goHome("post");
-      return;
-    } else {
-      window.scrollTo({
-        top: ref[subMenu].current.offsetTop,
-        behavior: "smooth",
-      });
-      setSubView(subMenu);
+    if (!view) return;
+    setMainTitle(makeMainTitle(view));
+    const newLoadState = { ...loadState };
+    newLoadState[view] = true;
+    setLoadState({ ...newLoadState });
+    if (view === "post" || view == "career") {
+      setSubMenu(null);
     }
-  }, [subMenu]);
-  // 화면 변경
-  useEffect(() => {
-    setMainTitle(makeMainTitle(subView));
-    setSubTitle(makeSubTitle(subView));
-  }, [subView]);
+  }, [view]);
+
   return (
     <>
-      <div className={cx("componentWrapper")} ref={devRef} data-idx="dev">
-        <div className={cx("postWrapper")}>
+      <div className={cx("componentWrapper", "dev")}>
+        <div
+          className={cx("component", "animate", { load: loadState["dev"] })}
+          ref={refObj["dev"]}
+          data-view="dev"
+        >
           {devPosts.map((post, idx) => {
             return makeElement(post, idx);
           })}
         </div>
       </div>
-      <div className={cx("componentWrapper")} ref={lifeRef} data-idx="life">
-        <div className={cx("postWrapper")}>
+      <div className={cx("componentWrapper", "life")}>
+        <div
+          className={cx("component", "animate", { load: loadState["life"] })}
+          ref={refObj["life"]}
+          data-view="life"
+        >
           {devPosts.map((post, idx) => {
             return makeElement(post, idx);
           })}
         </div>
       </div>
-      <div className={cx("componentWrapper")} ref={reviewRef} data-idx="review">
-        <div className={cx("postWrapper")}>
+      <div className={cx("componentWrapper", "review")}>
+        <div
+          className={cx("component", "animate", { load: loadState["review"] })}
+          ref={refObj["review"]}
+          data-view="review"
+        >
           {devPosts.map((post, idx) => {
             return makeElement(post, idx);
           })}

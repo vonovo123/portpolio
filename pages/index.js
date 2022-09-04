@@ -17,7 +17,6 @@ export default function Home({
   posts,
   portpolios,
   career,
-  menuFold,
   windowWidth,
   contentWidth,
   typeState,
@@ -27,9 +26,10 @@ export default function Home({
   subViewState,
   mainTitleState,
   subTitleState,
+  menuInfoState,
+  menuFold,
 }) {
   const router = useRouter();
-
   const [type, setType] = typeState;
   const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
@@ -37,6 +37,7 @@ export default function Home({
   const [subView, setSubView] = subViewState;
   const [mainTitle, setMainTitle] = mainTitleState;
   const [subTitle, setSubTitle] = subTitleState;
+  const [menuInfo, setMenuInfo] = menuInfoState;
   const [loadState, setLoadState] = useState({
     post: false,
     portpolio: true,
@@ -53,18 +54,8 @@ export default function Home({
     { id: "vue", name: "VueJs" },
     { id: "react", name: "ReactJs" },
   ];
-  const goPosts = useCallback(
-    (menu) => {
-      setType(null);
-      setMenu(null);
-      setSubView(null);
-      setSubTitle(null);
-      router.push({ pathname: "/posts", query: { menu } });
-    },
-    [router]
-  );
   const makeMainTitle = useCallback(
-    (menu, subMenu) => {
+    (menu) => {
       let title = null;
       if (menu === "post") {
         title = (
@@ -138,19 +129,53 @@ export default function Home({
       <div className={cx("title", "sub", { hide: menuFold })}>{subTitle}</div>
     );
   });
-
+  const goPosts = useCallback(
+    (menu) => {
+      setType(null);
+      setMenu(null);
+      setView(null);
+      setMainTitle(null);
+      setSubView(null);
+      setSubMenu(null);
+      setSubTitle(null);
+      setLoadState({
+        post: false,
+        portpolio: true,
+        career: false,
+      });
+      setMenuInfo(null);
+      router.push({ pathname: "/posts", query: { menu } });
+    },
+    [router]
+  );
   //화면진입 //스크롤로 화면변경
   useEffect(() => {
     setType("home");
-    router.query.menu
-      ? setMenu({ id: router.query.view })
-      : setMenu({ id: "post" });
+    setMenuInfo([
+      {
+        id: "post",
+        name: "새로운 포스트",
+        sub: [],
+      },
+      {
+        id: "portpolio",
+        name: "포트폴리오",
+        sub: [
+          { id: "pub", name: "HTML&CSS" },
+          { id: "js", name: "VanillaJs" },
+          { id: "vue", name: "VueJs" },
+          { id: "react", name: "ReactJs" },
+        ],
+      },
+      { id: "career", name: "커리어", sub: [] },
+    ]);
+    setMenu({ id: "post" });
     const option = {
       rootMargin: "-40% 0% -60% 0%",
     };
     const interSectionCallback = (entry) => {
-      const menu = entry.target.dataset.idx;
-      setView(menu);
+      const { view } = entry.target.dataset;
+      setView(view);
     };
     makeObserver(option, refObj, interSectionCallback);
   }, []);
@@ -178,7 +203,7 @@ export default function Home({
   // 화면 변경
   useEffect(() => {
     if (!view) return;
-    setMainTitle(makeMainTitle(view, subMenu));
+    setMainTitle(makeMainTitle(view));
     const newLoadState = { ...loadState };
     newLoadState[view] = true;
     setLoadState({ ...newLoadState });
@@ -187,18 +212,12 @@ export default function Home({
     }
   }, [view]);
 
-  useEffect(() => {
-    if (!subView) return;
-    if (view === "portpolio") {
-      setMainTitle(makeMainTitle(view, subMenu));
-    }
-  }, [subView]);
   return (
     <>
       <div className={cx("componentWrapper", "post")}>
         <div
           ref={refObj["post"]}
-          data-idx="post"
+          data-view="post"
           className={cx("component", "animate", { load: loadState["post"] })}
         >
           <Post
@@ -212,7 +231,7 @@ export default function Home({
       <div className={cx("componentWrapper", "portpolio")}>
         <div
           ref={refObj["portpolio"]}
-          data-idx="portpolio"
+          data-view="portpolio"
           className={cx("component")}
         >
           <PortPolio
@@ -229,7 +248,7 @@ export default function Home({
       <div className={cx("componentWrapper", "career")}>
         <div
           ref={refObj["career"]}
-          data-idx="career"
+          data-view="career"
           className={cx("component", "animate", { load: loadState["career"] })}
         >
           <Career
