@@ -1,79 +1,65 @@
 .toc {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-
-.read > div {
-  color: var(--activated-color);
-}
-.read::marker {
-  color: var(--activated-color);
-}
-
-.tocMoveTitle {
   position: fixed;
-  border: 3px solid var(--disabled-color);
-  border-radius: 5px;
-  display: flex;
-  width: 150px;
-  top: 50px;
-  z-index: 5;
-  background-color: white;
-  transition: all 1s;
-  right: -10px;
+  width: 300px;
+  height: 90%;
+  padding-bottom: 40px;
+  color: var(--toc-color);
+  background-color: var(--background-colorA);
+  font-weight: bold;
+  top: 80px;
+  right: 0;
+  z-index: 3;
+  opacity: 0.9;
+  border: var(--border-width) solid var(--border-color);
 }
-.tocMoveTitle.open {
-  transition: all 0s;
-  right: -200px;
+.read > div {
+  color: var(--toc-read-color);
+}
+.toc.title {
+  height: 40px;
+  width: 100px;
+  right: -100px;
+  transition: all 1s;
+}
+
+.toc.title.fold {
+  right: 0;
+}
+.toc.content {
+  transition: all 0.5s;
+}
+.toc.content.fold {
+  right: -300px;
 }
 
 .tocTitle {
-  position: relative;
-  font-size: 25px;
-  font-weight: bold;
-  color: var(--activated-color);
-  left: 10px;
-}
-.tocWrapper {
-  transition: right 0s;
-  background-color: rgba(255, 255, 255, 0.7);
-  position: fixed;
-  z-index: 2;
-  width: 270px;
-  height: 100%;
-  right: -290px;
-  padding-left: 20px;
-  padding-right: 0;
-  border: 3px solid var(--disabled-color);
-  border-radius: 5px;
-  color: var(--disabled-color);
-}
-
-.tocWrapper.open {
-  transition: right 1s;
-  right: 0px;
-}
-
-.tocWrapper .tocTitleWrapper {
-  position: relative;
-  background-color: white;
-  border: 3px solid var(--disabled-color);
-  border-radius: 5px;
-  width: 290px;
-  left: -40px;
+  position: absolute;
+  border-bottom: var(--border-width) solid var(--border-color);
+  color: var(--toc-read-color);
   display: flex;
-  transition: right 0.5s;
-  top: 40px;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: white;
+  font-size: 20px;
+}
+.btn {
+  width: 10%;
+  text-align: center;
+}
+.text {
+  width: 90%;
+  text-align: center;
 }
 
-.tocWrapper .tocTitleWrapper.open {
-  right: 0px;
-}
-.tocContentWrapper {
-  margin-top: 40px;
+.tocContent {
+  padding-top: 60px;
+  padding-left: 40px;
+  height: 100%;
+
   overflow-y: scroll;
 }
+
 .orderedList {
   padding-left: 25px;
 }

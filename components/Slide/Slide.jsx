@@ -18,7 +18,6 @@ export default function Carousel({
   const [width, setWidth] = useState(0);
   useEffect(() => {
     let size = data.length;
-    console.log(width);
     const { width } = slideRef.current
       .getElementsByTagName("div")[0]
       .getBoundingClientRect();
@@ -31,7 +30,7 @@ export default function Carousel({
     } else if (windowWidth < 1200) {
       limitSize = 3;
     } else {
-      limitSize = 4;
+      limitSize = 3;
     }
     slideRef.current.style.transform = `translate3d(-${0}px, 0, 0)`;
     setLimitSize(limitSize);

@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  width: 100%;
+  height: 100px;
+  background-color: var(--background-colorA);
+  padding: 10px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  align-items: center;
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+.header.fold {
+  background-color: var(--background-colorA);
+}
+.headerText {
+  width: 50%;
+  font-size: 23px;
+}
+.headerBtn {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  padding-top: 10px;
+  font-size: 15px;
+}
+
+.btnTitle {
+  text-align: center;
+  margin-right: 3%;
+}
+
+@media only screen and (max-width: 767px) {
+  .header {
+    font-size: 17px;
+  }
+}

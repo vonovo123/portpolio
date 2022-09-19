@@ -10,6 +10,7 @@ export default function Carousel({
   makeElement,
   windowWidth,
   contentWidth,
+  goPage,
 }) {
   const slideRef = useRef(null);
   const [size, setSize] = useState(0);
@@ -28,9 +29,9 @@ export default function Carousel({
     } else if (windowWidth < 992) {
       limitSize = 2;
     } else if (windowWidth < 1200) {
-      limitSize = 3;
-    } else {
       limitSize = 4;
+    } else {
+      limitSize = 5;
     }
     if (size >= limitSize) {
       slideRef.current.style.transform = `translate3d(-${
@@ -54,7 +55,6 @@ export default function Carousel({
       } else {
         nextIdx = size + dir;
       }
-      console.log(nextIdx);
       slideRef.current.style.transition = `${0.5}s ease-out`;
       slideRef.current.style.transform = `translate3d(${
         -width * nextIdx
@@ -92,14 +92,14 @@ export default function Carousel({
               data.map((element, idx) => {
                 return (
                   <Col key={idx} className={cx("col")}>
-                    {makeElement(element)}
+                    {makeElement(element, goPage)}
                   </Col>
                 );
               })}
             {data.map((element, idx) => {
               return (
                 <Col key={idx} className={cx("col")}>
-                  {makeElement(element)}
+                  {makeElement(element, goPage)}
                 </Col>
               );
             })}
@@ -107,7 +107,7 @@ export default function Carousel({
               data.map((element, idx) => {
                 return (
                   <Col key={idx} className={cx("col")}>
-                    {makeElement(element)}
+                    {makeElement(element, goPage)}
                   </Col>
                 );
               })}

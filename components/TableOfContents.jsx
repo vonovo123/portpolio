@@ -11,15 +11,13 @@ export default function TableOfContents({
   openToc,
   setOpenToc,
   readKey,
-  fixed,
 }) {
-  const titleRef = useRef(null);
   const getChildrenText = (heading) => {
     return heading.el.innerText;
   };
   const changeTocState = useCallback(() => {
     setOpenToc(!openToc);
-  });
+  }, [setOpenToc, openToc]);
   const createOrderedList = (outline) => {
     return (
       <ol className={cx("orderedList")}>
@@ -50,32 +48,25 @@ export default function TableOfContents({
     );
   };
   return (
-    <div className={cx("toc")}>
-      <div
-        className={cx("tocMoveTitle", { open: openToc, fixed: fixed })}
-        ref={titleRef}
-        onClick={changeTocState}
-      >
-        <div className={cx("tocTitle")}>
-          <CaretLeftOutlined /> TOC
-        </div>
-      </div>
-
-      <div className={cx("tocWrapper", { open: openToc, fixed: fixed })}>
-        <div
-          className={cx("tocTitleWrapper", { open: openToc, fixed: fixed })}
-          onClick={changeTocState}
-        >
-          <div className={cx("tocTitle")}>
-            <CaretRightOutlined style={{ paddingRight: 20 }} />
-            Table Of Contents
+    <>
+      <div className={cx("toc", "title", { fold: !openToc })}>
+        <div className={cx("tocTitle")} onClick={changeTocState}>
+          <div className={cx("btn")}>
+            <CaretLeftOutlined />
           </div>
-        </div>
-
-        <div className={cx("tocContentWrapper")}>
-          {createOrderedList(outline)}
+          <div className={cx("text")}>TOC</div>
         </div>
       </div>
-    </div>
+
+      <div className={cx("toc", "content", { fold: !openToc })}>
+        <div className={cx("tocTitle")} onClick={changeTocState}>
+          <div className={cx("btn")}>
+            <CaretLeftOutlined />
+          </div>
+          <div className={cx("text")}>Table of Content</div>
+        </div>
+        <div className={cx("tocContent")}>{createOrderedList(outline)}</div>
+      </div>
+    </>
   );
 }

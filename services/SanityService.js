@@ -19,12 +19,11 @@ const devLogUrl = `*[_type == 'devLog']{
   name,
   createdAt
 }`;
-const postsUrl = `
-*[_type == 'post']{
+const devPostUrl = `
+*[_type == 'devPost']{
   title,
   subtitle,
   createdAt,
-  shortContent,
   postContent,
   'category' : category -> {
     name,
@@ -111,8 +110,8 @@ export default class SanityService {
     return await this._client.fetch(homeUrl);
   }
 
-  async getPosts() {
-    return await this._client.fetch(postsUrl);
+  async getDevPost() {
+    return await this._client.fetch(devPostUrl);
   }
   async getPortpolio() {
     return await this._client.fetch(portpolioUrl);

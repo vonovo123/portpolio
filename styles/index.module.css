@@ -1,22 +1,12 @@
 .componentWrapper {
-  padding-top: 30px;
   width: 100%;
 }
-.post {
+.bColorA {
   background-color: var(--background-color);
 }
 
-.career {
+.bColorB {
   background-color: var(--background-colorB);
-}
-.animate {
-  opacity: 0;
-  padding-top: 100px;
-  transition: all 1s;
-}
-.load {
-  opacity: 1;
-  padding-top: 0px;
 }
 
 .title {
@@ -27,11 +17,9 @@
   font-weight: bold;
   transition: all 0.5s;
   opacity: 1;
-  padding-top: 5px;
 }
 .title.main {
   padding-left: 20px;
-  padding-top: 20px;
 }
 .title.sub {
   height: 50px;

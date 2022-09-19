@@ -1,41 +1,36 @@
-import SanityService from "../services/SanityService";
-import styles from "../styles/index.module.css";
-import classNames from "classnames/bind";
+import SanityService from "../../services/SanityService";
 import { useMemo, useState } from "react";
-import Page from "./page/page";
-import CodingListElement from "../components/Element/PostListElement";
-const cx = classNames.bind(styles);
-
-export default function Home({
-  recentPost,
+import PostListElement from "../../components/Element/PostListElement";
+import Page from "./page";
+export default function Coding({
+  devPost,
   pageState,
   menuState,
   menuInfoState,
   goPage,
 }) {
-  const postListState = useState([]);
-  const [postList, setPostList] = postListState;
-
-  const homeMenuInfo = useMemo(
+  const codingListState = useState([]);
+  const codingMenuInfo = useMemo(
     () => ({
-      recent: "Recent Posts",
+      linux: "Linux",
+      typescript: "Typescript",
     }),
     []
   );
   const makeElement = (element, idx, goPage) => {
-    return <CodingListElement element={element} key={idx} goPage={goPage} />;
+    return <PostListElement element={element} key={idx} goPage={goPage} />;
   };
   return (
     <Page
       goPage={goPage}
-      post={recentPost}
+      post={devPost}
       pageState={pageState}
       menuState={menuState}
       menuInfoState={menuInfoState}
-      postListState={postListState}
-      initPage={"home"}
-      initMenu={"recent"}
-      initMenuInfo={homeMenuInfo}
+      postListState={codingListState}
+      initPage={"devPost"}
+      initMenu={"linux"}
+      initMenuInfo={codingMenuInfo}
       makeElement={makeElement}
     ></Page>
   );
@@ -45,9 +40,11 @@ export async function getStaticProps() {
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
   const recentPost = await sanityService.getDevPost();
+  const devPost = await sanityService.getDevPost();
   const profile = await sanityService.getProfile();
   return {
     props: {
+      devPost,
       recentPost,
       profile,
     },

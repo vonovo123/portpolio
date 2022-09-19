@@ -1,17 +1,17 @@
-import styles from "../styles/Menus.module.css";
+import styles from "../styles/SelectBox.module.css";
 import { CaretDownOutlined, CaretUpOutlined } from "@ant-design/icons";
 import { CSSTransition } from "react-transition-group";
 import { Col, Row } from "antd";
 import classNames from "classnames/bind";
-import fadeTransition from "../styles/transition/fade.module.css";
+import fadeTransition from "../styles/Transition/fade.module.css";
 import { useRef, useState } from "react";
 const cx = classNames.bind(styles);
 
-export default function Menus({ menus, menu, setMenu }) {
+export default function SelectBox({ menus, menu, setMenu }) {
   const nodeRef = useRef(null);
   const [showMenuList, setShowMenuList] = useState(false);
   return (
-    <div className={cx("menuWrapper")}>
+    <div className={cx("boxWrapper")}>
       <div
         className={cx("selMenu", { disable: showMenuList })}
         onClick={() => {
@@ -19,7 +19,8 @@ export default function Menus({ menus, menu, setMenu }) {
         }}
       >
         <div className={cx("selMenuText")}>
-          {menu && menus.find((el) => el.id === menu).name}
+          {menu &&
+            Object.entries(menus).find(([key, value]) => key === menu)[1]}
         </div>
         {!showMenuList && <CaretDownOutlined className={cx("selMenuArrow")} />}
         {showMenuList && <CaretUpOutlined className={cx("selMenuArrow")} />}
@@ -34,17 +35,17 @@ export default function Menus({ menus, menu, setMenu }) {
           nodeRef={nodeRef}
         >
           <Row ref={nodeRef}>
-            {menus.map((option, idx) => (
+            {Object.entries(menus).map(([key, value], idx) => (
               <Col
                 key={idx}
                 span={24}
-                className={cx("menu", { sel: option.id === menu })}
+                className={cx("menu", { sel: key === menu })}
                 onClick={() => {
-                  setMenu({ id: option.id });
+                  setMenu({ id: key });
                   setShowMenuList(false);
                 }}
               >
-                {option.name}
+                {value}
               </Col>
             ))}
           </Row>

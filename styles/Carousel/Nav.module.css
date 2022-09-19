@@ -8,7 +8,6 @@
   align-items: center;
   display: flex;
   transition: all 0.5s;
-  padding: 20px;
 }
 .dots {
   display: flex;
@@ -16,15 +15,15 @@
   cursor: pointer;
 }
 .dot {
-  width: 13px;
-  height: 13px;
+  width: 10px;
+  height: 10px;
   border-radius: 100%;
   margin: 5px 10px 5px 10px;
   background-color: var(--nav-dot-color);
   transition: all 1s;
 }
 .dot.sel {
-  width: 30px;
+  width: 20px;
   height: 13px;
   border-radius: 0%;
   background-color: var(--nav-dot-sel-color);
@@ -39,4 +38,9 @@
   cursor: pointer;
   font-size: 18px;
   margin: 5px 20px 5px 20px;
+}
+@media only screen and (max-width: 767px) {
+  .navigation {
+    display: none;
+  }
 }

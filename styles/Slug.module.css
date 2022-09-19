@@ -23,20 +23,18 @@
   font-weight: bold;
   color: grey;
 }
-.wrapper {
-  padding-top: 80px;
+.post {
+  margin-bottom: 150px;
 }
-
 .contentHeaderWrapper {
   height: 100%;
-  padding: 20px 30px 0px 30px;
+  padding: 0px 30px 0px 30px;
 }
 .breadCrumbWrapper {
   position: relative;
 }
 .contentHeader {
   text-align: center;
-  padding-top: 30px;
 }
 
 .contentHeader .title {
@@ -49,8 +47,6 @@
 }
 
 .contentBody {
-  background-color: rgba(255, 255, 255, 1);
-  padding: 60px;
 }
 
 .tags {
@@ -77,9 +73,6 @@
 .fixPoint {
   background-color: red;
   margin-bottom: 30px;
-}
-.observe {
-  visibility: hidden;
 }
 @media only screen and (max-width: 767px) {
   .container {

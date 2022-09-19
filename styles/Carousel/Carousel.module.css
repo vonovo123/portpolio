@@ -1,7 +1,7 @@
 .carouselWrapper {
   width: 100%;
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 .carousel {
   width: 100%;
@@ -18,15 +18,15 @@
   flex-basis: auto;
   flex-grow: 0;
   flex-shrink: 0;
-  width: 25%;
+  width: 20%;
   padding: 1%;
 }
 
 /*  < lg  */
 @media only screen and (max-width: 1199px) {
   .col {
-    width: 33%;
-    padding: 3%;
+    width: 25%;
+    padding: 1%;
   }
 }
 @media only screen and (max-width: 991px) {
@@ -37,6 +37,9 @@
 }
 /* md < */
 @media only screen and (max-width: 767px) {
+  .carouselWrapper {
+    margin-bottom: 0px;
+  }
   .col {
     width: 98%;
     padding: 1%;

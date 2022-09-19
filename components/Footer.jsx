@@ -5,10 +5,8 @@ export default function Footer() {
     <Row
       align="middle"
       style={{
-        height: 100,
-        textAlign: "right",
-        paddingTop: 150,
-        paddingBottom: 50,
+        height: 10,
+        textAlign: "center",
       }}
     >
       <Col span={22}>

@@ -1,16 +1,19 @@
 .enter {
+  transition: all 1s;
 }
 .enter::-webkit-scrollbar {
   display: none;
 }
 
 .enterActive {
+  transition: all 1s;
 }
 .enterActive::-webkit-scrollbar {
   display: none;
 }
 
 .enterDone {
+  transition: all 1s;
 }
 
 .enterDone::-webkit-scrollbar {
@@ -18,15 +21,18 @@
 }
 
 .exitter {
+  transition: all 1s;
   height: 0px;
   overflow: hidden;
 }
 
 .exitActive {
+  transition: all 1s;
   height: 0px;
   overflow: hidden;
 }
 .exitDone {
+  transition: all 1s;
   height: 0px;
   overflow: hidden;
 }
