@@ -28,7 +28,7 @@ export default function Coding({
       menuState={menuState}
       menuInfoState={menuInfoState}
       postListState={infoListState}
-      initPage={"devPost"}
+      initPage={"info"}
       initMenu={"linux"}
       initMenuInfo={infoMenuInfo}
       makeElement={makeElement}

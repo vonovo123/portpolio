@@ -5,6 +5,7 @@
   font-weight: bold;
   background-color: var(--background-colorA);
   border-bottom: var(--border-width) solid var(--border-color);
+  overflow: hidden;
 }
 
 .menuWrapper {
@@ -12,6 +13,7 @@
   height: 40px;
   display: flex;
   align-items: center;
+  transition: all 0.5s;
   padding-left: 10px;
 }
 

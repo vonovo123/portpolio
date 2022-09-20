@@ -17,28 +17,23 @@
 .mb50 {
   margin-bottom: 100px;
 }
-.em {
-  font-style: normal;
-  font-size: 15px;
-  font-weight: bold;
-  color: grey;
-}
+
 .post {
   margin-bottom: 150px;
 }
 .contentHeaderWrapper {
   height: 100%;
-  padding: 0px 30px 0px 30px;
 }
 .breadCrumbWrapper {
   position: relative;
 }
 .contentHeader {
   text-align: center;
+  margin-bottom: 50px;
 }
 
 .contentHeader .title {
-  font-size: 40px;
+  font-size: 30px;
   font-weight: bold;
 }
 
@@ -46,34 +41,11 @@
   font-size: 30px;
 }
 
-.contentBody {
-}
-
-.tags {
-  display: flex;
-  width: 50%;
-  margin-left: 25%;
-  margin-right: 25%;
-  justify-content: center;
-  align-items: center;
-}
-.tag {
-  width: 30%;
-  margin: 20px;
-  font-size: 15px;
-  background-color: var(--activated-color);
-  color: rgba(255, 255, 255, 1);
-  border-radius: 5px;
-}
-
 .postImage {
-  height: 300px;
+  height: 200px;
   margin-bottom: 30px;
 }
-.fixPoint {
-  background-color: red;
-  margin-bottom: 30px;
-}
+
 @media only screen and (max-width: 767px) {
   .container {
     padding: 10px;
@@ -99,11 +71,5 @@
 
   .postImage {
     height: 100px;
-  }
-
-  .tag {
-    margin: 10px;
-    width: 40%;
-    font-size: 15px;
   }
 }

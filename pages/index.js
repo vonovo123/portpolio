@@ -13,7 +13,7 @@ export default function Home({
   menuInfoState,
   goPage,
 }) {
-  const postListState = useState([]);
+  const postListState = useState(null);
   const [postList, setPostList] = postListState;
 
   const homeMenuInfo = useMemo(

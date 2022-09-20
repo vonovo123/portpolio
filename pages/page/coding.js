@@ -9,7 +9,7 @@ export default function Coding({
   menuInfoState,
   goPage,
 }) {
-  const codingListState = useState([]);
+  const codingListState = useState(null);
   const codingMenuInfo = useMemo(
     () => ({
       linux: "Linux",
@@ -28,7 +28,7 @@ export default function Coding({
       menuState={menuState}
       menuInfoState={menuInfoState}
       postListState={codingListState}
-      initPage={"devPost"}
+      initPage={"coding"}
       initMenu={"linux"}
       initMenuInfo={codingMenuInfo}
       makeElement={makeElement}

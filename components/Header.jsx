@@ -1,9 +1,14 @@
 import styles from "../styles/Header.module.css";
 import classNames from "classnames/bind";
-import { ArrowLeftOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 export default function Header({ goPage, pageState }) {
   const [page, setPage] = pageState;
+  const headerMenuInfo = {
+    coding: "CODING",
+    info: "INFO",
+    portpolios: "PORTPOLIOS",
+    career: "CAREER",
+  };
   return (
     <div className={cx("header")}>
       <div
@@ -16,38 +21,18 @@ export default function Header({ goPage, pageState }) {
         {"DYNAMIC_KWON"}
       </div>
       <div className={cx("headerBtn")}>
-        <div
-          className={cx("btnTitle")}
-          onClick={() => {
-            goPage("coding");
-          }}
-        >
-          {"CODING"}
-        </div>
-        <div
-          className={cx("btnTitle")}
-          onClick={() => {
-            goPage("info");
-          }}
-        >
-          {"INFO"}
-        </div>
-        <div
-          className={cx("btnTitle")}
-          onClick={() => {
-            goPage("portpolios");
-          }}
-        >
-          {"PORTPOLIOS"}
-        </div>
-        <div
-          className={cx("btnTitle")}
-          onClick={() => {
-            goPage("career");
-          }}
-        >
-          {"CAREER"}
-        </div>
+        {Object.entries(headerMenuInfo).map(([key, value], idx) => (
+          <div
+            className={cx("btnTitle")}
+            key={idx}
+            onClick={() => {
+              if (page === key) return;
+              goPage(key);
+            }}
+          >
+            {value}
+          </div>
+        ))}
       </div>
     </div>
   );

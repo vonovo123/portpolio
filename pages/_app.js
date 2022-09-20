@@ -10,6 +10,7 @@ import About from "../components/About";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { LoadingOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -25,7 +26,6 @@ function MyApp({ Component, pageProps }) {
   const titleFoldState = useState(true);
   //메뉴 선택
   const menuState = useState(null);
-  //메뉴 서브선택
   const contentRef = useRef(null);
 
   const initState = useCallback(() => {
@@ -44,6 +44,7 @@ function MyApp({ Component, pageProps }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
+
   const goPage = useCallback(
     (def, val) => {
       initState();

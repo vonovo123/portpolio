@@ -2,8 +2,6 @@
   position: relative;
   width: 100%;
   height: 300px;
-  /* box-shadow: 10px 5px 10px var(--border-color); */
-  /* border-radius: 10px; */
 }
 .element {
   width: 100%;
@@ -27,18 +25,18 @@
 .elementContentWrapper {
   position: absolute;
   background-color: var(--background-colorA);
-  opacity: 0.8;
   width: 101%;
-  height: 300px;
-  /* border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px; */
+  opacity: 0.8;
+  top: 250px;
   padding: 20px;
-  padding-top: 70px;
 }
 .title {
-  margin-bottom: 20px;
+  height: 50px;
+  overflow: hidden;
   font-size: 15px;
   font-weight: bold;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .short {
   font-size: 12px;

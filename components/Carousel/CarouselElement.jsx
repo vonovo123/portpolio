@@ -18,10 +18,10 @@ export default function CarouselElement({ element, goPage }) {
             src={element.thumbnail.imageUrl}
             alt={element.thumbnail.alt}
             className={cx("elementImage")}
+            preview={false}
           />
           <div className={cx("elementContentWrapper")}>
             <div className={cx("title")}>{element.title}</div>
-            <div className={cx("short")}>{element.shortContent}</div>
           </div>
         </div>
       </div>
