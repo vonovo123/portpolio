@@ -25,10 +25,11 @@
 .elementContentWrapper {
   position: absolute;
   background-color: var(--background-colorA);
-  width: 101%;
+  width: 100%;
   opacity: 0.8;
   top: 250px;
   padding: 20px;
+  text-align: center;
 }
 .title {
   height: 50px;

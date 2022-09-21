@@ -37,9 +37,6 @@
 }
 /* md < */
 @media only screen and (max-width: 767px) {
-  .carouselWrapper {
-    margin-bottom: 0px;
-  }
   .col {
     width: 98%;
     padding: 1%;

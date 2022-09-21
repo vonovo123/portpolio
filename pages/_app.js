@@ -10,7 +10,7 @@ import About from "../components/About";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UpCircleOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -66,13 +66,17 @@ function MyApp({ Component, pageProps }) {
   );
   return (
     <div className={cx("app")}>
+      <div className={cx("floatBtn")}>
+        <UpCircleOutlined />
+      </div>
+      <div className={cx("about")}>
+        <About profile={pageProps.profile[0]} />
+      </div>
       <div className={cx("appWrapper")}>
         <div className={cx("header")}>
           <Header pageState={pageState} goPage={goPage}></Header>
           <Menu menuState={menuState} menuInfoState={menuInfoState} />
         </div>
-        <About profile={pageProps.profile[0]} />
-
         <div className={cx("body")} ref={contentRef}>
           <div className={cx("content")}>
             <Component
@@ -85,9 +89,9 @@ function MyApp({ Component, pageProps }) {
               goPage={goPage}
             />
           </div>
-          <div className={cx("ad")}></div>
+          <div className={cx("side")}></div>
         </div>
-        <div className={cx("banner")} ref={contentRef}>
+        <div className={cx("banner", "mb50")} ref={contentRef}>
           <RecentPosts
             recentPost={pageProps.recentPost}
             windowWidth={windowWidth}
@@ -95,7 +99,7 @@ function MyApp({ Component, pageProps }) {
             goPage={goPage}
           />
         </div>
-        <div className={cx("footer")}>
+        <div className={cx("footer", "mb50")}>
           <Footer />
         </div>
       </div>

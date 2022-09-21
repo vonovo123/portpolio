@@ -36,7 +36,7 @@ export default function About({ profile }) {
       <div className={cx("about")} ref={aboutRef}>
         <Row className={cx("profileWrapper")}>
           <Col className={cx("profileTitle")} span={24}>
-            {"🤡 WHO AM I ?"}
+            {"🤡 WHO AM I 🤡"}
           </Col>
           <Col className={cx("profileDescImageWrapper")} span={24}>
             <Image

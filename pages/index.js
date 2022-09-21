@@ -18,7 +18,7 @@ export default function Home({
 
   const homeMenuInfo = useMemo(
     () => ({
-      recent: "Recent Posts",
+      recent: "최근 글",
     }),
     []
   );

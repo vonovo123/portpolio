@@ -1,5 +1,15 @@
 .recentPosts {
 }
+.title {
+  padding: 10px;
+
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+.carouselWrapper {
+  margin-top: 50px;
+}
 .hide {
   display: none;
 }

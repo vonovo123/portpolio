@@ -4,10 +4,10 @@ const cx = classNames.bind(styles);
 export default function Header({ goPage, pageState }) {
   const [page, setPage] = pageState;
   const headerMenuInfo = {
-    coding: "CODING",
-    info: "INFO",
-    portpolios: "PORTPOLIOS",
-    career: "CAREER",
+    coding: "개발",
+    info: "정보",
+    portpolios: "포트폴리오",
+    career: "커리어",
   };
   return (
     <div className={cx("header")}>
@@ -18,7 +18,7 @@ export default function Header({ goPage, pageState }) {
           goPage("home");
         }}
       >
-        {"DYNAMIC_KWON"}
+        {"다이나믹_권"}
       </div>
       <div className={cx("headerBtn")}>
         {Object.entries(headerMenuInfo).map(([key, value], idx) => (

@@ -23,6 +23,7 @@ export default function RecentPosts({
   ]);
   return (
     <div className={cx("recentPosts")}>
+      <span className={cx("title")}>{"최근 글"}</span>
       <div className={cx("carouselWrapper")}>
         <Carousel
           data={postList}

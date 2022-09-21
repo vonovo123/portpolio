@@ -40,7 +40,4 @@
   margin: 5px 20px 5px 20px;
 }
 @media only screen and (max-width: 767px) {
-  .navigation {
-    display: none;
-  }
 }

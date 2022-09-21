@@ -59,13 +59,13 @@ export default function Page({
     }
   }, [loading]);
   return (
-    <>
+    <div className={cx("pageWrapper")}>
       <div className={cx("loading")} ref={loadingRef}>
         <LoadingOutlined />
       </div>
       <div className={cx("page")} ref={pageRef}>
         <List goPage={goPage} list={postList} makeElement={makeElement}></List>
       </div>
-    </>
+    </div>
   );
 }

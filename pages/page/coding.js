@@ -12,8 +12,8 @@ export default function Coding({
   const codingListState = useState(null);
   const codingMenuInfo = useMemo(
     () => ({
-      linux: "Linux",
-      typescript: "Typescript",
+      linux: "리눅스",
+      typescript: "타입스크립트",
     }),
     []
   );

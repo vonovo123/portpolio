@@ -1,7 +1,7 @@
 .header {
-  display: flex;
   width: 100%;
   height: 100px;
+  display: flex;
   background-color: var(--background-colorA);
   padding: 10px 10px;
   font-size: 20px;
@@ -10,9 +10,7 @@
   align-items: center;
   border-bottom: var(--border-width) solid var(--border-color);
 }
-.header.fold {
-  background-color: var(--background-colorA);
-}
+
 .headerText {
   width: 50%;
   font-size: 23px;
