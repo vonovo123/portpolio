@@ -1,33 +1,34 @@
 import "antd/dist/antd.css";
 import "../styles/reset.css";
 import "../styles/globals.css";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "../styles/App.module.css";
 import classNames from "classnames/bind";
-import Menu from "../components/Menu";
 import RecentPosts from "../components/RecentPosts";
-import { useCallback, useEffect, useRef, useState } from "react";
 import About from "../components/About";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { LoadingOutlined, UpCircleOutlined } from "@ant-design/icons";
+import { UpCircleOutlined } from "@ant-design/icons";
+import { on, off, clear } from "../utils/Swing";
 const cx = classNames.bind(styles);
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   // 뷰포트 화면 크기
   const [windowWidth, setWindowWidth] = useState(null);
   const [contentWidth, setContentWidth] = useState();
-
   //page 타입
   const pageState = useState(null);
   //메뉴 정보
   const menuInfoState = useState(null);
-  const [menuInfo, setMenuInfo] = menuInfoState;
   const titleFoldState = useState(true);
   //메뉴 선택
   const menuState = useState(null);
   const contentRef = useRef(null);
-
+  const swing = useRef(null);
+  const aboutRef = useRef(null);
+  const [showAbout, setShowAbout] = useState(false);
+  const [hideAbout, setHideAbout] = useState(false);
   const initState = useCallback(() => {
     pageState[1](null);
     menuState[1](null);
@@ -44,6 +45,17 @@ function MyApp({ Component, pageProps }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
+  useEffect(() => {
+    let flag = true;
+    if (!showAbout) {
+      on(swing, aboutRef);
+    } else {
+      off(swing, aboutRef);
+    }
+    return () => {
+      clear(swing);
+    };
+  }, [showAbout]);
 
   const goPage = useCallback(
     (def, val) => {
@@ -66,16 +78,34 @@ function MyApp({ Component, pageProps }) {
   );
   return (
     <div className={cx("app")}>
-      <div className={cx("floatBtn")}>
+      <div
+        className={cx("floatBtn")}
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }}
+      >
         <UpCircleOutlined />
       </div>
-      <div className={cx("about")}>
+      <div
+        className={cx("about", { show: showAbout, hide: hideAbout })}
+        onClick={() => {
+          setShowAbout(!showAbout);
+        }}
+        ref={aboutRef}
+      >
         <About profile={pageProps.profile[0]} />
       </div>
       <div className={cx("appWrapper")}>
         <div className={cx("header")}>
-          <Header pageState={pageState} goPage={goPage}></Header>
-          <Menu menuState={menuState} menuInfoState={menuInfoState} />
+          <Header
+            pageState={pageState}
+            menuState={menuState}
+            menuInfoState={menuInfoState}
+            goPage={goPage}
+          ></Header>
         </div>
         <div className={cx("body")} ref={contentRef}>
           <div className={cx("content")}>

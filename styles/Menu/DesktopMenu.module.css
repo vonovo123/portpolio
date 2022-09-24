@@ -1,0 +1,46 @@
+.menu {
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: var(--background-colorA);
+  overflow: hidden;
+}
+.mainMenuWrapper {
+  padding: 0px 20px;
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+.mainMenu {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  transition: all 0.5s;
+}
+.subMenuWrapper {
+  overflow: hidden;
+}
+.subMenu {
+  background-color: var(--border-color);
+  width: 100%;
+  padding: 0px 20px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  transition: all 0.5s;
+}
+.nav {
+  width: 10%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.5s;
+}
+.subMenu .nav {
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.subMenu .nav.sel {
+  font-size: 13px;
+  color: #000000;
+}

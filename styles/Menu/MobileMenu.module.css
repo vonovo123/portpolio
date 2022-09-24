@@ -1,0 +1,47 @@
+.menu {
+  height: 200px;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: var(--background-colorA);
+  overflow: hidden;
+  display: flex;
+}
+.mainMenuWrapper {
+  width: 50%;
+  padding: 20px;
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+.mainMenu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  transition: all 0.5s;
+}
+.subMenuWrapper {
+  width: 50%;
+  overflow: hidden;
+  background-color: var(--border-color);
+}
+.subMenu {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 20px;
+  align-items: center;
+  transition: all 0.5s;
+}
+.nav {
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.5s;
+  margin-bottom: 10px;
+}
+.subMenu .nav {
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.subMenu .nav.sel {
+  font-size: 13px;
+  color: #000000;
+}

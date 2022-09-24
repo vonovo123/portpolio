@@ -61,25 +61,21 @@
   width: 300px;
   top: 89vh;
   z-index: 2;
+  transition: all 1s;
 }
 .about.show {
-  top: 30%;
+  top: 30vh;
 }
-.about.fold {
-  top: 100%;
+.about.hide {
+  top: 100vh;
 }
 .header {
-  /*
-  transform: translateX(-50%); 
-  position: fixed;
-  z-index: 3;
-  left: 50%; */
   width: 100%;
   background-color: var(--background-colorA);
 }
 
 .body {
-  padding: 50px 0px;
+  padding: 20px 0px 50px 0px;
 }
 
 .content {
