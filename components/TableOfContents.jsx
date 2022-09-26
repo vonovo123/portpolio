@@ -1,23 +1,11 @@
 import styles from "../styles/TOC.module.css";
 import classNames from "classnames/bind";
-import { CaretRightOutlined, CaretLeftOutlined } from "@ant-design/icons";
-import { useCallback } from "react";
-import { useEffect } from "react";
-import { useRef } from "react";
-import { on, off, clear } from "../utils/Swing";
+import { CaretRightOutlined } from "@ant-design/icons";
 const cx = classNames.bind(styles);
-export default function TableOfContents({
-  outline,
-  openToc,
-  setOpenToc,
-  readKey,
-}) {
+export default function TableOfContents({ outline, readKey, setFoldToc }) {
   const getChildrenText = (heading) => {
     return heading.el.innerText;
   };
-  const changeTocState = useCallback(() => {
-    setOpenToc(!openToc);
-  }, [setOpenToc, openToc]);
   const createOrderedList = (outline) => {
     return (
       <ol className={cx("orderedList")}>
@@ -33,7 +21,7 @@ export default function TableOfContents({
               className={cx({})}
               onClick={() => {
                 window.scrollTo({
-                  top: heading.el.offsetTop - 130,
+                  top: heading.el.offsetTop - 30,
                   behavior: "smooth",
                 });
               }}
@@ -49,23 +37,35 @@ export default function TableOfContents({
   };
   return (
     <>
-      <div className={cx("toc", "title", { fold: !openToc })}>
-        <div className={cx("tocTitle")} onClick={changeTocState}>
+      <div className={cx("toc")}>
+        <div
+          className={cx("tocTitle")}
+          onClick={() => {
+            setFoldToc(true);
+          }}
+        >
           <div className={cx("btn")}>
-            <CaretLeftOutlined />
-          </div>
-          <div className={cx("text")}>TOC</div>
-        </div>
-      </div>
-
-      <div className={cx("toc", "content", { fold: !openToc })}>
-        <div className={cx("tocTitle")} onClick={changeTocState}>
-          <div className={cx("btn")}>
-            <CaretLeftOutlined />
+            <CaretRightOutlined />
           </div>
           <div className={cx("text")}>Table of Content</div>
         </div>
-        <div className={cx("tocContent")}>{createOrderedList(outline)}</div>
+        <div className={cx("tocContent")}>
+          <div
+            className={cx("list", `lv$1`, {
+              read: readKey === "sod",
+            })}
+          >
+            <div>Start of Content</div>
+          </div>
+          {createOrderedList(outline)}
+          <div
+            className={cx("list", `lv$1`, {
+              read: readKey === "eod",
+            })}
+          >
+            <div>End of Content</div>
+          </div>
+        </div>
       </div>
     </>
   );

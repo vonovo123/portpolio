@@ -116,6 +116,7 @@ function MyApp({ Component, pageProps }) {
               menuInfoState={menuInfoState}
               titleFoldState={titleFoldState}
               initState={initState}
+              setHideAbout={setHideAbout}
               goPage={goPage}
             />
           </div>

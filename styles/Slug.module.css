@@ -17,19 +17,31 @@
 .mb50 {
   margin-bottom: 100px;
 }
-
+.tocWrapper {
+  display: none;
+}
+.tocFold {
+  display: none;
+}
 .post {
-  margin-bottom: 150px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .contentHeaderWrapper {
   height: 100%;
+  margin-bottom: 100px;
+}
+.sod,
+.eod {
+  height: 100px;
 }
 .breadCrumbWrapper {
   position: relative;
 }
 .contentHeader {
   text-align: center;
-  margin-bottom: 50px;
 }
 
 .contentHeader .title {
@@ -46,30 +58,48 @@
   margin-bottom: 30px;
 }
 
-@media only screen and (max-width: 767px) {
-  .container {
-    padding: 10px;
-    width: 100%;
-    margin: 0;
-    border: none;
-  }
-  .contentHeader {
-    padding: 20px 0 25px 0;
-  }
-  .contentHeader .title {
-    font-size: 20px;
+@media only screen and (min-width: 1025px) {
+  .tocWrapper {
+    display: block;
+    right: 0;
+    width: 300px;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    color: var(--toc-color);
+    background-color: var(--background-colorA);
     font-weight: bold;
-    margin-bottom: 20px;
-    padding: 20px;
+    z-index: 2;
+    border: var(--border-width) solid var(--border-color);
+    transition: all 0.5s;
   }
-  .contentHeader .subTitle {
-    font-size: 16px;
+  .tocWrapper.fold {
+    right: -300px;
   }
-  .contentBody {
-    padding: 20px;
+  .tocFold {
+    display: flex;
+    width: 100px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    color: var(--toc-read-color);
+    font-size: 20px;
+    align-items: center;
+    background-color: var(--background-colorA);
+    font-weight: bold;
+    z-index: 1;
+    border: var(--border-width) solid var(--border-color);
+    transition: all 1s;
   }
-
-  .postImage {
-    height: 100px;
+  .tocFold.fold {
+    right: -300px;
+  }
+  .btn {
+    width: 40%;
+    text-align: center;
+  }
+  .text {
+    width: 60%;
   }
 }

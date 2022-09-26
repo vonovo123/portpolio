@@ -40,7 +40,7 @@
 }
 .appWrapper {
   margin: 0px auto;
-  padding: 0px 30px;
+  padding: 0px 20px;
 }
 .floatBtn {
   position: fixed;
@@ -75,7 +75,7 @@
 }
 
 .body {
-  padding: 20px 0px 50px 0px;
+  padding-bottom: 50px;
 }
 
 .content {
@@ -90,18 +90,19 @@
 }
 .banner {
   padding: 50px 0px;
-  display: flex;
 }
 
 @media only screen and (min-width: 768px) {
   .appWrapper {
     width: 768px;
+    padding: 0px 20px;
   }
 }
 
 @media only screen and (min-width: 1025px) {
   .appWrapper {
     width: 1118px;
+    padding: 0px 30px;
   }
   .body {
     display: flex;

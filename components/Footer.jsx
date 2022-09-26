@@ -7,6 +7,7 @@ export default function Footer() {
       style={{
         height: 10,
         textAlign: "center",
+        marginBottom: "130px",
       }}
     >
       <Col span={22}>

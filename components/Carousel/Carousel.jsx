@@ -31,11 +31,11 @@ export default function Carousel({
     } else if (windowWidth < 1200) {
       limitSize = 4;
     } else {
-      limitSize = 5;
+      limitSize = 4;
     }
     if (size >= limitSize) {
       slideRef.current.style.transform = `translate3d(-${
-        (width * 3 * size) / 3
+        width * size
       }px, 0, 0)`;
     } else {
       slideRef.current.style.transform = `translate3d(-${0}px, 0, 0)`;
@@ -77,6 +77,7 @@ export default function Carousel({
   return (
     <>
       <div className={cx("carouselWrapper")}>
+        {/* <div className={cx("left")}></div> */}
         <div className={cx("carousel")}>
           <Row
             className={cx("row")}
@@ -113,8 +114,9 @@ export default function Carousel({
               })}
           </Row>
         </div>
+        {/* <div className={cx("right")}></div> */}
       </div>
-      {size >= limitSize && (
+      {size >= limitSize && windowWidth > 767 && (
         <Nav index={index} size={size} move={move} limitSize={limitSize}></Nav>
       )}
     </>

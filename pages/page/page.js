@@ -53,7 +53,7 @@ export default function Page({
   }, [menu]);
   useEffect(() => {
     if (!loading) {
-      loadingRef.current.style.transform = `translate3d(0, -100px, 0)`;
+      loadingRef.current.style.transform = `translate3d(0, -120px, 0)`;
     } else {
       loadingRef.current.style.transform = `translate3d(0, 0px, 0)`;
     }

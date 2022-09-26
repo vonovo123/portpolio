@@ -1,62 +1,38 @@
 .toc {
-  position: fixed;
-  width: 300px;
-  height: 90%;
-  padding-bottom: 40px;
   color: var(--toc-color);
   background-color: var(--background-colorA);
-  font-weight: bold;
-  top: 80px;
-  right: 0;
-  z-index: 3;
-  opacity: 0.9;
-  border: var(--border-width) solid var(--border-color);
+  height: 100%;
+}
+.read {
 }
 .read > div {
+  transition: all, 0.5s;
+  font-weight: bold;
   color: var(--toc-read-color);
-}
-.toc.title {
-  height: 40px;
-  width: 100px;
-  right: -100px;
-  transition: all 1s;
-}
-
-.toc.title.fold {
-  right: 0;
-}
-.toc.content {
-  transition: all 0.5s;
-}
-.toc.content.fold {
-  right: -300px;
 }
 
 .tocTitle {
-  position: absolute;
   border-bottom: var(--border-width) solid var(--border-color);
   color: var(--toc-read-color);
   display: flex;
   align-items: center;
   width: 100%;
-  height: 40px;
-  background-color: white;
   font-size: 20px;
+  height: 50px;
 }
 .btn {
-  width: 10%;
+  width: 30%;
   text-align: center;
 }
 .text {
-  width: 90%;
-  text-align: center;
+  width: 70%;
 }
 
 .tocContent {
-  padding-top: 60px;
-  padding-left: 40px;
   height: 100%;
-
+  padding-top: 10px;
+  padding-bottom: 100px;
+  padding-left: 40px;
   overflow-y: scroll;
 }
 
