@@ -39,8 +39,8 @@ export default function Coding({
 export async function getStaticProps() {
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
-  const recentPost = await sanityService.getDevPost();
-  const devPost = await sanityService.getDevPost();
+  const recentPost = await sanityService.getPost();
+  const devPost = await sanityService.getPost("dev");
   const profile = await sanityService.getProfile();
   return {
     props: {

@@ -27,10 +27,10 @@ export default function DesktopMenu({
   return (
     <div className={cx("menu")}>
       <div className={cx("mainMenuWrapper")}>
-        <div className={cx("mainMenu")}>
+        <div className={cx("main")}>
           {Object.entries(headerMenuInfo).map(([key, value], idx) => (
             <div
-              className={cx("nav")}
+              className={cx("nav", { sel: page === key })}
               key={idx}
               onClick={() => {
                 if (page === key) return;
@@ -43,7 +43,7 @@ export default function DesktopMenu({
         </div>
       </div>
       <div className={cx("subMenuWrapper")}>
-        <div ref={menuRef} className={cx("subMenu")}>
+        <div ref={menuRef} className={cx("sub")}>
           {menuInfoView &&
             Object.entries(menuInfoView).map(([key, value], idx) => (
               <div

@@ -98,7 +98,7 @@ export default function Post({
 
 export async function getStaticPaths() {
   const sanityService = new SanityService();
-  const posts = await sanityService.getDevPost();
+  const posts = await sanityService.getPost();
   const paths = posts.map((post) => ({
     params: {
       slug: post.slug,
@@ -112,8 +112,8 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug } = params;
   const sanityService = new SanityService();
-  const posts = await sanityService.getDevPost();
-  const recentPost = await sanityService.getDevPost();
+  const posts = await sanityService.getPost();
+  const recentPost = [...posts];
   const profile = await sanityService.getProfile();
   const post = posts.find((post) => post.slug === slug);
 

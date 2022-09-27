@@ -19,9 +19,9 @@ export default function Carousel({
   const [width, setWidth] = useState(0);
   useEffect(() => {
     let size = data.length;
-    const { width } = slideRef.current
-      .getElementsByTagName("div")[0]
-      .getBoundingClientRect();
+    const { width } = slideRef.current.getElementsByTagName("div")[0]
+      ? slideRef.current.getElementsByTagName("div")[0].getBoundingClientRect()
+      : 0;
     setWidth(width);
     let limitSize = 0;
     if (windowWidth < 768) {
@@ -77,7 +77,6 @@ export default function Carousel({
   return (
     <>
       <div className={cx("carouselWrapper")}>
-        {/* <div className={cx("left")}></div> */}
         <div className={cx("carousel")}>
           <Row
             className={cx("row")}

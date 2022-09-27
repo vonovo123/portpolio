@@ -38,7 +38,7 @@ export async function getStaticProps() {
   const sanityService = new SanityService();
   const careers = await sanityService.getCareer();
   const profile = await sanityService.getProfile();
-  const recentPost = await sanityService.getDevPost();
+  const recentPost = await sanityService.getPost();
   return {
     props: {
       profile,

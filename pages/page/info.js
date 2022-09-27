@@ -12,8 +12,7 @@ export default function Coding({
   const infoListState = useState([]);
   const infoMenuInfo = useMemo(
     () => ({
-      linux: "Linux",
-      typescript: "Typescript",
+      diary: "Diary",
     }),
     []
   );
@@ -29,7 +28,7 @@ export default function Coding({
       menuInfoState={menuInfoState}
       postListState={infoListState}
       initPage={"info"}
-      initMenu={"linux"}
+      initMenu={"diary"}
       initMenuInfo={infoMenuInfo}
       makeElement={makeElement}
     ></Page>
@@ -39,8 +38,8 @@ export default function Coding({
 export async function getStaticProps() {
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
-  const recentPost = await sanityService.getDevPost();
-  const devPost = await sanityService.getDevPost();
+  const recentPost = await sanityService.getPost();
+  const devPost = await sanityService.getPost("info");
   const profile = await sanityService.getProfile();
   return {
     props: {

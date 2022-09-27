@@ -1,6 +1,7 @@
 .elementWrapper {
   height: 150px;
   border-top: var(--border-width) solid var(--border-color);
+  cursor: pointer;
 }
 .elementWrapper:last-child {
   border-bottom: var(--border-width) solid var(--border-color);
@@ -19,7 +20,7 @@
 }
 .elementContentWrapper {
   width: calc(100% - 155px);
-  padding: 0px 10px;
+  padding: 0px 20px;
   margin-top: 20px;
 }
 

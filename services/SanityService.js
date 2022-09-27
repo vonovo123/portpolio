@@ -11,6 +11,7 @@ const profileUrl = `
   }
 }
 `;
+
 const homeUrl = `*[_type == 'home']{
   title,
   homeContent
@@ -19,13 +20,19 @@ const devLogUrl = `*[_type == 'devLog']{
   name,
   createdAt
 }`;
-const devPostUrl = `
-*[_type == 'devPost']{
-  title,
+
+//*[_type=="movie" && references(*[_type=="person" && age > 99]._id)]{title}
+
+const getPostInner = `
+title,
   subtitle,
   createdAt,
   postContent,
   'category' : category -> {
+    name,
+    type
+  },
+  'subCategory' : subCategory -> {
     name,
     type
   },
@@ -45,7 +52,16 @@ const devPostUrl = `
       'slug': slug.current
     }
   }
+`;
+const getPostAll = `
+*[_type == 'post']{
+  ${getPostInner}
 }`;
+const getPostByCategory = `
+*[_type == 'post' && references(*[_type=="category" && type == $category]._id)]{
+  ${getPostInner}
+}`;
+
 const portpolioUrl = `
   *[_type == 'portpolio']{
     'category' : category -> {
@@ -110,8 +126,13 @@ export default class SanityService {
     return await this._client.fetch(homeUrl);
   }
 
-  async getDevPost() {
-    return await this._client.fetch(devPostUrl);
+  async getPost(category) {
+    if (!category) {
+      return await this._client.fetch(getPostAll);
+    } else {
+      const result = await this._client.fetch(getPostByCategory, { category });
+      return result;
+    }
   }
   async getPortpolio() {
     return await this._client.fetch(portpolioUrl);

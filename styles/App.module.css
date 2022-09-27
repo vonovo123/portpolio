@@ -25,7 +25,7 @@
   --background-colorB: #fefafa;
   --tag-color: #83878c;
   --tag-font-color: #ffffff;
-  --border-color: #e7e1e1;
+  --border-color: #bbbaba;
   --font-color: #191f28;
   --sub-font-color: #cacaca;
   --sel-font-color: #191f28;
@@ -83,7 +83,6 @@
 }
 
 .side {
-  background-color: grey;
   min-height: 100vh;
 }
 .footer {

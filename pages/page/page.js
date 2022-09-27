@@ -43,7 +43,13 @@ export default function Page({
       if (page === "home" || page === "career") {
         newPostList = [...post];
       } else {
-        newPostList = [...post.filter((post) => post.category.type === menu)];
+        if (page === "portpolios") {
+          newPostList = [...post.filter((post) => post.category.type === menu)];
+        } else {
+          newPostList = [
+            ...post.filter((post) => post.subCategory.type === menu),
+          ];
+        }
       }
       setPostList(newPostList);
       pageRef.current.style.opacity = 1;
