@@ -1,4 +1,8 @@
 import sanityClient from "@sanity/client";
+const homeUrl = `*[_type == 'home']{
+  title,
+  homeContent
+}`;
 const profileUrl = `
 *[_type == 'profile']{
   company,
@@ -11,20 +15,25 @@ const profileUrl = `
   }
 }
 `;
-
-const homeUrl = `*[_type == 'home']{
-  title,
-  homeContent
-}`;
 const devLogUrl = `*[_type == 'devLog']{
   name,
   createdAt
 }`;
 
-//*[_type=="movie" && references(*[_type=="person" && age > 99]._id)]{title}
+const categoryUrl = `*[_type == 'category']{
+  name,
+  type,
+  index
+}`;
 
-const getPostInner = `
-title,
+const subCategoryUrl = `
+*[_type == 'subCategory' && references(*[_type=="category" && type == $category]._id)]{
+  name,
+  type
+}`;
+
+const postInnerUrl = `
+  title,
   subtitle,
   createdAt,
   postContent,
@@ -53,17 +62,24 @@ title,
     }
   }
 `;
-const getPostAll = `
+const postAllUrl = `
 *[_type == 'post']{
-  ${getPostInner}
+  ${postInnerUrl}
 }`;
-const getPostByCategory = `
+const postByCategoryUrl = `
 *[_type == 'post' && references(*[_type=="category" && type == $category]._id)]{
-  ${getPostInner}
+  ${postInnerUrl}
 }`;
-
+const postByCategoryAndSubCategoryUrl = `
+*[_type == 'post' && references(*[_type=="category" && type == $category]._id)&& references(*[_type=="subCategory" && type == $subCategory]._id)]{
+  ${postInnerUrl}
+}`;
+const postBySlug = `
+*[_type == 'post' && slug.current == $slug]{
+  ${postInnerUrl}
+}`;
 const portpolioUrl = `
-  *[_type == 'portpolio']{
+  *[_type == 'portpolio' && references(*[_type=="subCategory" && type == $subCategory]._id)]{
     'category' : category -> {
       name,
       type
@@ -125,17 +141,38 @@ export default class SanityService {
   async getHome() {
     return await this._client.fetch(homeUrl);
   }
+  async getDataBySlug({ slug }) {
+    const result = await this._client.fetch(postBySlug, { slug });
 
-  async getPost(category) {
-    if (!category) {
-      return await this._client.fetch(getPostAll);
+    return result[0];
+  }
+  async getData({ type, category, subCategory }) {
+    if (!type) return [];
+    if (type === "post") {
+      if (!category) {
+        return await this._client.fetch(postAllUrl);
+      } else {
+        if (!subCategory) {
+          return await this._client.fetch(postByCategoryUrl, {
+            category,
+          });
+        } else {
+          return await this._client.fetch(postByCategoryAndSubCategoryUrl, {
+            category,
+            subCategory,
+          });
+        }
+      }
+    } else if (type === "portpolio") {
+      return await this._client.fetch(portpolioUrl, { subCategory });
+    } else if (type === "career") {
+      return await this._client.fetch(careerUrl);
     } else {
-      const result = await this._client.fetch(getPostByCategory, { category });
-      return result;
+      return [];
     }
   }
-  async getPortpolio() {
-    return await this._client.fetch(portpolioUrl);
+  async getPortpolio(subCategory) {
+    return await this._client.fetch(portpolioUrl, { subCategory });
   }
   async getCareer() {
     return await this._client.fetch(careerUrl);
@@ -145,6 +182,15 @@ export default class SanityService {
   }
   async getProfile() {
     return await this._client.fetch(profileUrl);
+  }
+  async getCategory() {
+    const result = await this._client.fetch(categoryUrl);
+    result.sort((a, b) => a.index - b.index);
+    return result;
+  }
+  async getSubCategory(category) {
+    const result = await this._client.fetch(subCategoryUrl, { category });
+    return result;
   }
 }
 

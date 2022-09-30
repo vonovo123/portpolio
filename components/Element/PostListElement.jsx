@@ -18,6 +18,7 @@ export default function PostListElement({ element, goPage }) {
             src={element.thumbnail.imageUrl}
             alt={element.thumbnail.alt}
             className={cx("elementImage")}
+            preview={false}
           />
         </div>
         <div className={cx("elementContentWrapper")}>

@@ -3,57 +3,62 @@ import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 const cx = classNames.bind(styles);
 export default function MobileMenu({
-  menuState,
   pageState,
-  menuInfoState,
-  headerMenuInfo,
+  menuState,
+  subMenuState,
+  menuInfo,
+  subMenuInfo,
   goPage,
 }) {
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
-  const [menuInfo, setMenuInfo] = menuInfoState;
-  const [menuInfoView, setMenuInfoView] = useState(null);
+  const [subMenu, setSubMenu] = subMenuState;
+  const [subMenuInfoView, setSubMenuInfoView] = useState(null);
+  const menuRef = useRef();
   useEffect(() => {
     menuRef.current.style.transform = `translate3d(-100px,0px, 0)`;
     menuRef.current.style.opacity = 0;
-    if (!menuInfo) return;
+    if (!subMenuInfo) return;
     setTimeout(() => {
-      setMenuInfoView({ ...menuInfo });
+      setSubMenuInfoView([...subMenuInfo]);
       menuRef.current.style.opacity = 1;
       menuRef.current.style.transform = `translate3d(0px, 0px, 0)`;
     }, 1000);
-  }, [menuInfo]);
-  const menuRef = useRef();
+  }, [subMenuInfo]);
+
   return (
     <div className={cx("menu")}>
       <div className={cx("mainMenuWrapper")}>
         <div className={cx("mainMenu")}>
-          {Object.entries(headerMenuInfo).map(([key, value], idx) => (
-            <div
-              className={cx("nav")}
-              key={idx}
-              onClick={() => {
-                if (page === key) return;
-                goPage(key);
-              }}
-            >
-              {value}
-            </div>
-          ))}
+          {menuInfo.map(({ name, type }, idx) => {
+            if (type === "recent") return;
+            return (
+              <div
+                className={cx("nav")}
+                key={idx}
+                onClick={() => {
+                  if (menu === type) return;
+                  goPage(type);
+                }}
+              >
+                {name}
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className={cx("subMenuWrapper")}>
         <div ref={menuRef} className={cx("subMenu")}>
-          {menuInfoView &&
-            Object.entries(menuInfoView).map(([key, value], idx) => (
+          {subMenuInfoView &&
+            subMenuInfoView.map(({ type, name }, idx) => (
               <div
-                className={cx("nav", { sel: menu === key })}
-                key={key}
+                className={cx("nav", { sel: subMenu === type })}
+                key={type}
                 onClick={() => {
-                  setMenu(key);
+                  setSubMenu(type);
                 }}
               >
-                <div className={cx("text")}>{value}</div>
+                <div className={cx("text")}>{name}</div>
               </div>
             ))}
         </div>

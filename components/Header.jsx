@@ -9,17 +9,14 @@ export default function Header({
   goPage,
   pageState,
   menuState,
-  menuInfoState,
+  subMenuState,
+  category,
+  subCategory,
 }) {
   const [page, setPage] = pageState;
   const [hide, setHide] = useState(true);
   const menuRef = useRef();
-  const headerMenuInfo = {
-    coding: "개발",
-    info: "정보",
-    portpolios: "포트폴리오",
-    career: "커리어",
-  };
+
   useEffect(() => {
     if (hide) {
       menuRef.current.style.height = 0;
@@ -51,8 +48,9 @@ export default function Header({
         <DesktopMenu
           pageState={pageState}
           menuState={menuState}
-          menuInfoState={menuInfoState}
-          headerMenuInfo={headerMenuInfo}
+          subMenuState={subMenuState}
+          menuInfo={category}
+          subMenuInfo={subCategory}
           goPage={goPage}
         />
       </div>
@@ -60,8 +58,9 @@ export default function Header({
         <MobileMenu
           pageState={pageState}
           menuState={menuState}
-          menuInfoState={menuInfoState}
-          headerMenuInfo={headerMenuInfo}
+          subMenuState={subMenuState}
+          menuInfo={category}
+          subMenuInfo={subCategory}
           goPage={goPage}
         />
       </div>

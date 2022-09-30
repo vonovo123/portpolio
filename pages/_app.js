@@ -12,28 +12,27 @@ import Footer from "../components/Footer";
 import { UpCircleOutlined } from "@ant-design/icons";
 import { on, off, clear } from "../utils/Swing";
 const cx = classNames.bind(styles);
-function MyApp({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
   // 뷰포트 화면 크기
   const [windowWidth, setWindowWidth] = useState(null);
   const [contentWidth, setContentWidth] = useState();
-  //page 타입
-  const pageState = useState(null);
-  //메뉴 정보
-  const menuInfoState = useState(null);
-  const titleFoldState = useState(true);
-  //메뉴 선택
-  const menuState = useState(null);
   const contentRef = useRef(null);
   const swing = useRef(null);
   const aboutRef = useRef(null);
   const [showAbout, setShowAbout] = useState(false);
   const [hideAbout, setHideAbout] = useState(false);
+  //page 타입
+  const pageState = useState(null);
+  //메뉴 선택
+  const menuState = useState(null);
+  //하위 메뉴 선택
+  const subMenuState = useState(null);
   const initState = useCallback(() => {
     pageState[1](null);
     menuState[1](null);
-    menuInfoState[1](null);
-  }, [pageState, menuState, menuInfoState]);
+    subMenuState[1](null);
+  }, [pageState, menuState, subMenuState]);
 
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
@@ -46,7 +45,6 @@ function MyApp({ Component, pageProps }) {
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
   useEffect(() => {
-    let flag = true;
     if (!showAbout) {
       on(swing, aboutRef);
     } else {
@@ -60,12 +58,12 @@ function MyApp({ Component, pageProps }) {
   const goPage = useCallback(
     (def, val) => {
       initState();
-      if (def === "home") {
+      if (def === "home" || def === "recent") {
         router.push({ pathname: "/", query: {} });
-      } else if (def === "portpolios") {
+      } else if (def === "portpolio") {
         router.push({ pathname: "/page/portpolios", query: {} });
-      } else if (def === "coding") {
-        router.push({ pathname: "/page/coding", query: { menu: val } });
+      } else if (def === "dev") {
+        router.push({ pathname: "/page/coding", query: { category: val } });
       } else if (def === "career") {
         router.push({ pathname: "/page/career", query: {} });
       } else if (def === "info") {
@@ -103,7 +101,9 @@ function MyApp({ Component, pageProps }) {
           <Header
             pageState={pageState}
             menuState={menuState}
-            menuInfoState={menuInfoState}
+            subMenuState={subMenuState}
+            category={pageProps.category}
+            subCategory={pageProps.subCategory}
             goPage={goPage}
           ></Header>
         </div>
@@ -113,8 +113,7 @@ function MyApp({ Component, pageProps }) {
               {...pageProps}
               pageState={pageState}
               menuState={menuState}
-              menuInfoState={menuInfoState}
-              titleFoldState={titleFoldState}
+              subMenuState={subMenuState}
               initState={initState}
               setHideAbout={setHideAbout}
               goPage={goPage}
@@ -137,5 +136,3 @@ function MyApp({ Component, pageProps }) {
     </div>
   );
 }
-
-export default MyApp;

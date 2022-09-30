@@ -1,36 +1,54 @@
 import SanityService from "../../services/SanityService";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import PortpolioListElement from "../../components/Element/PortpolioListElement";
 import Page from "./page";
+import { useRouter } from "next/router";
 export default function Portpolios({
-  portpolios,
   pageState,
   menuState,
-  menuInfoState,
+  subMenuState,
+  subCategory,
+  goPage,
 }) {
-  const portpolioListState = useState([]);
-  const portMenuInfo = useMemo(
-    () => ({
-      htmlCss: "HTML/CSS",
-      js: "VanillaJs",
-      vue: "Vue",
-      react: "React",
-    }),
-    []
-  );
   const makeElement = (element, idx) => {
     return <PortpolioListElement element={element} key={idx} />;
   };
+  const router = useRouter();
+  const [page, setPage] = pageState;
+  const [menu, setMenu] = menuState;
+  const [subMenu, setSubMenu] = subMenuState;
+  const [loading, setLoading] = useState(false);
+  const [post, setPost] = useState(null);
+  useEffect(() => {
+    setPage("portpolio");
+    setMenu("portpolio");
+    setSubMenu(
+      router.query.category ? router.query.category : subCategory[0].type
+    );
+  }, []);
+  useEffect(() => {
+    if (!subMenu) {
+      return;
+    }
+    async function fetchData() {
+      setLoading(true);
+      setPost(null);
+      const sanityService = new SanityService();
+      const post = await sanityService.getData({
+        type: "portpolio",
+        category: menu,
+        subCategory: subMenu,
+      });
+      setPost([...post]);
+      setLoading(false);
+    }
+    fetchData();
+  }, [subMenu]);
   return (
     <Page
-      post={portpolios}
-      pageState={pageState}
-      menuState={menuState}
-      menuInfoState={menuInfoState}
-      postListState={portpolioListState}
-      initPage={"portpolios"}
-      initMenu={"htmlCss"}
-      initMenuInfo={portMenuInfo}
+      goPage={goPage}
+      post={post}
+      loading={loading}
       makeElement={makeElement}
     ></Page>
   );
@@ -39,14 +57,21 @@ export default function Portpolios({
 export async function getStaticProps() {
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
-  const portpolios = await sanityService.getPortpolio();
+  // const portpolios = await sanityService.getPortpolio();
   const profile = await sanityService.getProfile();
-  const recentPost = await sanityService.getPost();
+  const recentPost = await sanityService.getData({
+    type: "post",
+    category: null,
+    subCategory: null,
+  });
+  const category = await sanityService.getCategory();
+  const subCategory = await sanityService.getSubCategory("portpolio");
   return {
     props: {
-      portpolios,
       profile,
       recentPost,
+      category,
+      subCategory,
     },
   };
 }

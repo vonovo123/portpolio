@@ -1,33 +1,54 @@
 import SanityService from "../../services/SanityService";
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import CareerListElement from "../../components/Element/CareerListElement";
 import Page from "./page";
+import { useRouter } from "next/router";
 export default function Career({
-  careers,
   pageState,
   menuState,
-  menuInfoState,
+  subMenuState,
+  subCategory,
+  goPage,
 }) {
-  const careerListState = useState([]);
-  const careerMenuInfo = useMemo(
-    () => ({
-      career: "Career",
-    }),
-    []
-  );
   const makeElement = (element, idx) => {
     return <CareerListElement element={element} key={idx} />;
   };
+  const router = useRouter();
+  const [page, setPage] = pageState;
+  const [menu, setMenu] = menuState;
+  const [subMenu, setSubMenu] = subMenuState;
+  const [loading, setLoading] = useState(false);
+  const [post, setPost] = useState(null);
+  useEffect(() => {
+    setPage("career");
+    setMenu("career");
+    setSubMenu(
+      router.query.category ? router.query.category : subCategory[0].type
+    );
+  }, []);
+  useEffect(() => {
+    if (!subMenu) {
+      return;
+    }
+    async function fetchData() {
+      setLoading(true);
+      setPost(null);
+      const sanityService = new SanityService();
+      const post = await sanityService.getData({
+        type: "career",
+        category: menu,
+        subCategory: subMenu,
+      });
+      setPost([...post]);
+      setLoading(false);
+    }
+    fetchData();
+  }, [subMenu]);
   return (
     <Page
-      post={careers}
-      pageState={pageState}
-      menuState={menuState}
-      menuInfoState={menuInfoState}
-      postListState={careerListState}
-      initPage={"career"}
-      initMenu={"career"}
-      initMenuInfo={careerMenuInfo}
+      goPage={goPage}
+      post={post}
+      loading={loading}
       makeElement={makeElement}
     ></Page>
   );
@@ -36,14 +57,20 @@ export default function Career({
 export async function getStaticProps() {
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
-  const careers = await sanityService.getCareer();
   const profile = await sanityService.getProfile();
-  const recentPost = await sanityService.getPost();
+  const category = await sanityService.getCategory();
+  const subCategory = await sanityService.getSubCategory("career");
+  const recentPost = await sanityService.getData({
+    type: "post",
+    category: null,
+    subCategory: null,
+  });
   return {
     props: {
       profile,
-      careers,
       recentPost,
+      category,
+      subCategory,
     },
   };
 }

@@ -1,10 +1,9 @@
 .elementWrapper {
   height: 150px;
-  border-top: var(--border-width) solid var(--border-color);
+  border-bottom: var(--border-width) solid var(--border-color);
   cursor: pointer;
 }
 .elementWrapper:last-child {
-  border-bottom: var(--border-width) solid var(--border-color);
 }
 .element {
   height: 150px;
@@ -17,11 +16,11 @@
   width: 150px;
   height: 150px;
   object-fit: cover;
+  padding: 10px;
 }
 .elementContentWrapper {
   width: calc(100% - 155px);
-  padding: 0px 20px;
-  margin-top: 20px;
+  padding: 20px;
 }
 
 .title {

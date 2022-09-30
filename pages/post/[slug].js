@@ -14,22 +14,24 @@ export default function Post({
   post,
   pageState,
   menuState,
-  menuInfoState,
+  subMenuState,
   setHideAbout,
+  menuType,
+  subMenuType,
 }) {
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
-  const [menuInfo, setMenuInfo] = menuInfoState;
+  const [subMenu, setSubMenu] = subMenuState;
   const [readKey, setReadkey] = useState({ flag: false });
   const sod = useRef(null);
   const eod = useRef(null);
   const [heading, setHeading] = useState([]);
   const [foldToc, setFoldToc] = useState(false);
   useEffect(() => {
-    setPage("post");
-    setMenu("post");
+    setPage("slug");
+    setMenu(menuType);
+    setSubMenu(subMenuType);
     setHideAbout("true");
-    setMenuInfo({});
     const option = {
       rootMargin: "-10% 0% -90% 0%",
     };
@@ -98,7 +100,11 @@ export default function Post({
 
 export async function getStaticPaths() {
   const sanityService = new SanityService();
-  const posts = await sanityService.getPost();
+  const posts = await sanityService.getData({
+    type: "post",
+    category: null,
+    subCategory: null,
+  });
   const paths = posts.map((post) => ({
     params: {
       slug: post.slug,
@@ -112,17 +118,26 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { slug } = params;
   const sanityService = new SanityService();
-  const posts = await sanityService.getPost();
-  const recentPost = [...posts];
+  const category = await sanityService.getCategory();
   const profile = await sanityService.getProfile();
-  const post = posts.find((post) => post.slug === slug);
-
+  ///const posts = await sanityService.getPost();
+  const recentPost = await sanityService.getData({
+    type: "post",
+    category: null,
+    subCategory: null,
+  });
+  const post = await sanityService.getDataBySlug({ slug });
+  const subCategory = await sanityService.getSubCategory(post.category.type);
   return {
     props: {
       slug,
       post,
       profile,
       recentPost,
+      category,
+      subCategory,
+      menuType: post.category.type,
+      subMenuType: post.subCategory.type,
     },
   };
 }

@@ -4,73 +4,24 @@ import styles from "../../styles/Page/Page.module.css";
 const cx = classNames.bind(styles);
 import List from "../../components/List";
 import { LoadingOutlined } from "@ant-design/icons";
-export default function Page({
-  goPage,
-  post,
-  pageState,
-  menuState,
-  menuInfoState,
-  initPage,
-  initMenu,
-  initMenuInfo,
-  postListState,
-  makeElement,
-}) {
-  const [page, setPage] = pageState;
-  const [menu, setMenu] = menuState;
-  const [menuInfo, setMenuInfo] = menuInfoState;
-  const [postList, setPostList] = postListState;
-  const loadingState = useState(false);
-  const [loading, setLoading] = loadingState;
+export default function Page({ goPage, post, loading, makeElement }) {
   const pageRef = useRef();
-  const loadingRef = useRef();
-  //화면진입 //스크롤로 화면변경
-  useEffect(() => {
-    setPage(initPage);
-    setMenuInfo(initMenuInfo);
-    setMenu(initMenu);
-  }, []);
-  useEffect(() => {
-    pageRef.current.style.opacity = 0;
-    pageRef.current.style.transform = `translate3d(0,50px, 0)`;
-    if (!menu) {
-      setPostList(null);
-      return;
-    }
-    setLoading(true);
-    setTimeout(() => {
-      let newPostList = null;
-      if (page === "home" || page === "career") {
-        newPostList = [...post];
-      } else {
-        if (page === "portpolios") {
-          newPostList = [...post.filter((post) => post.category.type === menu)];
-        } else {
-          newPostList = [
-            ...post.filter((post) => post.subCategory.type === menu),
-          ];
-        }
-      }
-      setPostList(newPostList);
-      pageRef.current.style.opacity = 1;
-      pageRef.current.style.transform = `translate3d(0, 0px, 0)`;
-      setLoading(false);
-    }, 1000);
-  }, [menu]);
   useEffect(() => {
     if (!loading) {
-      loadingRef.current.style.transform = `translate3d(0, -120px, 0)`;
+      pageRef.current.style.transform = `translate3d(0, -70px, 0)`;
     } else {
-      loadingRef.current.style.transform = `translate3d(0, 0px, 0)`;
+      pageRef.current.style.transform = `translate3d(0, 0px, 0)`;
     }
   }, [loading]);
   return (
-    <div className={cx("pageWrapper")}>
-      <div className={cx("loading")} ref={loadingRef}>
-        <LoadingOutlined />
-      </div>
-      <div className={cx("page")} ref={pageRef}>
-        <List goPage={goPage} list={postList} makeElement={makeElement}></List>
+    <div className={cx("page")}>
+      <div className={cx("pageWrapper")} ref={pageRef}>
+        <div className={cx("loading")}>
+          <LoadingOutlined />
+        </div>
+        <div className={cx("list")}>
+          <List goPage={goPage} list={post} makeElement={makeElement}></List>
+        </div>
       </div>
     </div>
   );
