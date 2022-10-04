@@ -9,7 +9,7 @@ export default function PostListElement({ element, goPage }) {
     <div
       className={cx("elementWrapper")}
       onClick={() => {
-        goPage("post", element.slug);
+        goPage({ def: "slug", slug: element.slug });
       }}
     >
       <div className={cx("element")}>

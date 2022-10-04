@@ -62,7 +62,7 @@
   .tocWrapper {
     display: block;
     right: 0;
-    width: 300px;
+    width: 280px;
     position: fixed;
     top: 0;
     height: 100%;
@@ -74,7 +74,7 @@
     transition: all 0.5s;
   }
   .tocWrapper.fold {
-    right: -300px;
+    right: -280px;
   }
   .tocFold {
     display: flex;

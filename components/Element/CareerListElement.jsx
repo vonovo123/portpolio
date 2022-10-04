@@ -51,28 +51,26 @@ export default function CareerListElement({ element }) {
           </Row>
           {element.works.map((work, idx) => {
             return (
-              <>
-                <Row className={cx("descriptionCol")}>
-                  <Col span={2}></Col>
-                  <Col span={14}>
-                    <span>{dayjs(work.from).format("YYYY.M.DD")}</span>
-                    {" ~"}
-                    <span>{dayjs(work.to).format("YYYY.M.DD")}</span>
-                    <div>{work.name}</div>
-                    <div>{work.description} </div>
-                  </Col>
-                  <Col span={2}></Col>
-                  <Col span={6}>
-                    <Row className={cx("tagWrapper")}>
-                      {work.skills.map((skill, index) => (
-                        <Col key={index} className={cx("tag")}>
-                          {skill.name}
-                        </Col>
-                      ))}
-                    </Row>
-                  </Col>
-                </Row>
-              </>
+              <Row className={cx("descriptionCol")} key={idx}>
+                <Col span={2}></Col>
+                <Col span={14}>
+                  <span>{dayjs(work.from).format("YYYY.M.DD")}</span>
+                  {" ~"}
+                  <span>{dayjs(work.to).format("YYYY.M.DD")}</span>
+                  <div>{work.name}</div>
+                  <div>{work.description} </div>
+                </Col>
+                <Col span={2}></Col>
+                <Col span={6}>
+                  <Row className={cx("tagWrapper")}>
+                    {work.skills.map((skill, index) => (
+                      <Col key={index} className={cx("tag")}>
+                        {skill.name}
+                      </Col>
+                    ))}
+                  </Row>
+                </Col>
+              </Row>
             );
           })}
         </div>

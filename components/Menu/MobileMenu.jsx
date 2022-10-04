@@ -8,7 +8,6 @@ export default function MobileMenu({
   subMenuState,
   menuInfo,
   subMenuInfo,
-  goPage,
 }) {
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
@@ -16,29 +15,25 @@ export default function MobileMenu({
   const [subMenuInfoView, setSubMenuInfoView] = useState(null);
   const menuRef = useRef();
   useEffect(() => {
-    menuRef.current.style.transform = `translate3d(-100px,0px, 0)`;
-    menuRef.current.style.opacity = 0;
-    if (!subMenuInfo) return;
-    setTimeout(() => {
-      setSubMenuInfoView([...subMenuInfo]);
-      menuRef.current.style.opacity = 1;
-      menuRef.current.style.transform = `translate3d(0px, 0px, 0)`;
-    }, 1000);
+    if (!subMenuInfo) {
+      setSubMenuInfoView(null);
+      return;
+    }
+    setSubMenuInfoView([...subMenuInfo]);
   }, [subMenuInfo]);
 
   return (
     <div className={cx("menu")}>
-      <div className={cx("mainMenuWrapper")}>
+      <div className={cx("mainMenuWrapper", { hide: !subMenuInfoView })}>
         <div className={cx("mainMenu")}>
-          {menuInfo.map(({ name, type }, idx) => {
+          {menuInfo.map(({ type, name, slug }, idx) => {
             if (type === "recent") return;
             return (
               <div
                 className={cx("nav")}
                 key={idx}
                 onClick={() => {
-                  if (menu === type) return;
-                  goPage(type);
+                  setMenu(slug);
                 }}
               >
                 {name}
@@ -47,7 +42,7 @@ export default function MobileMenu({
           })}
         </div>
       </div>
-      <div className={cx("subMenuWrapper")}>
+      <div className={cx("subMenuWrapper", { hide: !subMenuInfoView })}>
         <div ref={menuRef} className={cx("subMenu")}>
           {subMenuInfoView &&
             subMenuInfoView.map(({ type, name }, idx) => (

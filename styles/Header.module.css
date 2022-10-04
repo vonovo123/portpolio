@@ -38,6 +38,7 @@
   }
   .desktopMenuWrapper {
     display: block;
+    height: 100px;
   }
   .mobileMenuWrapper {
     display: none;

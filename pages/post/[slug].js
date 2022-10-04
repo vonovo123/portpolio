@@ -9,6 +9,7 @@ import { makeHeadings } from "../../utils/Headings";
 import makeObserver from "../../utils/Observer";
 import TableOfContents from "../../components/TableOfContents";
 import { CaretLeftOutlined } from "@ant-design/icons";
+import { setLocalData } from "../../utils/LocalStorage";
 const cx = classNames.bind(styles);
 export default function Post({
   post,
@@ -16,26 +17,27 @@ export default function Post({
   menuState,
   subMenuState,
   setHideAbout,
+  goPage,
+  pageType,
   menuType,
   subMenuType,
+  subCategoryState,
 }) {
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
+  const [subCategory, setSubcategory] = subCategoryState;
   const [readKey, setReadkey] = useState({ flag: false });
   const sod = useRef(null);
   const eod = useRef(null);
   const [heading, setHeading] = useState([]);
   const [foldToc, setFoldToc] = useState(false);
   useEffect(() => {
-    setPage("slug");
-    setMenu(menuType);
-    setSubMenu(subMenuType);
     setHideAbout("true");
+    setSubcategory(null);
     const option = {
       rootMargin: "-10% 0% -90% 0%",
     };
-
     const $contentNode = document.querySelector("#content");
     const cb = (entry) => {
       setReadkey(entry.target.dataset.idx);
@@ -51,6 +53,10 @@ export default function Post({
     const headings = makeHeadings({ ast, io: contentIo });
     setHeading(headings);
   }, []);
+  useEffect(() => {
+    if (!subMenu) return;
+    goPage({ def: page });
+  }, [subMenu]);
   return (
     <div className={cx("post")}>
       <div className={cx("tocWrapper", { fold: foldToc })}>
@@ -136,7 +142,8 @@ export async function getStaticProps({ params }) {
       recentPost,
       category,
       subCategory,
-      menuType: post.category.type,
+      pageType: post.category.type,
+      menuType: post.category.slug,
       subMenuType: post.subCategory.type,
     },
   };

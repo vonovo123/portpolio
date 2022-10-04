@@ -23,11 +23,13 @@ const devLogUrl = `*[_type == 'devLog']{
 const categoryUrl = `*[_type == 'category']{
   name,
   type,
+  slug,
   index
 }`;
 
 const subCategoryUrl = `
-*[_type == 'subCategory' && references(*[_type=="category" && type == $category]._id)]{
+*[_type == 'subCategory' && references(*[_type=="category" && slug == $category]._id)]{
+  
   name,
   type
 }`;
@@ -39,7 +41,8 @@ const postInnerUrl = `
   postContent,
   'category' : category -> {
     name,
-    type
+    type,
+    slug
   },
   'subCategory' : subCategory -> {
     name,
@@ -67,11 +70,11 @@ const postAllUrl = `
   ${postInnerUrl}
 }`;
 const postByCategoryUrl = `
-*[_type == 'post' && references(*[_type=="category" && type == $category]._id)]{
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)]{
   ${postInnerUrl}
 }`;
 const postByCategoryAndSubCategoryUrl = `
-*[_type == 'post' && references(*[_type=="category" && type == $category]._id)&& references(*[_type=="subCategory" && type == $subCategory]._id)]{
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)&& references(*[_type=="subCategory" && type == $subCategory]._id)]{
   ${postInnerUrl}
 }`;
 const postBySlug = `
@@ -150,6 +153,8 @@ export default class SanityService {
     if (!type) return [];
     if (type === "post") {
       if (!category) {
+        return await this._client.fetch(postAllUrl);
+      } else if (category === "home") {
         return await this._client.fetch(postAllUrl);
       } else {
         if (!subCategory) {

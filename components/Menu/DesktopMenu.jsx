@@ -8,7 +8,6 @@ export default function DesktopMenu({
   subMenuState,
   menuInfo,
   subMenuInfo,
-  goPage,
 }) {
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
@@ -16,27 +15,23 @@ export default function DesktopMenu({
   const [subMenuInfoView, setSubMenuInfoView] = useState(null);
   const menuRef = useRef();
   useEffect(() => {
-    menuRef.current.style.opacity = 0;
-    menuRef.current.style.transform = `translate3d(0,-50px, 0)`;
-    if (!subMenuInfo) return;
-    setTimeout(() => {
-      setSubMenuInfoView([...subMenuInfo]);
-      menuRef.current.style.opacity = 1;
-      menuRef.current.style.transform = `translate3d(0, 0px, 0)`;
-    }, 500);
+    if (!subMenuInfo) {
+      setSubMenuInfoView(null);
+      return;
+    }
+    setSubMenuInfoView([...subMenuInfo]);
   }, [subMenuInfo]);
   return (
-    <div className={cx("menu")}>
-      <div className={cx("mainMenuWrapper")}>
+    <div className={cx("menu", { hide: !subMenuInfoView })}>
+      <div className={cx("mainMenuWrapper", { hide: !subMenuInfoView })}>
         <div className={cx("main")}>
-          {menuInfo.map(({ type, name }, idx) => {
+          {menuInfo.map(({ type, slug, name }, idx) => {
             return (
               <div
-                className={cx("nav", { sel: menu === type })}
+                className={cx("nav", { sel: menu === slug })}
                 key={idx}
                 onClick={() => {
-                  if (menu === type) return;
-                  goPage(type);
+                  setMenu(slug);
                 }}
               >
                 {name}
@@ -45,7 +40,7 @@ export default function DesktopMenu({
           })}
         </div>
       </div>
-      <div className={cx("subMenuWrapper")}>
+      <div className={cx("subMenuWrapper", { hide: !subMenuInfoView })}>
         <div ref={menuRef} className={cx("sub")}>
           {subMenuInfoView &&
             subMenuInfoView.map(({ type, name }, idx) => (

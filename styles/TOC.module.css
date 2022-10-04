@@ -45,22 +45,22 @@
   margin-bottom: 15px;
 }
 .list.lv1 {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: bold;
 }
 
 .list.lv2 {
   font-weight: 500;
-  font-size: 17px;
+  font-size: 15px;
 }
 
 .list.lv3 {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
 }
 
 .list.lv4 {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 300;
 }
 

@@ -10,7 +10,9 @@ import { useRouter } from "next/router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UpCircleOutlined } from "@ant-design/icons";
+import SanityService from "../services/SanityService";
 import { on, off, clear } from "../utils/Swing";
+import { setLocalData } from "../utils/LocalStorage";
 const cx = classNames.bind(styles);
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -22,22 +24,50 @@ export default function MyApp({ Component, pageProps }) {
   const aboutRef = useRef(null);
   const [showAbout, setShowAbout] = useState(false);
   const [hideAbout, setHideAbout] = useState(false);
+  const cachedPathState = useState(null);
+  const [cachedPath, setCachedPath] = cachedPathState;
+  const subCategoryState = useState(null);
+  // 하위 메뉴 정보
+  const [subCategory, setSubcategory] = subCategoryState;
   //page 타입
   const pageState = useState(null);
-  //메뉴 선택
+  const [page, setPage] = pageState;
+  //선택퇸 메뉴
   const menuState = useState(null);
-  //하위 메뉴 선택
+  const [menu, setMenu] = menuState;
+  //선택된 하위 메뉴
   const subMenuState = useState(null);
+  const [subMenu, setSubMenu] = subMenuState;
   const initState = useCallback(() => {
-    pageState[1](null);
-    menuState[1](null);
-    subMenuState[1](null);
-  }, [pageState, menuState, subMenuState]);
+    setPage(null);
+    setMenu(null);
+    setSubMenu(null);
+    setSubcategory(null);
+  }, [setPage, setMenu, setSubMenu]);
 
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
     setContentWidth(contentRef.current.getBoundingClientRect().width);
   }, []);
+  const goPage = useCallback(
+    ({ def, slug }) => {
+      initState();
+      if (def === "slug") {
+        router.push({ pathname: `/post/${slug}` });
+      } else if (def === "home") {
+        if (page === "post") {
+          setCachedPath({ page: "post", menu: "home", subMenu: "recent" });
+        } else {
+          setLocalData("path", null);
+          router.push({ pathname: "/" });
+        }
+      } else {
+        setLocalData("path", { page, menu, subMenu });
+        router.push({ pathname: "/" });
+      }
+    },
+    [initState, router, page, menu, subMenu]
+  );
 
   useEffect(() => {
     handleResize();
@@ -54,26 +84,30 @@ export default function MyApp({ Component, pageProps }) {
       clear(swing);
     };
   }, [showAbout]);
-
-  const goPage = useCallback(
-    (def, val) => {
-      initState();
-      if (def === "home" || def === "recent") {
-        router.push({ pathname: "/", query: {} });
-      } else if (def === "portpolio") {
-        router.push({ pathname: "/page/portpolios", query: {} });
-      } else if (def === "dev") {
-        router.push({ pathname: "/page/coding", query: { category: val } });
-      } else if (def === "career") {
-        router.push({ pathname: "/page/career", query: {} });
-      } else if (def === "info") {
-        router.push({ pathname: "/page/info", query: {} });
-      } else if (def === "post") {
-        router.push({ pathname: `/post/${val}` });
-      }
-    },
-    [initState, router]
-  );
+  useEffect(() => {
+    if (!menu) return;
+    if (menu === "portpolio" || menu === "career") {
+      setPage(menu);
+    } else {
+      setPage("post");
+    }
+    setSubMenu(null);
+    setSubcategory(null);
+    async function fetchData() {
+      const sanityService = new SanityService();
+      const subCategory = await sanityService.getSubCategory(menu);
+      setSubcategory(subCategory);
+    }
+    fetchData();
+  }, [menu]);
+  useEffect(() => {
+    if (!cachedPath) return;
+    setPage(cachedPath.page);
+    setMenu(cachedPath.menu);
+    setTimeout(() => {
+      setSubMenu(cachedPath.subMenu);
+    }, 1000);
+  }, [cachedPath]);
   return (
     <div className={cx("app")}>
       <div
@@ -103,7 +137,7 @@ export default function MyApp({ Component, pageProps }) {
             menuState={menuState}
             subMenuState={subMenuState}
             category={pageProps.category}
-            subCategory={pageProps.subCategory}
+            subCategory={subCategory}
             goPage={goPage}
           ></Header>
         </div>
@@ -111,6 +145,8 @@ export default function MyApp({ Component, pageProps }) {
           <div className={cx("content")}>
             <Component
               {...pageProps}
+              cachedPathState={cachedPathState}
+              subCategoryState={subCategoryState}
               pageState={pageState}
               menuState={menuState}
               subMenuState={subMenuState}

@@ -1,64 +1,76 @@
 import SanityService from "../services/SanityService";
-import styles from "../styles/index.module.css";
-import classNames from "classnames/bind";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Page from "./page/page";
-import CodingListElement from "../components/Element/PostListElement";
 import { useRouter } from "next/router";
-const cx = classNames.bind(styles);
-
+import { setLocalData, getLocalData } from "../utils/LocalStorage";
 export default function Home({
-  recentPost,
+  cachedPathState,
   pageState,
   menuState,
   subMenuState,
-  subCategory,
+  subCategoryState,
   goPage,
 }) {
-  const router = useRouter();
   const [page, setPage] = pageState;
+  const [pageView, setPageView] = useState(null);
   const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
-  const [loading, setLoading] = useState(false);
+  const [subCategory, setSubCategory] = subCategoryState;
   const [post, setPost] = useState(null);
-  const makeElement = (element, idx, goPage) => {
-    return <CodingListElement element={element} key={idx} goPage={goPage} />;
-  };
+  const [cachedPath, setCachedPath] = cachedPathState;
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   useEffect(() => {
-    setPage("home");
-    setMenu("recent");
-    setSubMenu(
-      router.query.category ? router.query.category : subCategory[0].type
-    );
-  }, []);
-  useEffect(() => {
-    if (!subMenu) {
-      return;
-    }
-
-    async function fetchData() {
-      setLoading(true);
-      setPost(null);
-      const sanityService = new SanityService();
-      const post = await sanityService.getData({
-        type: "post",
-        category: null,
-        subCategory: null,
+    const path = getLocalData("path");
+    if (!path) {
+      setCachedPath({ page: "post", menu: "home", subMenu: "recent" });
+    } else {
+      const { page, menu, subMenu } = path;
+      setCachedPath({
+        page,
+        menu,
+        subMenu,
       });
-      setPost([...post]);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!subMenu) return;
+    setLoading(true);
+    async function fetchData() {
+      setPost(null);
+      const param = {
+        type: page,
+        category: menu,
+        subCategory: subMenu !== "default" ? subMenu : subCategory[0].type,
+      };
+      const sanityService = new SanityService();
+      const post = await sanityService.getData(param);
+      setLocalData("path", { page, menu, subMenu });
+      setPost(post);
       setLoading(false);
     }
     fetchData();
   }, [subMenu]);
-  return <Page goPage={goPage} post={post} makeElement={makeElement}></Page>;
+  useEffect(() => {
+    setPageView(page);
+  }, [post]);
+  return (
+    <Page
+      pageView={pageView}
+      post={post}
+      loading={loading}
+      goPage={goPage}
+    ></Page>
+  );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ query }) {
+  console.log(query);
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
   const profile = await sanityService.getProfile();
   const category = await sanityService.getCategory();
-  const subCategory = await sanityService.getSubCategory("recent");
   const recentPost = await sanityService.getData({
     type: "post",
     category: null,
@@ -69,7 +81,6 @@ export async function getStaticProps() {
       recentPost,
       profile,
       category,
-      subCategory,
     },
   };
 }
