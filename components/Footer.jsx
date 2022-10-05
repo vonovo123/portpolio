@@ -1,18 +1,12 @@
-import { Col, Row } from "antd";
-
 export default function Footer() {
   return (
-    <Row
-      align="middle"
+    <div
       style={{
         height: 10,
         textAlign: "center",
-        marginBottom: "130px",
       }}
     >
-      <Col span={22}>
-        <p>@ 2022 Henry kwon. All right reserved.</p>
-      </Col>
-    </Row>
+      <p>Copyright © HYUNWOO KWON All Rights Reserved.</p>
+    </div>
   );
 }

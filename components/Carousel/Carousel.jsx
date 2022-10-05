@@ -92,14 +92,14 @@ export default function Carousel({
               data.map((element, idx) => {
                 return (
                   <Col key={idx} className={cx("col")}>
-                    {makeElement(element, goPage)}
+                    {makeElement({ element, goPage })}
                   </Col>
                 );
               })}
             {data.map((element, idx) => {
               return (
                 <Col key={idx} className={cx("col")}>
-                  {makeElement(element, goPage)}
+                  {makeElement({ element, goPage })}
                 </Col>
               );
             })}
@@ -107,7 +107,7 @@ export default function Carousel({
               data.map((element, idx) => {
                 return (
                   <Col key={idx} className={cx("col")}>
-                    {makeElement(element, goPage)}
+                    {makeElement({ element, goPage })}
                   </Col>
                 );
               })}

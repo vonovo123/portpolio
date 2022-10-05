@@ -1,4 +1,7 @@
-.componentWrapper {
+.mb {
+  margin-bottom: 30px;
+}
+.index {
   width: 100%;
 }
 .bColorA {
@@ -9,32 +12,38 @@
   background-color: var(--background-colorB);
 }
 
-.title {
-  display: flex;
+.ad {
+  background-color: var(--border-color);
+  width: 100%;
+  padding: 10px;
+}
+.ad.h100 {
+  height: 100px;
+}
+.ad.h200 {
+  height: 200px;
+}
+.ad.h300 {
+  height: 300px;
+}
+.titleWrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   flex-wrap: nowrap;
-  font-size: 20px;
+  font-size: 16px;
   color: var(--font-color);
   font-weight: bold;
   transition: all 0.5s;
-  opacity: 1;
+  border-radius: 3px;
+  transition: all 0.5s;
+  margin-bottom: 30px;
+  min-height: 50px;
 }
-.title.main {
-  padding-left: 20px;
+.title {
+  display: inline-block;
+  margin: 0px 10px;
+  transition: all 0.5s;
 }
 .title.sub {
-  height: 50px;
-  padding-left: 30px;
-}
-.title.sub.hide {
-  opacity: 0;
-  padding: 0;
-  height: 0px;
-}
-
-.mainSubTitleText {
-  color: var(--sub-font-color);
-  padding-top: 5px;
-  font-size: 15px;
-  margin-left: 20px;
-  cursor: pointer;
 }

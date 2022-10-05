@@ -23,6 +23,7 @@
 .app {
   --background-colorA: #ffffff;
   --background-colorB: #fefafa;
+  --sel-box-color: rgb(230, 230, 230);
   --tag-color: #83878c;
   --tag-font-color: #ffffff;
   --border-color: #e0e0e0;
@@ -75,8 +76,7 @@
 }
 
 .body {
-  margin-top: 30px;
-  padding-bottom: 50px;
+  padding-top: 30px;
 }
 
 .content {
@@ -86,10 +86,25 @@
 .side {
   min-height: 100vh;
 }
+.ad {
+  background-color: var(--border-color);
+  width: 100%;
+  padding: 10px;
+}
+.ad.h100 {
+  height: 100px;
+}
+.ad.h200 {
+  height: 200px;
+}
+.ad.h300 {
+  height: 300px;
+}
 .footer {
+  min-height: 50px;
 }
 .banner {
-  padding: 50px 0px;
+  padding: 10px 0px 50px 0px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -106,6 +121,8 @@
   }
   .body {
     display: flex;
+    flex-wrap: wrap;
+    padding-top: 60px;
   }
   .content {
     width: 75%;

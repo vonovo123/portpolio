@@ -26,20 +26,21 @@ export default function MobileMenu({
     <div className={cx("menu")}>
       <div className={cx("mainMenuWrapper", { hide: !subMenuInfoView })}>
         <div className={cx("mainMenu")}>
-          {menuInfo.map(({ type, name, slug }, idx) => {
-            if (type === "recent") return;
-            return (
-              <div
-                className={cx("nav")}
-                key={idx}
-                onClick={() => {
-                  setMenu(slug);
-                }}
-              >
-                {name}
-              </div>
-            );
-          })}
+          {menuInfo &&
+            menuInfo.map(({ type, name, slug }, idx) => {
+              if (type === "recent") return;
+              return (
+                <div
+                  className={cx("nav")}
+                  key={idx}
+                  onClick={() => {
+                    setMenu(slug);
+                  }}
+                >
+                  {name}
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className={cx("subMenuWrapper", { hide: !subMenuInfoView })}>

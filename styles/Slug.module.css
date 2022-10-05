@@ -17,6 +17,20 @@
 .mb50 {
   margin-bottom: 100px;
 }
+.ad {
+  background-color: var(--border-color);
+  width: 100%;
+  padding: 10px;
+}
+.ad.h100 {
+  height: 100px;
+}
+.ad.h200 {
+  height: 200px;
+}
+.ad.h300 {
+  height: 300px;
+}
 .tocWrapper {
   display: none;
 }
@@ -24,7 +38,6 @@
   display: none;
 }
 .post {
-  margin-top: 50px;
   margin-bottom: 50px;
   padding-left: 10px;
   padding-right: 10px;

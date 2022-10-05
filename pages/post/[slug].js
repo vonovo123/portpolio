@@ -31,7 +31,7 @@ export default function Post({
   const sod = useRef(null);
   const eod = useRef(null);
   const [heading, setHeading] = useState([]);
-  const [foldToc, setFoldToc] = useState(false);
+  const [foldToc, setFoldToc] = useState(true);
   useEffect(() => {
     setHideAbout("true");
     setSubcategory(null);
@@ -77,6 +77,7 @@ export default function Post({
         </div>
         <div className={cx("text")}>TOC</div>
       </div>
+      <div className={cx("ad", "h100", "mb30")}>Ad Section</div>
       <Row className={cx("contentHeaderWrapper")} ref={sod} data-idx={"sod"}>
         <Col span={24} align={"center"}>
           <Image

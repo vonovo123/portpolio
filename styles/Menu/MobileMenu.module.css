@@ -36,10 +36,10 @@
 }
 .subMenu .nav {
   font-size: 15px;
-  color: #ffffff;
+  color: #000000;
 }
 
 .subMenu .nav.sel {
   font-size: 15px;
-  color: #000000;
+  color: #ffffff;
 }

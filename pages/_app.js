@@ -4,7 +4,8 @@ import "../styles/globals.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "../styles/App.module.css";
 import classNames from "classnames/bind";
-import RecentPosts from "../components/RecentPosts";
+import RecentPosts from "../components/ThemePosts/RecentPosts";
+import DefaultPosts from "../components/ThemePosts/defaultPosts";
 import About from "../components/About";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
@@ -13,6 +14,7 @@ import { UpCircleOutlined } from "@ant-design/icons";
 import SanityService from "../services/SanityService";
 import { on, off, clear } from "../utils/Swing";
 import { setLocalData } from "../utils/LocalStorage";
+
 const cx = classNames.bind(styles);
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -26,8 +28,11 @@ export default function MyApp({ Component, pageProps }) {
   const [hideAbout, setHideAbout] = useState(false);
   const cachedPathState = useState(null);
   const [cachedPath, setCachedPath] = cachedPathState;
-  const subCategoryState = useState(null);
+  // 메뉴 정보
+  const categoryState = useState(null);
+  const [category, setCategory] = categoryState;
   // 하위 메뉴 정보
+  const subCategoryState = useState(null);
   const [subCategory, setSubcategory] = subCategoryState;
   //page 타입
   const pageState = useState(null);
@@ -48,6 +53,7 @@ export default function MyApp({ Component, pageProps }) {
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
     setContentWidth(contentRef.current.getBoundingClientRect().width);
+    setCategory(pageProps.category);
   }, []);
   const goPage = useCallback(
     ({ def, slug }) => {
@@ -136,7 +142,7 @@ export default function MyApp({ Component, pageProps }) {
             pageState={pageState}
             menuState={menuState}
             subMenuState={subMenuState}
-            category={pageProps.category}
+            category={category}
             subCategory={subCategory}
             goPage={goPage}
           ></Header>
@@ -146,6 +152,7 @@ export default function MyApp({ Component, pageProps }) {
             <Component
               {...pageProps}
               cachedPathState={cachedPathState}
+              category={category}
               subCategoryState={subCategoryState}
               pageState={pageState}
               menuState={menuState}
@@ -155,11 +162,28 @@ export default function MyApp({ Component, pageProps }) {
               goPage={goPage}
             />
           </div>
-          <div className={cx("side")}></div>
+          <div className={cx("side")}>
+            <div className={cx("themePostsWrapper", "mb50")}>
+              <DefaultPosts
+                post={pageProps.recentPost}
+                goPage={goPage}
+                title={"많이 본 글"}
+              ></DefaultPosts>
+            </div>
+            <div className={cx("ad", "h300", "mb50")}>Ad Section</div>
+            <div className={cx("themePostsWrapper", "mb50")}>
+              <DefaultPosts
+                post={pageProps.recentPost}
+                goPage={goPage}
+                title={"같은 메뉴 다른 글"}
+              ></DefaultPosts>
+            </div>
+          </div>
         </div>
+        <div className={cx("ad", "h100", "mb20")}>Ad Section</div>
         <div className={cx("banner", "mb50")} ref={contentRef}>
           <RecentPosts
-            recentPost={pageProps.recentPost}
+            post={pageProps.recentPost}
             windowWidth={windowWidth}
             contentWidth={contentWidth}
             goPage={goPage}

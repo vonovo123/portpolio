@@ -1,3 +1,6 @@
+import classNames from "classnames/bind";
+import styles from "../styles/index.module.css";
+const cx = classNames.bind(styles);
 import SanityService from "../services/SanityService";
 import { useEffect, useState } from "react";
 import Page from "./page/page";
@@ -8,6 +11,7 @@ export default function Home({
   pageState,
   menuState,
   subMenuState,
+  category,
   subCategoryState,
   goPage,
 }) {
@@ -19,6 +23,7 @@ export default function Home({
   const [post, setPost] = useState(null);
   const [cachedPath, setCachedPath] = cachedPathState;
   const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState(null);
   const router = useRouter();
   useEffect(() => {
     const path = getLocalData("path");
@@ -42,10 +47,27 @@ export default function Home({
       const param = {
         type: page,
         category: menu,
-        subCategory: subMenu !== "default" ? subMenu : subCategory[0].type,
+        subCategory: subMenu,
       };
       const sanityService = new SanityService();
       const post = await sanityService.getData(param);
+      let mainCat = null;
+      let subCat = null;
+      if (category && subCategory) {
+        mainCat = category.find((cat) => cat.slug === menu);
+        subCat = subCategory.find((cat) => cat.type === subMenu);
+        if (mainCat && subCat)
+          setTitle(
+            <>
+              <div className={cx("title")}>{mainCat.name}</div>
+              <div className={cx("title")}>{">"}</div>
+              <div className={cx("title", "sub")}>{subCat.name}</div>
+            </>
+          );
+        else setTitle(null);
+      } else {
+        setTitle(null);
+      }
       setLocalData("path", { page, menu, subMenu });
       setPost(post);
       setLoading(false);
@@ -56,17 +78,20 @@ export default function Home({
     setPageView(page);
   }, [post]);
   return (
-    <Page
-      pageView={pageView}
-      post={post}
-      loading={loading}
-      goPage={goPage}
-    ></Page>
+    <>
+      <div className={cx("titleWrapper")}>{title && title}</div>
+      <div className={cx("ad", "h100", "mb30")}>Ad Section</div>
+      <Page
+        pageView={pageView}
+        post={post}
+        loading={loading}
+        goPage={goPage}
+      ></Page>
+    </>
   );
 }
 
 export async function getStaticProps({ query }) {
-  console.log(query);
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
   const profile = await sanityService.getProfile();

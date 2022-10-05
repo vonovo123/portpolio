@@ -25,19 +25,20 @@ export default function DesktopMenu({
     <div className={cx("menu", { hide: !subMenuInfoView })}>
       <div className={cx("mainMenuWrapper", { hide: !subMenuInfoView })}>
         <div className={cx("main")}>
-          {menuInfo.map(({ type, slug, name }, idx) => {
-            return (
-              <div
-                className={cx("nav", { sel: menu === slug })}
-                key={idx}
-                onClick={() => {
-                  setMenu(slug);
-                }}
-              >
-                {name}
-              </div>
-            );
-          })}
+          {menuInfo &&
+            menuInfo.map(({ type, slug, name }, idx) => {
+              return (
+                <div
+                  className={cx("nav", { sel: menu === slug })}
+                  key={idx}
+                  onClick={() => {
+                    setMenu(slug);
+                  }}
+                >
+                  {name}
+                </div>
+              );
+            })}
         </div>
       </div>
       <div className={cx("subMenuWrapper", { hide: !subMenuInfoView })}>
