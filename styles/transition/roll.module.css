@@ -20,7 +20,7 @@
   display: none;
 }
 
-.exitter {
+.exit {
   transition: all 1s;
   height: 0px;
   overflow: hidden;
