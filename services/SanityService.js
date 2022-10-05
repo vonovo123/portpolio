@@ -1,4 +1,8 @@
 import sanityClient from "@sanity/client";
+const homeUrl = `*[_type == 'home']{
+  title,
+  homeContent
+}`;
 const profileUrl = `
 *[_type == 'profile']{
   company,
@@ -11,26 +15,38 @@ const profileUrl = `
   }
 }
 `;
-const homeUrl = `*[_type == 'home']{
-  title,
-  'content':content[]{ 
-  ...,
-  ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-  }
-}`;
 const devLogUrl = `*[_type == 'devLog']{
   name,
   createdAt
 }`;
-const postsUrl = `
-*[_type == 'post']{
+
+const categoryUrl = `*[_type == 'category']{
+  name,
+  type,
+  slug,
+  index
+}`;
+
+const subCategoryUrl = `
+*[_type == 'subCategory' && references(*[_type=="category" && slug == $category]._id)]{
+  
+  name,
+  type
+}`;
+
+const postInnerUrl = `
   title,
   subtitle,
   createdAt,
-  shortContent,
-  'content':content[]{ 
-    ...,
-    ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+  postContent,
+  'category' : category -> {
+    name,
+    type,
+    slug
+  },
+  'subCategory' : subCategory -> {
+    name,
+    type
   },
   'slug': slug.current,
   'thumbnail' : {
@@ -42,17 +58,36 @@ const postsUrl = `
     role,
     'image' : image.asset -> url  
   },
-  'tag': tag -> {
-    title,
-    'slug': slug.current
+  'tag': tag[]{
+    _type == 'reference' => @ -> {
+      title,
+      'slug': slug.current
+    }
   }
+`;
+const postAllUrl = `
+*[_type == 'post']{
+  ${postInnerUrl}
+}`;
+const postByCategoryUrl = `
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)]{
+  ${postInnerUrl}
+}`;
+const postByCategoryAndSubCategoryUrl = `
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)&& references(*[_type=="subCategory" && type == $subCategory]._id)]{
+  ${postInnerUrl}
+}`;
+const postBySlug = `
+*[_type == 'post' && slug.current == $slug]{
+  ${postInnerUrl}
 }`;
 const portpolioUrl = `
-  *[_type == 'portpolio']{
+  *[_type == 'portpolio' && references(*[_type=="subCategory" && type == $subCategory]._id)]{
     'category' : category -> {
       name,
       type
     },
+    shortContent,
     'skills': skills[]{
       _type == 'reference' => @ -> {
         name,
@@ -67,10 +102,7 @@ const portpolioUrl = `
     },
     repoUrl,
     demoUrl,
-    'content':content[]{ 
-      ...,
-      ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-    },
+    portpolioContent,
     createdAt,
     'thumbnail' : {
       'alt' : thumbnail.alt,
@@ -112,12 +144,40 @@ export default class SanityService {
   async getHome() {
     return await this._client.fetch(homeUrl);
   }
+  async getDataBySlug({ slug }) {
+    const result = await this._client.fetch(postBySlug, { slug });
 
-  async getPosts() {
-    return await this._client.fetch(postsUrl);
+    return result[0];
   }
-  async getPortpolio() {
-    return await this._client.fetch(portpolioUrl);
+  async getData({ type, category, subCategory }) {
+    if (!type) return [];
+    if (type === "post") {
+      if (!category) {
+        return await this._client.fetch(postAllUrl);
+      } else if (category === "home") {
+        return await this._client.fetch(postAllUrl);
+      } else {
+        if (!subCategory) {
+          return await this._client.fetch(postByCategoryUrl, {
+            category,
+          });
+        } else {
+          return await this._client.fetch(postByCategoryAndSubCategoryUrl, {
+            category,
+            subCategory,
+          });
+        }
+      }
+    } else if (type === "portpolio") {
+      return await this._client.fetch(portpolioUrl, { subCategory });
+    } else if (type === "career") {
+      return await this._client.fetch(careerUrl);
+    } else {
+      return [];
+    }
+  }
+  async getPortpolio(subCategory) {
+    return await this._client.fetch(portpolioUrl, { subCategory });
   }
   async getCareer() {
     return await this._client.fetch(careerUrl);
@@ -128,4 +188,28 @@ export default class SanityService {
   async getProfile() {
     return await this._client.fetch(profileUrl);
   }
+  async getCategory() {
+    const result = await this._client.fetch(categoryUrl);
+    result.sort((a, b) => a.index - b.index);
+    return result;
+  }
+  async getSubCategory(category) {
+    const result = await this._client.fetch(subCategoryUrl, { category });
+    return result;
+  }
 }
+
+// 'content':content[]{
+//   ...,
+//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+// },
+
+// 'content':content[]{
+//   ...,
+//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+//   }
+
+// 'content':content[]{
+//   ...,
+//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+// },

@@ -1,134 +1,62 @@
 .about {
-  min-height: 700px;
+  width: 100%;
+  height: 100%;
+  color: var(--font-color);
+  font-weight: 500;
+  font-size: 12px;
+  transition: all 1s;
+  width: 100%;
+  height: 100%;
+  font-weight: bold;
+  border-radius: 8px;
+  background-color: var(--background-colorB);
+  border: 2px solid var(--border-color);
 }
 .aTag {
-  color: black;
-}
-.titleWrapper {
-  width: 100px;
-  height: 50px;
-  position: relative;
-  margin-bottom: 30px;
-}
-.titleCover {
-  width: 10%;
-  height: 100%;
-  background-color: rgb(0, 0, 0);
-  border-radius: 5px;
-  transition: width 0.5s;
-}
-.titleCover.sel {
-  width: 100%;
-}
-.titleText {
-  position: absolute;
-  width: 100px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
-  top: 7px;
-  transition: color 0.5s;
-}
-.titleText.sel {
-  color: rgb(252, 231, 48);
+  color: var(--font-color);
 }
 
 .profileWrapper {
-  border-radius: 10px;
-  padding: 10px;
+  padding: 20px;
 }
+.profileTitle {
+  margin-bottom: 50px;
+  font-size: 23px;
 
-.profileDesc {
-  border: 3px dotted black;
-  border-radius: 10px;
+  text-align: center;
 }
-
 .profileDescImageWrapper {
-  height: 350px;
+  height: 150px;
+  margin-bottom: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 3px dotted black;
 }
+
 .profileDescImage {
-  width: 280px;
-  height: 280x;
+  width: 150px;
+  height: 150px;
   border-radius: 100%;
 }
 
 .profileDescInfo {
-  padding-top: 20px;
-  font-size: 15px;
-  padding-left: 20px;
-  padding-bottom: 20px;
+  padding-left: 10px;
 }
 
 .profileDescInfoDetail {
-  margin-bottom: 10px;
-  transition: all 0.5s;
+  margin-bottom: 20px;
   cursor: pointer;
-  font-size: 15px;
 }
-.profileDescInfoDetail .text {
+.text {
   margin-left: 10px;
 }
 
-.profileIntro {
-  border: 3px dotted black;
-  border-left: none;
-  border-radius: 10px;
-  padding: 80px;
-  font-size: 17px;
-}
-
 @media only screen and (max-width: 767px) {
-  .profileDesc {
-    border: none;
+  .aboutWrapper {
+    width: 100%;
+    top: 91%;
   }
-
-  .profileDescImageWrapper {
-    border: 3px dotted black;
-    border-bottom: none;
-    border-radius: 5px;
-    height: 400px;
-  }
-  .profileDescImage {
-    width: 200px;
-    height: 200x;
-    border-radius: 100%;
-  }
-  .profileDescInfo {
-    border: 3px solid black;
-    border-radius: 5px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    padding: 0;
-  }
-  .profileDescInfoDetail {
-    margin-bottom: 0;
-    font-size: 20px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .profileDescInfoDetail.sel {
-    background-color: black;
-    color: rgb(252, 231, 48);
-    font-weight: bold;
-  }
-  .profileIntro {
-    border: 3px dotted black;
-    border-bottom: none;
-    border-radius: 10px;
-    padding: 20px;
-    font-size: 17px;
-    height: 400px;
-    overflow: scroll;
-  }
-  .showInfo {
-    margin-top: 50px;
-    font-size: 14px;
-    font-weight: bold;
+  .aboutWrapper.show {
+    top: 45%;
   }
 }

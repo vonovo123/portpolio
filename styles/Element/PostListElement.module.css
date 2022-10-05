@@ -1,0 +1,44 @@
+.elementWrapper {
+  height: 150px;
+  border-bottom: var(--border-width) solid var(--border-color);
+  cursor: pointer;
+}
+.elementWrapper:last-child {
+}
+.element {
+  height: 150px;
+  display: flex;
+}
+.elementImageWrapper {
+  width: 150px;
+}
+.elementImage {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  padding: 10px;
+}
+.elementContentWrapper {
+  width: calc(100% - 155px);
+  padding: 20px;
+}
+
+.title {
+  font-size: 16px;
+  margin-bottom: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.short {
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #666666;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  max-height: 5.1em;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

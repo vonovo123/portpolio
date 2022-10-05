@@ -1,0 +1,20 @@
+.breadCrumbWrapper {
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+.mb10 {
+  margin-bottom: 10px;
+}
+.breadCrumb {
+  display: flex;
+}
+.crumb {
+  margin: 0px 20px 0px 0px;
+  color: var(--font-color);
+  cursor: pointer;
+}
+.crumb.sel {
+  color: var(--sel-font-color);
+}

@@ -1,0 +1,47 @@
+.carouselWrapper {
+  width: 100%;
+  display: flex;
+  margin-bottom: 20px;
+}
+.carousel {
+  width: 100%;
+  overflow: hidden;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.col {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 33%;
+  padding: 1%;
+}
+
+/*  < lg  */
+@media only screen and (max-width: 1199px) {
+  .col {
+    width: 33%;
+    padding: 1%;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .col {
+    width: 50%;
+    padding: 3%;
+  }
+}
+/* md < */
+@media only screen and (max-width: 767px) {
+  .col {
+    width: 97%;
+    padding: 0 2% 0 1%;
+  }
+  .col:last-child {
+    padding: 0 1% 0 1%;
+  }
+}

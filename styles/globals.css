@@ -5,6 +5,10 @@ body {
   width: 100%;
   font-family: Roboto sans-serif;
   transition: width 0.5s;
+  user-select: none;
+  scroll-behavior: smooth;
+  overflow: auto;
+  height: auto;
 }
 html::-webkit-scrollbar {
   display: none;

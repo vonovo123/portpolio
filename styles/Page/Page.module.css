@@ -1,0 +1,15 @@
+.page {
+  overflow: hidden;
+}
+.pageWrapper {
+  transition: all 0.5s;
+}
+.loading {
+  padding: 30px 0px;
+  height: 100px;
+  width: 100%;
+  justify-content: center;
+  font-size: 30px;
+  transition: all 0.5s;
+  text-align: center;
+}

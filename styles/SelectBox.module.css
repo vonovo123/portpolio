@@ -1,0 +1,46 @@
+.boxWrapper {
+  position: relative;
+  font-size: 15px;
+  font-weight: bold;
+}
+.selMenu {
+  display: flex;
+  padding: 5px 10px 10px 10px;
+  width: 200px;
+  color: var(--sel-font-color);
+  cursor: pointer;
+  text-align: center;
+}
+.selMenuText {
+  width: 120px;
+}
+
+.selMenu.disable {
+  color: var(--disabled-color);
+}
+
+.selMenuArrow {
+  margin: 3px;
+  padding-right: 10px;
+}
+
+.categoryMenu {
+  position: absolute;
+  background-color: var(--background-colorA);
+  min-width: 100px;
+  font-size: 15px;
+  top: 40px;
+  z-index: 2;
+}
+.menu {
+  background-color: var(--background-color);
+  color: var(--sub-font-color);
+  border-bottom: none;
+  padding: 10px;
+}
+.menu.sel {
+  color: var(--font-color);
+}
+.menu:hover {
+  color: var(--sel-font-color);
+}

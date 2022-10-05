@@ -1,0 +1,49 @@
+.mb {
+  margin-bottom: 30px;
+}
+.index {
+  width: 100%;
+}
+.bColorA {
+  background-color: var(--background-color);
+}
+
+.bColorB {
+  background-color: var(--background-colorB);
+}
+
+.ad {
+  background-color: var(--border-color);
+  width: 100%;
+  padding: 10px;
+}
+.ad.h100 {
+  height: 100px;
+}
+.ad.h200 {
+  height: 200px;
+}
+.ad.h300 {
+  height: 300px;
+}
+.titleWrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  font-size: 16px;
+  color: var(--font-color);
+  font-weight: bold;
+  transition: all 0.5s;
+  border-radius: 3px;
+  transition: all 0.5s;
+  margin-bottom: 30px;
+  min-height: 50px;
+}
+.title {
+  display: inline-block;
+  margin: 0px 10px;
+  transition: all 0.5s;
+}
+.title.sub {
+}

@@ -1,0 +1,42 @@
+.carouselWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+.carousel {
+  width: 92%;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.col {
+  flex-basis: auto;
+  flex-grow: 0;
+  flex-shrink: 0;
+  width: 25%;
+  padding: 1%;
+}
+
+/*  < lg  */
+@media only screen and (max-width: 1199px) {
+  .col {
+    width: 25%;
+  }
+}
+@media only screen and (max-width: 991px) {
+  .col {
+    width: 50%;
+  }
+}
+/* md < */
+@media only screen and (max-width: 767px) {
+  .col {
+    width: 100%;
+  }
+}

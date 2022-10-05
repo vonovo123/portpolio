@@ -1,145 +1,111 @@
-import styles from "../styles/Home.module.css";
+import classNames from "classnames/bind";
+import styles from "../styles/index.module.css";
+const cx = classNames.bind(styles);
 import SanityService from "../services/SanityService";
-import Header from "../components/Header";
-import HeadLine from "../components/HeadLine";
-import Career from "../components/Career";
-import PortPolio from "../components/PortPolio";
-import PostList from "../components/PostList";
-import Footer from "../components/Footer";
-import About from "../components/About";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import GitProfileService from "../services/GitProfileService";
+import { useEffect, useState } from "react";
+import Page from "./page/page";
+import { useRouter } from "next/router";
+import { setLocalData, getLocalData } from "../utils/LocalStorage";
 export default function Home({
-  home,
-  posts,
-  devLog,
-  profile,
-  portpolios,
-  career,
+  cachedPathState,
+  pageState,
+  menuState,
+  subMenuState,
+  category,
+  subCategoryState,
+  goPage,
 }) {
-  const [width, setWidth] = useState();
-  const handleResize = () => {
-    setWidth(window.innerWidth);
-  };
+  const [page, setPage] = pageState;
+  const [pageView, setPageView] = useState(null);
+  const [menu, setMenu] = menuState;
+  const [subMenu, setSubMenu] = subMenuState;
+  const [subCategory, setSubCategory] = subCategoryState;
+  const [post, setPost] = useState(null);
+  const [cachedPath, setCachedPath] = cachedPathState;
+  const [loading, setLoading] = useState(false);
+  const [title, setTitle] = useState(null);
+  const router = useRouter();
   useEffect(() => {
-    setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setWidth]);
-  const [view, setView] = useState("home");
-  let html = [],
-    vanillaJs = [],
-    vueNuxt = [],
-    reactNext = [];
-  profile = profile[0];
-  portpolios.forEach((portpolio) => {
-    if (portpolio.category.type === "html/css") {
-      html.push({ ...portpolio });
-    } else if (portpolio.category.type === "vanillaJs") {
-      vanillaJs.push({ ...portpolio });
-    } else if (portpolio.category.type === "vueNuxt") {
-      vueNuxt.push({ ...portpolio });
-    } else if (portpolio.category.type === "reactNext") {
-      reactNext.push({ ...portpolio });
+    const path = getLocalData("path");
+    if (!path) {
+      setCachedPath({ page: "post", menu: "home", subMenu: "recent" });
+    } else {
+      const { page, menu, subMenu } = path;
+      setCachedPath({
+        page,
+        menu,
+        subMenu,
+      });
     }
-  });
-  const intro = home.find((content) => content.title === "Introduction");
-  const navClickEvent = useCallback(
-    (target) => {
-      setView(target);
-      if (target === "home") {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      } else {
-        window.scrollTo({
-          top: document.querySelector(`#${target}`).offsetTop - 100,
-          behavior: "auto",
-        });
-      }
-    },
-    [setView]
-  );
+  }, []);
 
   useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: "-20% 0% -80% 0%",
-      threshold: 0.0,
-    };
-    const headerOption = {
-      root: null,
-      rootMargin: "-15% 0% 0% 0%",
-      threshold: 0.0,
-    };
-    const $headLine = document.querySelector("#headLine");
-    const Ho = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setView("home");
-        }
-      });
-    }, headerOption);
-    Ho.observe($headLine);
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setView(entry.target.dataset.idx);
-        }
-      });
-    }, option);
-    const $career = document.querySelector("#career");
-    const $portpolio = document.querySelector("#portpolio");
-    // const $post = document.querySelector("#post");
-    const $about = document.querySelector("#about");
-    io.observe($career);
-    io.observe($portpolio);
-    // io.observe($post);
-    io.observe($about);
-  }, []);
+    if (!subMenu) return;
+    setLoading(true);
+    async function fetchData() {
+      setPost(null);
+      const param = {
+        type: page,
+        category: menu,
+        subCategory: subMenu,
+      };
+      const sanityService = new SanityService();
+      const post = await sanityService.getData(param);
+      let mainCat = null;
+      let subCat = null;
+      if (category && subCategory) {
+        mainCat = category.find((cat) => cat.slug === menu);
+        subCat = subCategory.find((cat) => cat.type === subMenu);
+        if (mainCat && subCat)
+          setTitle(
+            <>
+              <div className={cx("title")}>{mainCat.name}</div>
+              <div className={cx("title")}>{">"}</div>
+              <div className={cx("title", "sub")}>{subCat.name}</div>
+            </>
+          );
+        else setTitle(null);
+      } else {
+        setTitle(null);
+      }
+      setLocalData("path", { page, menu, subMenu });
+      setPost(post);
+      setLoading(false);
+    }
+    fetchData();
+  }, [subMenu]);
+  useEffect(() => {
+    setPageView(page);
+  }, [post]);
   return (
-    <div className={styles.wrapper}>
-      <Header
-        view={view}
-        navClickEvent={navClickEvent}
-        type={"index"}
-        width={width}
-      />
-      <div className={styles.container} id="rootContainer">
-        <HeadLine devLog={devLog} />
-        <Career view={view} career={career} width={width} />
-        <PortPolio
-          html={html}
-          vanillaJs={vanillaJs}
-          vueNuxt={vueNuxt}
-          view={view}
-          reactNext={reactNext}
-          width={width}
-        />
-        {/* <PostList posts={posts} view={view} width={width} /> */}
-        <About view={view} profile={profile} intro={intro} width={width} />
-        <Footer />
-      </div>
-    </div>
+    <>
+      <div className={cx("titleWrapper")}>{title && title}</div>
+      <div className={cx("ad", "h100", "mb30")}>Ad Section</div>
+      <Page
+        pageView={pageView}
+        post={post}
+        loading={loading}
+        goPage={goPage}
+      ></Page>
+    </>
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ query }) {
   //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
   const sanityService = new SanityService();
-  const gitProfileService = new GitProfileService();
-  const home = await sanityService.getHome();
-  const posts = await sanityService.getPosts();
-  const portpolios = await sanityService.getPortpolio();
-  const career = await sanityService.getCareer();
-  const devLog = await sanityService.getDevLog();
   const profile = await sanityService.getProfile();
+  const category = await sanityService.getCategory();
+  const recentPost = await sanityService.getData({
+    type: "post",
+    category: null,
+    subCategory: null,
+  });
   return {
     props: {
-      home,
-      posts,
+      recentPost,
       profile,
-      portpolios,
-      career,
-      devLog,
+      category,
     },
   };
 }
