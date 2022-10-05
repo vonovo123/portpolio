@@ -134,7 +134,7 @@ export default function MyApp({ Component, pageProps }) {
         }}
         ref={aboutRef}
       >
-        <About profile={pageProps.profile[0]} />
+        <About profile={pageProps.profile && pageProps.profile[0]} />
       </div>
       <div className={cx("appWrapper")}>
         <div className={cx("header")}>
