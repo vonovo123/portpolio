@@ -52,6 +52,7 @@ export default function Post({
     let ast = [sod.current, ...$contentNode.childNodes, eod.current];
     const headings = makeHeadings({ ast, io: contentIo });
     setHeading(headings);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     if (!subMenu) return;
