@@ -73,11 +73,9 @@ export default function Home({
       setLoading(false);
     }
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [subMenu]);
   useEffect(() => {
     setPageView(page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [post]);
   return (
     <>
