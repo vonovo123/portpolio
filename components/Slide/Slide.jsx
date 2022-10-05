@@ -25,6 +25,7 @@ export default function Carousel({
     let limitSize = 0;
     if (windowWidth < 768) {
       limitSize = 1;
+      windowWidth;
     } else if (windowWidth < 992) {
       limitSize = 2;
     } else if (windowWidth < 1200) {
@@ -36,7 +37,7 @@ export default function Carousel({
     setLimitSize(limitSize);
     setSize(size);
     setIndex(0);
-  }, [contentWidth]);
+  }, [data, contentWidth, windowWidth]);
 
   const move = useCallback(
     (dir) => {

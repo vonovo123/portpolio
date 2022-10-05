@@ -105,7 +105,7 @@ export default function MyApp({ Component, pageProps }) {
       setSubcategory(subCategory);
     }
     fetchData();
-  }, [menu]);
+  }, [menu, setPage, setSubMenu, setSubcategory]);
   useEffect(() => {
     if (!cachedPath) return;
     setPage(cachedPath.page);
@@ -113,7 +113,7 @@ export default function MyApp({ Component, pageProps }) {
     setTimeout(() => {
       setSubMenu(cachedPath.subMenu);
     }, 1000);
-  }, [cachedPath]);
+  }, [cachedPath, setPage, setMenu, setSubMenu]);
   return (
     <div className={cx("app")}>
       <div
