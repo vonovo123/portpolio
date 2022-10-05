@@ -56,7 +56,7 @@ export default function Post({
   useEffect(() => {
     if (!subMenu) return;
     goPage({ def: page });
-  }, [subMenu]);
+  }, [subMenu, goPage, page]);
   return (
     <div className={cx("post")}>
       <div className={cx("tocWrapper", { fold: foldToc })}>

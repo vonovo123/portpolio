@@ -43,7 +43,7 @@ export default function Carousel({
     setLimitSize(limitSize);
     setSize(size);
     setIndex(size);
-  }, [data, contentWidth]);
+  }, [data, contentWidth, windowWidth]);
 
   const move = useCallback(
     (dir) => {
