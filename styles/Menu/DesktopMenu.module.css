@@ -18,7 +18,7 @@
   border-bottom: var(--border-width) solid var(--border-color);
   height: 60px;
   width: 100%;
-  padding: 10px;
+  padding: 10px 0px;
   z-index: 2;
 }
 .mainMenuWrapper.hide {
@@ -39,7 +39,7 @@
   top: 60px;
   height: 60px;
   width: 100%;
-  padding: 10px;
+  padding: 10px 0px;
   border-bottom: var(--border-width) solid var(--border-color);
 
   background-color: rgb(255, 254, 254);

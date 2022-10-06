@@ -1,12 +1,14 @@
 .elementWrapper {
   height: 150px;
   border-bottom: var(--border-width) solid var(--border-color);
+  margin-bottom: 10px;
   cursor: pointer;
 }
 .elementWrapper:last-child {
 }
 .element {
   height: 150px;
+
   display: flex;
 }
 .elementImageWrapper {
@@ -16,7 +18,6 @@
   width: 150px;
   height: 150px;
   object-fit: cover;
-  padding: 10px;
 }
 .elementContentWrapper {
   width: calc(100% - 155px);

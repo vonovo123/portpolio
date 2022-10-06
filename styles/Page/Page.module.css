@@ -4,6 +4,10 @@
 .pageWrapper {
   transition: all 0.5s;
 }
+.listWrapper {
+  transition: all 1s;
+  opacity: 0;
+}
 .loading {
   padding: 30px 0px;
   height: 100px;
