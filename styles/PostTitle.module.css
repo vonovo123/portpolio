@@ -1,0 +1,22 @@
+.titleWrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  font-size: 17px;
+  color: var(--font-color);
+  font-weight: bold;
+  transition: all 0.5s;
+  border-radius: 3px;
+  transition: all 0.5s;
+  min-height: 50px;
+  overflow: hidden;
+}
+.titleInnerWrapper {
+  transition: all 0.5s;
+}
+.title {
+  display: inline-block;
+  margin-right: 10px;
+  transition: all 0.5s;
+}

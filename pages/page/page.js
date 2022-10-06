@@ -9,6 +9,7 @@ import List from "../../components/List";
 const cx = classNames.bind(styles);
 export default function Page({ goPage, post, loading, pageView }) {
   const pageRef = useRef();
+  const listRef = useRef();
   const createElement = useCallback(
     ({ element, idx, goPage }) => {
       if (pageView === "post")
@@ -24,14 +25,14 @@ export default function Page({ goPage, post, loading, pageView }) {
     [pageView]
   );
   useEffect(() => {
+    if (loading === null) return;
     if (!loading) {
       pageRef.current.style.transform = `translate3d(0, -70px, 0)`;
+      listRef.current.style.opacity = 1;
     } else {
       pageRef.current.style.transform = `translate3d(0, 0px, 0)`;
     }
   }, [loading]);
-
-  useEffect(() => {}, [pageView]);
 
   return (
     <div className={cx("page")}>
@@ -39,13 +40,16 @@ export default function Page({ goPage, post, loading, pageView }) {
         <div className={cx("loading")}>
           <LoadingOutlined />
         </div>
-        {!loading && (
-          <List
-            post={post}
-            goPage={goPage}
-            createElement={createElement}
-          ></List>
-        )}
+
+        <div ref={listRef} className={cx("listWrapper")}>
+          {!loading && (
+            <List
+              post={post}
+              goPage={goPage}
+              createElement={createElement}
+            ></List>
+          )}
+        </div>
       </div>
     </div>
   );

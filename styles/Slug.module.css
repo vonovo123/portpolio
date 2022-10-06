@@ -39,36 +39,55 @@
 }
 .post {
   margin-bottom: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 .contentHeaderWrapper {
   height: 100%;
-  margin-bottom: 100px;
+  margin: 50px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 .sod,
 .eod {
-  height: 100px;
+  height: 50px;
 }
-.breadCrumbWrapper {
-  position: relative;
+.postImageWrapper {
+  margin-bottom: 30px;
 }
-.contentHeader {
+.postImage {
+  height: 250px;
+}
+.contentHeaderInfo {
+  width: 100%;
+  font-weight: bold;
   text-align: center;
 }
-
-.contentHeader .title {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-.contentHeader .subTitle {
+.contentHeaderInfo .title {
   font-size: 30px;
 }
 
-.postImage {
-  height: 200px;
-  margin-bottom: 30px;
+.contentHeaderInfo .subTitle {
+  font-size: 20px;
+}
+.createdAt {
+}
+.contentAuthor {
+  height: 50px;
+  display: inline-flex;
+}
+.authorNameWrapper {
+  height: 50px;
+  width: 150px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: center;
+}
+.authorImage {
+  height: 50px;
+  width: 60px;
+  border-radius: 100%;
+  margin-right: 10px;
 }
 
 @media only screen and (min-width: 1025px) {

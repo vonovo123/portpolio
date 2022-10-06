@@ -9,22 +9,17 @@ import { makeHeadings } from "../../utils/Headings";
 import makeObserver from "../../utils/Observer";
 import TableOfContents from "../../components/TableOfContents";
 import { CaretLeftOutlined } from "@ant-design/icons";
-import { setLocalData } from "../../utils/LocalStorage";
+import PostTitle from "../../components/PostTitle";
 const cx = classNames.bind(styles);
 export default function Post({
   post,
   pageState,
-  menuState,
   subMenuState,
   setHideAbout,
   goPage,
-  pageType,
-  menuType,
-  subMenuType,
   subCategoryState,
 }) {
   const [page, setPage] = pageState;
-  const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
   const [subCategory, setSubcategory] = subCategoryState;
   const [readKey, setReadkey] = useState({ flag: false });
@@ -32,9 +27,15 @@ export default function Post({
   const eod = useRef(null);
   const [heading, setHeading] = useState([]);
   const [foldToc, setFoldToc] = useState(true);
+  const postTitleState = useState(null);
+  const [postTitle, setPostTitle] = postTitleState;
   useEffect(() => {
     setHideAbout("true");
     setSubcategory(null);
+  }, []);
+  useEffect(() => {
+    const newTitle = { main: post.category.name, sub: post.subCategory.name };
+    setPostTitle(newTitle);
     const option = {
       rootMargin: "-10% 0% -90% 0%",
     };
@@ -52,8 +53,7 @@ export default function Post({
     let ast = [sod.current, ...$contentNode.childNodes, eod.current];
     const headings = makeHeadings({ ast, io: contentIo });
     setHeading(headings);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [post]);
   useEffect(() => {
     if (!subMenu) return;
     goPage({ def: page });
@@ -79,25 +79,35 @@ export default function Post({
         <div className={cx("text")}>TOC</div>
       </div>
       <div className={cx("ad", "h100", "mb30")}>Ad Section</div>
-      <Row className={cx("contentHeaderWrapper")} ref={sod} data-idx={"sod"}>
-        <Col span={24} align={"center"}>
+      <PostTitle postTitleState={postTitleState}></PostTitle>
+      <div className={cx("contentHeaderWrapper")} ref={sod} data-idx={"sod"}>
+        <div className={cx("postImageWrapper")}>
           <Image
             src={post.thumbnail.imageUrl}
             alt={post.thumbnail.alt}
             className={cx("postImage")}
             preview={false}
           />
-        </Col>
-        <Col span={24} align={"center"}>
-          <div className={cx("contentHeader")}>
-            <div className={cx("title", "mb20")}>{post.title}</div>
-            <div className={cx("subTitle", "mb20")}>{post.subtitle}</div>
-            <div className={cx("createdAt")}>
-              {dayjs(post.createdAt).format("MMMM DD / YYYY ")}
+        </div>
+        <div className={cx("contentHeaderInfo")}>
+          <div className={cx("title", "mb20")}>{post.title}</div>
+          <div className={cx("subTitle", "mb20")}>{post.subtitle}</div>
+          <div className={cx("createdAt", "mb10")}>
+            {dayjs(post.createdAt).format("MMMM DD / YYYY ")}
+          </div>
+          <div className={cx("contentAuthor")}>
+            <Image
+              src={post.author.image}
+              alt={post.author.name}
+              className={cx("authorImage")}
+              preview={false}
+            />
+            <div className={cx("authorNameWrapper")}>
+              <div className={cx("authorName")}>{post.author.name}</div>
             </div>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
       <div className={cx("contentBody")}>
         <BlogMarkDown markdown={post.postContent.markdown} />
       </div>
@@ -145,8 +155,6 @@ export async function getStaticProps({ params }) {
       category,
       subCategory,
       pageType: post.category.type,
-      menuType: post.category.slug,
-      subMenuType: post.subCategory.type,
     },
   };
 }

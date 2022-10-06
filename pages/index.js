@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Page from "./page/page";
 import { useRouter } from "next/router";
 import { setLocalData, getLocalData } from "../utils/LocalStorage";
+import PostTitle from "../components/PostTitle";
 export default function Home({
   cachedPathState,
   pageState,
@@ -22,8 +23,9 @@ export default function Home({
   const [subCategory, setSubCategory] = subCategoryState;
   const [post, setPost] = useState(null);
   const [cachedPath, setCachedPath] = cachedPathState;
-  const [loading, setLoading] = useState(false);
-  const [title, setTitle] = useState(null);
+  const [loading, setLoading] = useState(null);
+  const postTitleState = useState(null);
+  const [postTitle, setPostTitle] = postTitleState;
   const router = useRouter();
   useEffect(() => {
     const path = getLocalData("path");
@@ -41,7 +43,6 @@ export default function Home({
 
   useEffect(() => {
     if (!subMenu) return;
-    setLoading(true);
     async function fetchData() {
       setPost(null);
       const param = {
@@ -49,28 +50,23 @@ export default function Home({
         category: menu,
         subCategory: subMenu,
       };
+      setLoading(true);
       const sanityService = new SanityService();
-      const post = await sanityService.getData(param);
-      let mainCat = null;
-      let subCat = null;
-      if (category && subCategory) {
-        mainCat = category.find((cat) => cat.slug === menu);
-        subCat = subCategory.find((cat) => cat.type === subMenu);
-        if (mainCat && subCat)
-          setTitle(
-            <>
-              <div className={cx("title")}>{mainCat.name}</div>
-              <div className={cx("title")}>{">"}</div>
-              <div className={cx("title", "sub")}>{subCat.name}</div>
-            </>
-          );
-        else setTitle(null);
-      } else {
-        setTitle(null);
+      try {
+        const post = await sanityService.getData(param);
+        setPost(post);
+        setLoading(false);
+        setLocalData("path", { page, menu, subMenu });
+      } catch (error) {
+        goPage({ def: "home" });
       }
-      setLocalData("path", { page, menu, subMenu });
-      setPost(post);
-      setLoading(false);
+    }
+
+    if (category && subCategory) {
+      const main = category.find((cat) => cat.slug === menu).name;
+      const sub = subCategory.find((cat) => cat.type === subMenu).name;
+      const newTitle = { main, sub };
+      setPostTitle(newTitle);
     }
     fetchData();
   }, [subMenu]);
@@ -79,8 +75,8 @@ export default function Home({
   }, [post]);
   return (
     <>
-      <div className={cx("titleWrapper")}>{title && title}</div>
       <div className={cx("ad", "h100", "mb30")}>Ad Section</div>
+      <PostTitle postTitleState={postTitleState}></PostTitle>
       <Page
         pageView={pageView}
         post={post}
