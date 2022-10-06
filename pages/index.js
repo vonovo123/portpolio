@@ -7,7 +7,7 @@ import Page from "./page/page";
 import { useRouter } from "next/router";
 import { setLocalData, getLocalData } from "../utils/LocalStorage";
 import PostTitle from "../components/PostTitle";
-import AdBanner from "../components/AdBanner";
+import AdTop from "../components/AdBanner/AdTop";
 export default function Home({
   cachedPathState,
   pageState,
@@ -76,9 +76,7 @@ export default function Home({
   }, [post]);
   return (
     <>
-      <div className={cx("ad", "h100", "mb30")}>
-        <AdBanner></AdBanner>
-      </div>
+      <AdTop></AdTop>
       <PostTitle postTitleState={postTitleState}></PostTitle>
       <Page
         pageView={pageView}

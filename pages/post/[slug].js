@@ -10,6 +10,7 @@ import makeObserver from "../../utils/Observer";
 import TableOfContents from "../../components/TableOfContents";
 import { CaretLeftOutlined } from "@ant-design/icons";
 import PostTitle from "../../components/PostTitle";
+import AdTop from "../../components/AdBanner/AdTop";
 const cx = classNames.bind(styles);
 export default function Post({
   post,
@@ -78,7 +79,7 @@ export default function Post({
         </div>
         <div className={cx("text")}>TOC</div>
       </div>
-      <div className={cx("ad", "h100", "mb30")}>Ad Section</div>
+      <AdTop></AdTop>
       <PostTitle postTitleState={postTitleState}></PostTitle>
       <div className={cx("contentHeaderWrapper")} ref={sod} data-idx={"sod"}>
         <div className={cx("postImageWrapper")}>
