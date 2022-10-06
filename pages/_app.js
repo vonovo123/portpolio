@@ -14,6 +14,8 @@ import { UpCircleOutlined } from "@ant-design/icons";
 import SanityService from "../services/SanityService";
 import { on, off, clear } from "../utils/Swing";
 import { setLocalData } from "../utils/LocalStorage";
+import AdBottom from "../components/AdBanner/AdBottom";
+import AdSide from "../components/AdBanner/AdSide";
 
 const cx = classNames.bind(styles);
 export default function MyApp({ Component, pageProps }) {
@@ -170,7 +172,7 @@ export default function MyApp({ Component, pageProps }) {
                 title={"많이 본 글"}
               ></DefaultPosts>
             </div>
-            <div className={cx("ad", "h300", "mb50")}>Ad Section</div>
+            <AdSide></AdSide>
             <div className={cx("themePostsWrapper", "mb50")}>
               <DefaultPosts
                 post={pageProps.recentPost}
@@ -180,7 +182,7 @@ export default function MyApp({ Component, pageProps }) {
             </div>
           </div>
         </div>
-        <div className={cx("ad", "h100", "mb20")}>Ad Section</div>
+        <AdBottom></AdBottom>
         <div className={cx("banner", "mb50")} ref={contentRef}>
           <RecentPosts
             post={pageProps.recentPost}
