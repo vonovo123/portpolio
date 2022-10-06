@@ -78,42 +78,43 @@ export default function Carousel({
     <>
       <div className={cx("carouselWrapper")}>
         <div className={cx("carousel")}>
-          <Row
-            className={cx("row")}
-            ref={slideRef}
-            onTouchStart={(e) => {
-              Touch.touchStart(e);
-            }}
-            onTouchEnd={(e) => {
-              Touch.touchEnd(e, move);
-            }}
-          >
-            {(size >= limitSize || windowWidth < 767) &&
-              data.map((element, idx) => {
+          {data && (
+            <Row
+              className={cx("row")}
+              ref={slideRef}
+              onTouchStart={(e) => {
+                Touch.touchStart(e);
+              }}
+              onTouchEnd={(e) => {
+                Touch.touchEnd(e, move);
+              }}
+            >
+              {(size >= limitSize || windowWidth < 767) &&
+                data.map((element, idx) => {
+                  return (
+                    <Col key={idx} className={cx("col")}>
+                      {makeElement({ element, goPage })}
+                    </Col>
+                  );
+                })}
+              {data.map((element, idx) => {
                 return (
                   <Col key={idx} className={cx("col")}>
                     {makeElement({ element, goPage })}
                   </Col>
                 );
               })}
-            {data.map((element, idx) => {
-              return (
-                <Col key={idx} className={cx("col")}>
-                  {makeElement({ element, goPage })}
-                </Col>
-              );
-            })}
-            {(size >= limitSize || windowWidth < 767) &&
-              data.map((element, idx) => {
-                return (
-                  <Col key={idx} className={cx("col")}>
-                    {makeElement({ element, goPage })}
-                  </Col>
-                );
-              })}
-          </Row>
+              {(size >= limitSize || windowWidth < 767) &&
+                data.map((element, idx) => {
+                  return (
+                    <Col key={idx} className={cx("col")}>
+                      {makeElement({ element, goPage })}
+                    </Col>
+                  );
+                })}
+            </Row>
+          )}
         </div>
-        {/* <div className={cx("right")}></div> */}
       </div>
       {size >= limitSize && windowWidth > 767 && (
         <Nav index={index} size={size} move={move} limitSize={limitSize}></Nav>
