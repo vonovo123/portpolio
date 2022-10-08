@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-
+import styles from "../../styles/Ad.module.css";
+import classNames from "classnames/bind";
+const cx = classNames.bind(styles);
 export default function AdBottom({}) {
   useEffect(() => {
     try {
@@ -10,8 +12,8 @@ export default function AdBottom({}) {
   }, []);
   return (
     <ins
-      className="adsbygoogle"
-      style={{ display: "block" }}
+      className={cx("adsbygoogle", "ad", "bottom")}
+      style={{ display: "block", height: "100px", width: "100%" }}
       data-ad-client="ca-pub-2342228861381156"
       data-ad-slot="3648326424"
       data-ad-format="auto"

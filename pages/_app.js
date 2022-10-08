@@ -27,7 +27,7 @@ export default function MyApp({ Component, pageProps }) {
   const swing = useRef(null);
   const aboutRef = useRef(null);
   const [showAbout, setShowAbout] = useState(false);
-  const [hideAbout, setHideAbout] = useState(false);
+  const [hideAbout, setHideAbout] = useState(true);
   const cachedPathState = useState(null);
   const [cachedPath, setCachedPath] = cachedPathState;
   // 메뉴 정보
@@ -45,6 +45,10 @@ export default function MyApp({ Component, pageProps }) {
   //선택된 하위 메뉴
   const subMenuState = useState(null);
   const [subMenu, setSubMenu] = subMenuState;
+  // 모바일 헤더 숨김
+  const mobileHeaderState = useState(true);
+  const [mobileHeaderHide, setMobileHeaderHide] = mobileHeaderState;
+
   const initState = useCallback(() => {
     setPage(null);
     setMenu(null);
@@ -59,19 +63,20 @@ export default function MyApp({ Component, pageProps }) {
   }, []);
   const goPage = useCallback(
     ({ def, slug }) => {
-      initState();
       if (def === "slug") {
+        initState();
         router.push({ pathname: `/post/${slug}` });
       } else if (def === "home") {
+        initState();
         if (page === "post") {
           setCachedPath({ page: "post", menu: "home", subMenu: "recent" });
         } else {
-          setLocalData("path", null);
           router.push({ pathname: "/" });
         }
+      } else if (def === "post") {
+        router.push({ pathname: `/` });
       } else {
-        setLocalData("path", { page, menu, subMenu });
-        router.push({ pathname: "/" });
+        router.push({ pathname: `/${def}` });
       }
     },
     [initState, router, page, menu, subMenu]
@@ -93,29 +98,30 @@ export default function MyApp({ Component, pageProps }) {
     };
   }, [showAbout]);
   useEffect(() => {
-    if (!menu) return;
-    if (menu === "portpolio" || menu === "career") {
-      setPage(menu);
-    } else {
-      setPage("post");
-    }
-    setSubMenu(null);
-    setSubcategory(null);
-    async function fetchData() {
-      const sanityService = new SanityService();
-      const subCategory = await sanityService.getSubCategory(menu);
-      setSubcategory(subCategory);
-    }
-    fetchData();
-  }, [menu, setPage, setSubMenu, setSubcategory]);
-  useEffect(() => {
     if (!cachedPath) return;
     setPage(cachedPath.page);
     setMenu(cachedPath.menu);
     setTimeout(() => {
       setSubMenu(cachedPath.subMenu);
     }, 1000);
-  }, [cachedPath, setPage, setMenu, setSubMenu]);
+  }, [cachedPath]);
+  useEffect(() => {
+    if (!menu) return;
+    setSubcategory(null);
+    async function fetchData() {
+      const sanityService = new SanityService();
+      const subCategory = await sanityService.getSubCategory(menu);
+      setSubcategory(subCategory);
+    }
+    if (menu === "portpolio" || menu === "career") {
+      setPage(menu);
+    } else {
+      setPage("post");
+    }
+    setSubMenu(null);
+    fetchData();
+  }, [menu]);
+
   return (
     <div className={cx("app")}>
       <div
@@ -141,6 +147,7 @@ export default function MyApp({ Component, pageProps }) {
       <div className={cx("appWrapper")}>
         <div className={cx("header")}>
           <Header
+            mobileHeaderState={mobileHeaderState}
             pageState={pageState}
             menuState={menuState}
             subMenuState={subMenuState}
@@ -162,6 +169,7 @@ export default function MyApp({ Component, pageProps }) {
               initState={initState}
               setHideAbout={setHideAbout}
               goPage={goPage}
+              setMobileHeaderHide={setMobileHeaderHide}
             />
           </div>
           <div className={cx("side")}>

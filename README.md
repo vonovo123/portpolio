@@ -32,3 +32,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+skDtRDgl36BeTrJ7WvKYOCBjY9WZPNppJAIBrd0S1YI8hjmAYWX4QHUZKBTtIIeJKIVMaYTE5YUb9glw2OPWJ2ItfGu5ac2qjDFMeToP2y24fzJhfPG0ov57PaxgydjX2swry6RKVZH33IlCSZ3qdhDPu2H1NAb6QB9vs74bPXqW0UGR8XJg
+
+hy is this happening?
+The current schema does not declare items of type review as valid for this list. This could mean that the type has been removed as a valid item type, or that someone else has added it to their own local schema that is not yet deployed.
+You can still move or delete this item, but it cannot be edited since the schema definition for its type is nowhere to be found.
+JSON representation of this item:
+{
+"\_createdAt": "2022-10-07T08:23:43Z",
+"\_id": "my-review",
+"\_key": "os36Ir4WffAYIGwaU7vmsX",
+"\_rev": "ueR4P6AAHCFVBGi2CGp2OY",
+"\_type": "review",
+"\_updatedAt": "2022-10-07T08:23:43Z",
+"title": "Sanity Tandem Extraordinaire"
+}

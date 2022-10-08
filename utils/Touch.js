@@ -14,9 +14,10 @@ export default (function Touch() {
       if (Math.abs(dy) >= 5) {
         return;
       }
-      if (Math.abs(dx) <= 1) {
-        return;
-      }
+      console.log(Math.abs(dx));
+      // if (Math.abs(dx) <= 1) {
+      //   return;
+      // }
       dx > 0 ? move("prev") : move("next");
     },
   };

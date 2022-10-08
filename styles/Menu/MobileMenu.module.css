@@ -6,8 +6,6 @@
   background-color: var(--background-colorA);
   overflow: hidden;
   display: flex;
-  border-top: var(--border-width) solid var(--border-color);
-  border-bottom: var(--border-width) solid var(--border-color);
 }
 .mainMenuWrapper {
   width: 60%;

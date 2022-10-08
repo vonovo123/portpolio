@@ -11,16 +11,20 @@ import TableOfContents from "../../components/TableOfContents";
 import { CaretLeftOutlined } from "@ant-design/icons";
 import PostTitle from "../../components/PostTitle";
 import AdTop from "../../components/AdBanner/AdTop";
+import { setLocalData } from "../../utils/LocalStorage";
 const cx = classNames.bind(styles);
 export default function Post({
   post,
   pageState,
+  menuState,
   subMenuState,
   setHideAbout,
   goPage,
   subCategoryState,
+  setMobileHeaderHide,
 }) {
   const [page, setPage] = pageState;
+  const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
   const [subCategory, setSubcategory] = subCategoryState;
   const [readKey, setReadkey] = useState({ flag: false });
@@ -31,10 +35,12 @@ export default function Post({
   const postTitleState = useState(null);
   const [postTitle, setPostTitle] = postTitleState;
   useEffect(() => {
-    setHideAbout("true");
+    setMobileHeaderHide(true);
+    setHideAbout(true);
     setSubcategory(null);
   }, []);
   useEffect(() => {
+    setPage("slug");
     const newTitle = { main: post.category.name, sub: post.subCategory.name };
     setPostTitle(newTitle);
     const option = {
@@ -57,8 +63,17 @@ export default function Post({
   }, [post]);
   useEffect(() => {
     if (!subMenu) return;
+    setLocalData("path", { page, menu, subMenu });
     goPage({ def: page });
-  }, [subMenu, goPage, page]);
+  }, [subMenu]);
+  const makeReview = async () => {
+    const sanityService = new SanityService();
+    await sanityService.setReview({ id: post._id });
+  };
+  const deleteReview = async () => {
+    const sanityService = new SanityService();
+    await sanityService.deleteReview({ id: post._id });
+  };
   return (
     <div className={cx("post")}>
       <div className={cx("tocWrapper", { fold: foldToc })}>
@@ -80,6 +95,12 @@ export default function Post({
         <div className={cx("text")}>TOC</div>
       </div>
       <AdTop></AdTop>
+      {/* <div>
+        <button onClick={makeReview}>make</button>
+      </div>
+      <div>
+        <button onClick={deleteReview}>delete</button>
+      </div> */}
       <PostTitle postTitleState={postTitleState}></PostTitle>
       <div className={cx("contentHeaderWrapper")} ref={sod} data-idx={"sod"}>
         <div className={cx("postImageWrapper")}>
@@ -139,7 +160,6 @@ export async function getStaticProps({ params }) {
   const sanityService = new SanityService();
   const category = await sanityService.getCategory();
   const profile = await sanityService.getProfile();
-  ///const posts = await sanityService.getPost();
   const recentPost = await sanityService.getData({
     type: "post",
     category: null,
@@ -147,6 +167,8 @@ export async function getStaticProps({ params }) {
   });
   const post = await sanityService.getDataBySlug({ slug });
   const subCategory = await sanityService.getSubCategory(post.category.type);
+  sanityService.upCount({ id: post._id });
+
   return {
     props: {
       slug,
