@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 const cx = classNames.bind(styles);
 export default function MobileMenu({
+  mobileHeaderState,
   pageState,
   menuState,
   subMenuState,
@@ -12,6 +13,7 @@ export default function MobileMenu({
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
   const [subMenu, setSubMenu] = subMenuState;
+  const [mobileHeaderHide, setMobileHeaderHide] = mobileHeaderState;
   const [subMenuInfoView, setSubMenuInfoView] = useState(null);
   const menuRef = useRef();
   useEffect(() => {
@@ -21,7 +23,6 @@ export default function MobileMenu({
     }
     setSubMenuInfoView([...subMenuInfo]);
   }, [subMenuInfo]);
-
   return (
     <div className={cx("menu")}>
       <div className={cx("mainMenuWrapper", { hide: !subMenuInfoView })}>

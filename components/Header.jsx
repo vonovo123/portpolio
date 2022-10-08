@@ -6,6 +6,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 const cx = classNames.bind(styles);
 export default function Header({
+  mobileHeaderState,
   pageState,
   menuState,
   subMenuState,
@@ -15,16 +16,16 @@ export default function Header({
   goPage,
 }) {
   const [page, setPage] = pageState;
-  const [hide, setHide] = useState(true);
-  const menuRef = useRef();
 
+  const menuRef = useRef();
+  const [mobileHeaderHide, setMobileHeaderHide] = mobileHeaderState;
   useEffect(() => {
-    if (hide) {
+    if (mobileHeaderHide) {
       menuRef.current.style.height = 0;
     } else {
       menuRef.current.style.height = "200px";
     }
-  }, [hide]);
+  }, [mobileHeaderHide]);
   return (
     <div className={cx("header")}>
       <div className={cx("titleWrapper")}>
@@ -40,7 +41,7 @@ export default function Header({
         <div className={cx("innerMenu")}>
           <MenuOutlined
             onClick={() => {
-              setHide(!hide);
+              setMobileHeaderHide(!mobileHeaderHide);
             }}
           />
         </div>
@@ -53,11 +54,11 @@ export default function Header({
           subMenuState={subMenuState}
           menuInfo={category}
           subMenuInfo={subCategory}
-          goPage={goPage}
         />
       </div>
       <div className={cx("mobileMenuWrapper")} ref={menuRef}>
         <MobileMenu
+          mobileHeaderState={mobileHeaderState}
           pageState={pageState}
           menuState={menuState}
           subMenuState={subMenuState}

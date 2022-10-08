@@ -29,16 +29,20 @@ const categoryUrl = `*[_type == 'category']{
 
 const subCategoryUrl = `
 *[_type == 'subCategory' && references(*[_type=="category" && slug == $category]._id)]{
-  
   name,
   type
 }`;
 
 const postInnerUrl = `
+  _id,
   title,
   subtitle,
   createdAt,
   postContent,
+  viewCount,
+  'review': review -> {
+    title
+  },
   'category' : category -> {
     name,
     type,
@@ -140,7 +144,6 @@ export default class SanityService {
     token: process.env.SANITY_AUTH_TOKEN, // or leave blank for unauthenticated usage
     useCdn: process.env.NODE_ENV === "production",
   });
-
   async getHome() {
     return await this._client.fetch(homeUrl);
   }
@@ -196,6 +199,32 @@ export default class SanityService {
   async getSubCategory(category) {
     const result = await this._client.fetch(subCategoryUrl, { category });
     return result;
+  }
+  async upCount({ id, count }) {
+    this._client.patch(id).inc({ viewCount: 1 }).commit();
+  }
+  async setReview({ id, coment }) {
+    const doc = {
+      _id: "my-review",
+      _type: "review",
+      title: "Sanity Tandem Extraordinaire",
+    };
+
+    const review = await this._client.createOrReplace(doc);
+    console.log(review);
+    await this._client
+      .patch(id)
+      .setIfMissing({ review: [] })
+      .append("review", [review])
+      .commit({ autoGenerateArrayKeys: true });
+    const result = await this._client.getDocument(id);
+    console.log(result);
+  }
+  async deleteReview({ id }) {
+    const reviewsToRemove = ["review[0]"];
+    await this._client.patch(id).unset(reviewsToRemove).commit();
+    const result = await this._client.getDocument(id);
+    console.log(result.review);
   }
 }
 

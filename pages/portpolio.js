@@ -34,11 +34,19 @@ export default function Home({
     setMobileHeaderHide(true);
     const path = getLocalData("path");
     if (!path) {
-      setCachedPath({ page: "post", menu: "home", subMenu: "recent" });
+      setCachedPath({
+        page: "portpolio",
+        menu: "portpolio",
+        subMenu: "htmlCss",
+      });
     } else {
       const { page, menu, subMenu } = path;
-      if (page !== "post") {
-        setCachedPath({ page: "post", menu: "home", subMenu: "recent" });
+      if (page !== "portpolio") {
+        setCachedPath({
+          page: "portpolio",
+          menu: "portpolio",
+          subMenu: "htmlCss",
+        });
       } else {
         setCachedPath({
           page,
@@ -70,11 +78,10 @@ export default function Home({
       }
     }
     setLocalData("path", { page, menu, subMenu });
-    if (page !== "post") {
+    if (page !== "portpolio") {
       goPage({ def: page });
       return;
     }
-    setMobileHeaderHide(true);
     if (category && subCategory) {
       const main = category.find((cat) => cat.slug === menu).name;
       const sub = subCategory.find((cat) => cat.type === subMenu).name;
@@ -88,7 +95,6 @@ export default function Home({
   }, [post]);
   return (
     <>
-      <AdTop></AdTop>
       <div className={cx("titleWrapper")}>
         <PostTitle postTitleState={postTitleState}></PostTitle>
       </div>

@@ -27,7 +27,7 @@ export default function Page({ goPage, post, loading, pageView }) {
   useEffect(() => {
     if (loading === null) return;
     if (!loading) {
-      pageRef.current.style.transform = `translate3d(0, -70px, 0)`;
+      pageRef.current.style.transform = `translate3d(0, -50px, 0)`;
       listRef.current.style.opacity = 1;
     } else {
       pageRef.current.style.transform = `translate3d(0, 0px, 0)`;

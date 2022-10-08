@@ -26,3 +26,12 @@
 .ad.h300 {
   height: 300px;
 }
+.titleWrapper {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.e404 {
+  height: 50vh;
+  font-size: 20px;
+  margin: 20px;
+}

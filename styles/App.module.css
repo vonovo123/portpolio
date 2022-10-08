@@ -60,12 +60,12 @@
 .about {
   position: fixed;
   width: 300px;
-  top: 89vh;
+  bottom: -440px;
   z-index: 2;
   transition: all 1s;
 }
 .about.show {
-  top: 30vh;
+  bottom: 0px;
 }
 .about.hide {
   top: 100vh;
