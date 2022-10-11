@@ -138,24 +138,24 @@ export default function Post({
   );
 }
 
-export async function getStaticPaths() {
-  const sanityService = new SanityService();
-  const posts = await sanityService.getData({
-    type: "post",
-    category: null,
-    subCategory: null,
-  });
-  const paths = posts.map((post) => ({
-    params: {
-      slug: post.slug,
-    },
-  }));
-  return {
-    paths,
-    fallback: false,
-  };
-}
-export async function getStaticProps({ params }) {
+// export async function getStaticPaths() {
+//   const sanityService = new SanityService();
+//   const posts = await sanityService.getData({
+//     type: "post",
+//     category: null,
+//     subCategory: null,
+//   });
+//   const paths = posts.map((post) => ({
+//     params: {
+//       slug: post.slug,
+//     },
+//   }));
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
+export async function getServerSideProps({ params }) {
   const { slug } = params;
   const sanityService = new SanityService();
   const category = await sanityService.getCategory();
