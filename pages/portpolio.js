@@ -108,8 +108,7 @@ export default function Home({
   );
 }
 
-export async function getStaticProps() {
-  //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
+export async function getServerSideProps() {
   const sanityService = new SanityService();
   const profile = await sanityService.getProfile();
   const category = await sanityService.getCategory();
