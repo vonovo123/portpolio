@@ -3,7 +3,7 @@ import classNames from "classnames/bind";
 import { useCallback, useState } from "react";
 import List from "../List";
 const cx = classNames.bind(styles);
-export default function DefaultPosts({ post, goPage, title }) {
+export default function DefaultPosts({ post, goSlug, title }) {
   const createPopularPostElement = useCallback(({ element, idx, goPage }) => {
     return (
       <div
@@ -25,7 +25,7 @@ export default function DefaultPosts({ post, goPage, title }) {
       <div className={cx("listWrapper")}>
         <List
           post={post}
-          goPage={goPage}
+          goPage={goSlug}
           createElement={createPopularPostElement}
         ></List>
       </div>

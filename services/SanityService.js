@@ -70,9 +70,19 @@ const postInnerUrl = `
   }
 `;
 const postAllUrl = `
-*[_type == 'post']{
+*[_type == 'post']  | order(createdAt desc){
   ${postInnerUrl}
 }`;
+const postRecentUrl = `
+*[_type == 'post']  | order(createdAt desc){
+  ${postInnerUrl}
+}[0...10]`;
+
+const postPopularUrl = `
+*[_type == 'post']  | order(viewCount desc){
+  ${postInnerUrl}
+}[0...10]`;
+
 const postByCategoryUrl = `
 *[_type == 'post' && references(*[_type=="category" && slug == $category]._id)]{
   ${postInnerUrl}
@@ -158,7 +168,7 @@ export default class SanityService {
       if (!category) {
         return await this._client.fetch(postAllUrl);
       } else if (category === "home") {
-        return await this._client.fetch(postAllUrl);
+        return await this._client.fetch(postRecentUrl);
       } else {
         if (!subCategory) {
           return await this._client.fetch(postByCategoryUrl, {
@@ -175,6 +185,8 @@ export default class SanityService {
       return await this._client.fetch(portpolioUrl, { subCategory });
     } else if (type === "career") {
       return await this._client.fetch(careerUrl);
+    } else if (type === "popular") {
+      return await this._client.fetch(postPopularUrl);
     } else {
       return [];
     }
@@ -211,7 +223,6 @@ export default class SanityService {
     };
 
     const review = await this._client.createOrReplace(doc);
-    console.log(review);
     await this._client
       .patch(id)
       .setIfMissing({ review: [] })
@@ -224,7 +235,6 @@ export default class SanityService {
     const reviewsToRemove = ["review[0]"];
     await this._client.patch(id).unset(reviewsToRemove).commit();
     const result = await this._client.getDocument(id);
-    console.log(result.review);
   }
 }
 

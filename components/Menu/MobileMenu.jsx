@@ -3,17 +3,17 @@ import classNames from "classnames/bind";
 import { useEffect, useRef, useState } from "react";
 const cx = classNames.bind(styles);
 export default function MobileMenu({
-  mobileHeaderState,
   pageState,
   menuState,
+  menuTypeState,
   subMenuState,
   menuInfo,
   subMenuInfo,
 }) {
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
+  const [menuType, setMenuType] = menuTypeState;
   const [subMenu, setSubMenu] = subMenuState;
-  const [mobileHeaderHide, setMobileHeaderHide] = mobileHeaderState;
   const [subMenuInfoView, setSubMenuInfoView] = useState(null);
   const menuRef = useRef();
   useEffect(() => {
@@ -36,6 +36,7 @@ export default function MobileMenu({
                   key={idx}
                   onClick={() => {
                     setMenu(slug);
+                    setMenuType(type);
                   }}
                 >
                   {name}

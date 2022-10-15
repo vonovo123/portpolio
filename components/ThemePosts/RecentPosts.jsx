@@ -8,7 +8,7 @@ export default function RecentPosts({
   post,
   windowWidth,
   contentWidth,
-  goPage,
+  goSlug = { goSlug },
 }) {
   const makeElement = useCallback(({ element, goPage }) => {
     return (
@@ -24,7 +24,7 @@ export default function RecentPosts({
           makeElement={makeElement}
           windowWidth={windowWidth}
           contentWidth={contentWidth}
-          goPage={goPage}
+          goSlug={goSlug}
         ></Carousel>
       </div>
     </div>
