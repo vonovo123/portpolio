@@ -17,6 +17,8 @@ import AdBottom from "../components/AdBanner/AdBottom";
 import AdSide from "../components/AdBanner/AdSide";
 import { setLocalData } from "../utils/LocalStorage";
 import PostTitle from "../components/PostTitle";
+import AdTop from "../components/AdBanner/AdTop";
+import makeObserver from "../utils/Observer";
 
 const cx = classNames.bind(styles);
 export default function MyApp({ Component, pageProps }) {
@@ -24,10 +26,13 @@ export default function MyApp({ Component, pageProps }) {
   // 뷰포트 화면 크기
   const [windowWidth, setWindowWidth] = useState(null);
   const [contentWidth, setContentWidth] = useState();
-  const contentRef = useRef(null);
+  const bodyRef = useRef(null);
+  const upbtnRef = useRef(null);
   const swing = useRef(null);
   const aboutRef = useRef(null);
-  const [showAbout, setShowAbout] = useState(false);
+  const [upBtnHide, setUpBtnHide] = useState(true);
+  const showAboutState = useState(false);
+  const [showAbout, setShowAbout] = showAboutState;
   const [hideAbout, setHideAbout] = useState(true);
   // 케시 데이터 정보
   const cachedPathState = useState(null);
@@ -70,11 +75,13 @@ export default function MyApp({ Component, pageProps }) {
     setPostTitle(null);
     setMobileHeaderHide(true);
   });
+
   const handleResize = useCallback(() => {
     setWindowWidth(window.innerWidth);
-    setContentWidth(contentRef.current.getBoundingClientRect().width);
+    setContentWidth(bodyRef.current.getBoundingClientRect().width);
     setCategory(pageProps.category);
   }, []);
+
   const goPage = useCallback(() => {
     setPage(menuType);
     setLocalData("page", menuType);
@@ -97,6 +104,7 @@ export default function MyApp({ Component, pageProps }) {
     setCachedPath({ page: "slug", menu, subMenu: null });
     router.push({ pathname: `/post/${slug}` });
   }, []);
+
   const fetchPostData = useCallback(async () => {
     setPost(null);
     const param = {
@@ -104,6 +112,10 @@ export default function MyApp({ Component, pageProps }) {
       category: menu,
       subCategory: subMenu,
     };
+    window.scrollTo({
+      top: bodyRef.current.offsetTop - 15,
+      behavior: "smooth",
+    });
     setLoading(true);
     const sanityService = new SanityService();
     try {
@@ -112,6 +124,20 @@ export default function MyApp({ Component, pageProps }) {
       setLoading(false);
     } catch (error) {}
   }, [page, menu, subMenu]);
+
+  useEffect(() => {
+    const option = {
+      rootMargin: "-10% 0px -90% 0px",
+    };
+    const inCb = () => {
+      setUpBtnHide(false);
+    };
+    const outCb = () => {
+      setUpBtnHide(true);
+    };
+    const io = makeObserver(option, inCb, outCb);
+    io.observe(bodyRef.current);
+  }, [bodyRef.current]);
 
   useEffect(() => {
     handleResize();
@@ -156,7 +182,6 @@ export default function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     if (!subMenu) return;
-    setMobileHeaderHide(true);
     setPostTitle(null);
     if (category && subCategory) {
       const main = category.find((cat) => cat.slug === menu).name;
@@ -170,7 +195,8 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <div className={cx("app")}>
       <div
-        className={cx("floatBtn")}
+        ref={upbtnRef}
+        className={cx("upBtn", { hide: upBtnHide })}
         onClick={() => {
           window.scrollTo({
             top: 0,
@@ -199,14 +225,16 @@ export default function MyApp({ Component, pageProps }) {
             subMenuState={subMenuState}
             category={category}
             subCategory={subCategory}
+            showAboutState={showAboutState}
             goMain={goMain}
           ></Header>
         </div>
-        <div className={cx("body")} ref={contentRef}>
+        <div className={cx("body")} ref={bodyRef}>
           <div className={cx("titleWrapper")}>
             <PostTitle postTitleState={postTitleState}></PostTitle>
           </div>
           <div className={cx("content")}>
+            <AdTop></AdTop>
             <Component
               {...pageProps}
               cachedPathState={cachedPathState}
@@ -240,16 +268,17 @@ export default function MyApp({ Component, pageProps }) {
               ></DefaultPosts>
             </div>
           </div>
+          <AdBottom></AdBottom>
+          <div className={cx("banner", "mb50")}>
+            <RecentPosts
+              post={pageProps.recentPost}
+              windowWidth={windowWidth}
+              contentWidth={contentWidth}
+              goSlug={goSlug}
+            />
+          </div>
         </div>
-        <AdBottom></AdBottom>
-        <div className={cx("banner", "mb50")}>
-          <RecentPosts
-            post={pageProps.recentPost}
-            windowWidth={windowWidth}
-            contentWidth={contentWidth}
-            goSlug={goSlug}
-          />
-        </div>
+
         <div className={cx("footer", "mb50")}>
           <Footer />
         </div>

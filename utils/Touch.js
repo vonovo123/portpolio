@@ -14,11 +14,11 @@ export default (function Touch() {
       const dy = clientY - touchPosition.clientY;
       console.log(Math.abs(dy));
       console.log(Math.abs(dx));
-      if (Math.abs(dy) >= 5) {
+      if (Math.abs(dx) <= 1 || Math.abs(dy) >= 50) {
         return;
       }
 
-      // if (Math.abs(dx) <= 1) {
+      // if () {
       //   return;
       // }
       dx > 0 ? move("prev") : move("next");

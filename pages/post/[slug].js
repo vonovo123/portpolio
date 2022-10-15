@@ -81,7 +81,6 @@ export default function Post({
           </div>
           <div className={cx("text")}>TOC</div>
         </div>
-        <AdTop></AdTop>
         {/* <div>
         <button onClick={makeReview}>make</button>
       </div>

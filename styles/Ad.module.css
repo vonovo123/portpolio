@@ -1,6 +1,8 @@
 .ad {
   background-color: grey;
   margin-bottom: 30px;
+  text-align: center;
+  color: white;
 }
 .top,
 .bottom {

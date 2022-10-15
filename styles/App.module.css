@@ -20,6 +20,10 @@
 .hide {
   display: none;
 }
+.soc {
+  background-color: red;
+  height: 100px;
+}
 .app {
   --background-colorA: #ffffff;
   --background-colorB: #fefafa;
@@ -43,7 +47,7 @@
   margin: 0px auto;
   padding: 0px 20px;
 }
-.floatBtn {
+.upBtn {
   position: fixed;
   top: 90vh;
   z-index: 2;
@@ -56,11 +60,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.5s;
+  opacity: 1;
+}
+.upBtn.hide {
+  opacity: 0;
 }
 .about {
   position: fixed;
-  width: 300px;
-  bottom: -440px;
+  bottom: -600px;
   z-index: 2;
   transition: all 1s;
 }
@@ -73,10 +81,10 @@
 .header {
   width: 100%;
   background-color: var(--background-colorA);
+  padding-bottom: 30px;
 }
 
 .body {
-  padding-top: 30px;
 }
 
 .content {
@@ -100,11 +108,13 @@
 .ad.h300 {
   height: 300px;
 }
+
+.banner {
+  width: 100%;
+  padding: 10px 0px 50px 0px;
+}
 .footer {
   min-height: 50px;
-}
-.banner {
-  padding: 10px 0px 50px 0px;
 }
 .titleWrapper {
   width: 100%;
@@ -122,10 +132,12 @@
     width: 1118px;
     padding: 0px 30px;
   }
+  .header {
+    padding-bottom: 60px;
+  }
   .body {
     display: flex;
     flex-wrap: wrap;
-    padding-top: 60px;
   }
   .content {
     width: 75%;
@@ -133,5 +145,10 @@
   }
   .side {
     width: 25%;
+  }
+  .about {
+    width: 50%;
+    padding-right: 30px;
+    bottom: -440px;
   }
 }

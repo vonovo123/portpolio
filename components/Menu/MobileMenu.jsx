@@ -32,7 +32,7 @@ export default function MobileMenu({
               if (type === "recent") return;
               return (
                 <div
-                  className={cx("nav")}
+                  className={cx("nav", { sel: menu === slug })}
                   key={idx}
                   onClick={() => {
                     setMenu(slug);

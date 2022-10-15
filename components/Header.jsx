@@ -2,7 +2,7 @@ import styles from "../styles/Header.module.css";
 import classNames from "classnames/bind";
 import DesktopMenu from "./Menu/DesktopMenu";
 import MobileMenu from "./Menu/MobileMenu";
-import { MenuOutlined } from "@ant-design/icons";
+import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 const cx = classNames.bind(styles);
 export default function Header({
@@ -12,6 +12,7 @@ export default function Header({
   menuTypeState,
   subMenuState,
   subMenuViewState,
+  showAboutState,
   category,
   subCategory,
   goMain,
@@ -19,6 +20,7 @@ export default function Header({
   const [page, setPage] = pageState;
   const menuRef = useRef();
   const [mobileHeaderHide, setMobileHeaderHide] = mobileHeaderState;
+  const [showAbout, setShowAbout] = showAboutState;
   useEffect(() => {
     if (mobileHeaderHide) {
       menuRef.current.style.height = 0;
@@ -39,6 +41,12 @@ export default function Header({
           {"Dynamic_Kwon"}
         </div>
         <div className={cx("innerMenu")}>
+          <UserOutlined
+            className={cx("userInfo")}
+            onClick={() => {
+              setShowAbout(!showAbout);
+            }}
+          />
           <MenuOutlined
             onClick={() => {
               setMobileHeaderHide(!mobileHeaderHide);

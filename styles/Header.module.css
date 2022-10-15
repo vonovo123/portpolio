@@ -20,6 +20,9 @@
   justify-content: right;
   width: 50%;
 }
+.userInfo {
+  margin-right: 20px;
+}
 .title {
   width: 50%;
 }
@@ -40,7 +43,7 @@
   }
   .desktopMenuWrapper {
     display: block;
-    height: 100px;
+    height: 120px;
   }
   .mobileMenuWrapper {
     display: none;
