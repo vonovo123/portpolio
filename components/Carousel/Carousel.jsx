@@ -10,7 +10,7 @@ export default function Carousel({
   makeElement,
   windowWidth,
   contentWidth,
-  goPage,
+  goSlug,
 }) {
   const slideRef = useRef(null);
   const [size, setSize] = useState(0);
@@ -93,14 +93,14 @@ export default function Carousel({
                 data.map((element, idx) => {
                   return (
                     <Col key={idx} className={cx("col")}>
-                      {makeElement({ element, goPage })}
+                      {makeElement({ element, goPage: goSlug })}
                     </Col>
                   );
                 })}
               {data.map((element, idx) => {
                 return (
                   <Col key={idx} className={cx("col")}>
-                    {makeElement({ element, goPage })}
+                    {makeElement({ element, goPage: goSlug })}
                   </Col>
                 );
               })}
@@ -108,7 +108,7 @@ export default function Carousel({
                 data.map((element, idx) => {
                   return (
                     <Col key={idx} className={cx("col")}>
-                      {makeElement({ element, goPage })}
+                      {makeElement({ element, goPage: goSlug })}
                     </Col>
                   );
                 })}

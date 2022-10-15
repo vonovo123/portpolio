@@ -106,7 +106,10 @@
 .banner {
   padding: 10px 0px 50px 0px;
 }
-
+.titleWrapper {
+  width: 100%;
+  margin-bottom: 20px;
+}
 @media only screen and (min-width: 768px) {
   .appWrapper {
     width: 768px;

@@ -5,12 +5,14 @@ const cx = classNames.bind(styles);
 export default function DesktopMenu({
   pageState,
   menuState,
+  menuTypeState,
   subMenuState,
   menuInfo,
   subMenuInfo,
 }) {
   const [page, setPage] = pageState;
   const [menu, setMenu] = menuState;
+  const [menuType, setMenuType] = menuTypeState;
   const [subMenu, setSubMenu] = subMenuState;
   const [subMenuInfoView, setSubMenuInfoView] = useState(null);
   const menuRef = useRef();
@@ -32,6 +34,7 @@ export default function DesktopMenu({
                   className={cx("nav", { sel: menu === slug })}
                   key={idx}
                   onClick={() => {
+                    setMenuType(type);
                     setMenu(slug);
                   }}
                 >

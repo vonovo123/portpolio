@@ -9,14 +9,14 @@ export default function Header({
   mobileHeaderState,
   pageState,
   menuState,
+  menuTypeState,
   subMenuState,
   subMenuViewState,
   category,
   subCategory,
-  goPage,
+  goMain,
 }) {
   const [page, setPage] = pageState;
-
   const menuRef = useRef();
   const [mobileHeaderHide, setMobileHeaderHide] = mobileHeaderState;
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function Header({
           className={cx("title")}
           onClick={() => {
             if (page === "home") return;
-            goPage({ def: "home" });
+            goMain();
           }}
         >
           {"Dynamic_Kwon"}
@@ -50,6 +50,7 @@ export default function Header({
         <DesktopMenu
           pageState={pageState}
           menuState={menuState}
+          menuTypeState={menuTypeState}
           subMenuViewState={subMenuViewState}
           subMenuState={subMenuState}
           menuInfo={category}
@@ -58,9 +59,9 @@ export default function Header({
       </div>
       <div className={cx("mobileMenuWrapper")} ref={menuRef}>
         <MobileMenu
-          mobileHeaderState={mobileHeaderState}
           pageState={pageState}
           menuState={menuState}
+          menuTypeState={menuTypeState}
           subMenuState={subMenuState}
           menuInfo={category}
           subMenuInfo={subCategory}

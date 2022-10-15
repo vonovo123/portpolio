@@ -1,109 +1,50 @@
-import classNames from "classnames/bind";
-import styles from "../styles/index.module.css";
-const cx = classNames.bind(styles);
 import SanityService from "../services/SanityService";
 import { useEffect, useState } from "react";
 import Page from "./page/page";
-import { useRouter } from "next/router";
 import { setLocalData, getLocalData } from "../utils/LocalStorage";
-import PostTitle from "../components/PostTitle";
-import AdTop from "../components/AdBanner/AdTop";
 export default function Home({
   cachedPathState,
-  pageState,
-  menuState,
+  menuTypeState,
   subMenuState,
-  category,
-  subCategoryState,
-  goPage,
   setHideAbout,
-  setMobileHeaderHide,
+  post,
+  loading,
+  goPage,
+  fetchPostData,
 }) {
-  const [page, setPage] = pageState;
-  const [pageView, setPageView] = useState(null);
-  const [menu, setMenu] = menuState;
+  const [menuType, setMenuType] = menuTypeState;
   const [subMenu, setSubMenu] = subMenuState;
-  const [subCategory, setSubCategory] = subCategoryState;
-  const [post, setPost] = useState(null);
+  const [pageView, setPageView] = useState(null);
   const [cachedPath, setCachedPath] = cachedPathState;
-  const [loading, setLoading] = useState(null);
-  const postTitleState = useState(null);
-  const [postTitle, setPostTitle] = postTitleState;
-  const router = useRouter();
   useEffect(() => {
-    setMobileHeaderHide(true);
-    const path = getLocalData("path");
-    if (!path) {
-      setCachedPath({
-        page: "portpolio",
-        menu: "portpolio",
-        subMenu: "htmlCss",
-      });
-    } else {
-      const { page, menu, subMenu } = path;
-      if (page !== "portpolio") {
-        setCachedPath({
-          page: "portpolio",
-          menu: "portpolio",
-          subMenu: "htmlCss",
-        });
-      } else {
-        setCachedPath({
-          page,
-          menu,
-          subMenu,
-        });
-      }
+    let page = getLocalData("page");
+    let path = getLocalData("path");
+    if (!page || page !== "portpolio") {
+      page = "portpolio";
+      path = { menu: "portpolio", subMenu: "htmlCss" };
     }
+    if (!path) path = { menu: "portpolio", subMenu: "htmlCss" };
+    setCachedPath({
+      page,
+      ...path,
+    });
+    setMenuType("portpolio");
+    setPageView("portpolio");
     setHideAbout(false);
   }, []);
-
   useEffect(() => {
     if (!subMenu) return;
-    async function fetchData() {
-      setPost(null);
-      const param = {
-        type: page,
-        category: menu,
-        subCategory: subMenu,
-      };
-      setLoading(true);
-      const sanityService = new SanityService();
-      try {
-        const post = await sanityService.getData(param);
-        setPost(post);
-        setLoading(false);
-      } catch (error) {
-        goPage({ def: "home" });
-      }
+    if (menuType === "portpolio") {
+      fetchPostData();
+    } else {
+      goPage();
     }
-    setLocalData("path", { page, menu, subMenu });
-    if (page !== "portpolio") {
-      goPage({ def: page });
-      return;
-    }
-    if (category && subCategory) {
-      const main = category.find((cat) => cat.slug === menu).name;
-      const sub = subCategory.find((cat) => cat.type === subMenu).name;
-      const newTitle = { main, sub };
-      setPostTitle(newTitle);
-    }
-    fetchData();
+    return;
   }, [subMenu]);
-  useEffect(() => {
-    setPageView(page);
-  }, [post]);
+
   return (
     <>
-      <div className={cx("titleWrapper")}>
-        <PostTitle postTitleState={postTitleState}></PostTitle>
-      </div>
-      <Page
-        pageView={pageView}
-        post={post}
-        loading={loading}
-        goPage={goPage}
-      ></Page>
+      <Page pageView={pageView} post={post} loading={loading}></Page>
     </>
   );
 }
@@ -117,9 +58,15 @@ export async function getServerSideProps() {
     category: null,
     subCategory: null,
   });
+  const popularPost = await sanityService.getData({
+    type: "popular",
+    category: null,
+    subCategory: null,
+  });
   return {
     props: {
       recentPost,
+      popularPost,
       profile,
       category,
     },
