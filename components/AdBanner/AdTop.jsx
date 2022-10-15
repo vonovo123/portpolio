@@ -19,6 +19,8 @@ export default function AdTop({}) {
       data-ad-slot="6441725316"
       data-ad-format="auto"
       data-full-width-responsive="true"
-    ></ins>
+    >
+      {"Google AdSence Section"}
+    </ins>
   );
 }

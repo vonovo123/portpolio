@@ -18,6 +18,8 @@ export default function AdBottom({}) {
       data-ad-slot="3648326424"
       data-ad-format="auto"
       data-full-width-responsive="true"
-    ></ins>
+    >
+      {"Google AdSence Section"}
+    </ins>
   );
 }

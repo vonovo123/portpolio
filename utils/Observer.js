@@ -1,8 +1,12 @@
-export default function makeObserver(option, interSectionCallback) {
+export default function makeObserver(option, inCallBack, outCallback) {
   const io = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        interSectionCallback(entry);
+        inCallBack(entry);
+      } else {
+        if (outCallback) {
+          outCallback();
+        }
       }
     });
   }, option);

@@ -46,7 +46,6 @@ export default function Home({
 
   return (
     <>
-      <AdTop></AdTop>
       <Page
         pageView={pageView}
         post={post}

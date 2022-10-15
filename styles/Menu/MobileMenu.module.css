@@ -3,7 +3,7 @@
   width: 100%;
   font-size: 16px;
   font-weight: 500;
-  background-color: var(--background-colorA);
+  background-color: var(--background-color);
   overflow: hidden;
   display: flex;
 }
@@ -20,7 +20,7 @@
   width: 40%;
   padding-top: 20px;
   padding-left: 30px;
-  background-color: var(--border-color);
+  background-color: var(--background-colorB);
   transition: all 0.5s;
 }
 .subMenuWrapper.hide {
@@ -32,6 +32,10 @@
   transition: all 0.5s;
   margin: 5px 0px;
 }
+.nav.sel {
+  font-size: 15px;
+  color: var(--border-color);
+}
 .subMenu .nav {
   font-size: 15px;
   color: #000000;
@@ -39,5 +43,5 @@
 
 .subMenu .nav.sel {
   font-size: 15px;
-  color: #ffffff;
+  color: var(--border-color);
 }
