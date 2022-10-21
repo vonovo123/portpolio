@@ -1,0 +1,132 @@
+.commentInput {
+  width: 100%;
+  margin-bottom: 30px;
+  display: flex;
+}
+.contentWrapper {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  margin-right: 20px;
+}
+
+.titleWrapper {
+  width: 100%;
+  display: flex;
+  margin-bottom: 15px;
+  height: 20px;
+}
+.title {
+  font-weight: bold;
+  margin-right: 10px;
+}
+.commentInputWrapper {
+  width: 80%;
+  margin-left: 25px;
+}
+.commentInputInnerWrapper {
+  position: relative;
+  margin-bottom: 10px;
+}
+.lengthCount {
+  position: absolute;
+  width: 70px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  right: 10px;
+  color: grey;
+}
+.nickNameInput {
+  width: 100%;
+  height: 35px;
+  padding: 10px;
+  padding-right: 90px;
+  border-radius: 5px;
+  border: var(--border-width) solid var(--border-color);
+}
+
+.commentInputTxt {
+  width: 100%;
+  height: 70px;
+  resize: none;
+  padding: 10px;
+  padding-right: 90px;
+  border-radius: 5px;
+  border: var(--border-width) solid var(--border-color);
+}
+
+.btnWrapper {
+}
+
+.commentSubmitBtn {
+  width: 100%;
+  height: 35px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: var(--border-width) solid var(--border-color);
+}
+.loading {
+  height: 50px;
+  margin-bottom: 10px;
+  width: 100%;
+  justify-content: center;
+  font-size: 30px;
+  transition: all 0.5s;
+  text-align: center;
+}
+.commentList {
+  margin-bottom: 40px;
+}
+.noReComment {
+  margin-left: 25px;
+}
+.commentListWrapper {
+  margin-bottom: 20px;
+}
+.comment {
+  padding: 15px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  font-size: 13px;
+}
+.commentWrapper {
+  width: 100%;
+  display: flex;
+}
+.imageWrapper {
+  width: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+}
+.image {
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+}
+.cotentWrapper {
+  width: 100%;
+}
+.commentName {
+  width: 50%;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.commentDate {
+  width: 100%;
+  text-align: right;
+  color: grey;
+}
+.commentTxt {
+  width: 100%;
+}
+
+.error {
+  border-color: red;
+}

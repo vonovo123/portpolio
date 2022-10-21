@@ -38,12 +38,12 @@
   display: none;
 }
 .post {
-  margin-bottom: 50px;
+  margin-bottom: 10px;
 }
 .contentHeaderWrapper {
   height: 100%;
   margin-top: 50px;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -70,25 +70,35 @@
 .contentHeaderInfo .subTitle {
   font-size: 20px;
 }
-.createdAt {
-}
+
 .contentAuthor {
-  height: 50px;
-  display: inline-flex;
-}
-.authorNameWrapper {
-  height: 50px;
-  width: 150px;
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-  align-items: center;
+  font-weight: bold;
+  margin-bottom: 50px;
+  color: grey;
+  justify-content: center;
 }
 .authorImage {
-  height: 50px;
-  width: 60px;
-  border-radius: 100%;
+  height: 40px;
+  width: 40px;
+  border-radius: 10px;
   margin-right: 10px;
+}
+.authorInfo {
+  display: flex;
+  align-items: center;
+}
+.editInfo {
+  text-align: left;
+}
+
+.comment {
+  margin-bottom: 50px;
+}
+.commentTitle {
+  font-size: 25px;
+  margin-bottom: 30px;
 }
 
 @media only screen and (min-width: 1025px) {
@@ -102,7 +112,7 @@
     color: var(--toc-color);
     background-color: var(--background-colorA);
     font-weight: bold;
-    z-index: 2;
+    z-index: 3;
     border: var(--border-width) solid var(--border-color);
     transition: all 0.5s;
   }
@@ -121,7 +131,7 @@
     align-items: center;
     background-color: var(--background-colorA);
     font-weight: bold;
-    z-index: 1;
+    z-index: 3;
     border: var(--border-width) solid var(--border-color);
     transition: all 1s;
   }

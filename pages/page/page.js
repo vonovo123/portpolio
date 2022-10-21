@@ -1,21 +1,19 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "../../styles/Page/Page.module.css";
-import CodingListElement from "../../components/Element/PostListElement";
+import PostListElement from "../../components/Element/PostListElement";
 import PortpolioListElement from "../../components/Element/PortpolioListElement";
 import CareerListElement from "../../components/Element/CareerListElement";
 import { LoadingOutlined } from "@ant-design/icons";
 import List from "../../components/List";
 const cx = classNames.bind(styles);
-export default function Page({ goPage, post, loading, pageView }) {
+export default function Page({ goSlug, post, loading, pageView }) {
   const pageRef = useRef();
   const listRef = useRef();
   const createElement = useCallback(
-    ({ element, idx, goPage }) => {
+    ({ element, idx }) => {
       if (pageView === "post")
-        return (
-          <CodingListElement element={element} key={idx} goPage={goPage} />
-        );
+        return <PostListElement element={element} key={idx} goSlug={goSlug} />;
       if (pageView === "portpolio")
         return <PortpolioListElement element={element} key={idx} />;
       if (pageView === "career") {
@@ -43,11 +41,7 @@ export default function Page({ goPage, post, loading, pageView }) {
 
         <div ref={listRef} className={cx("listWrapper")}>
           {!loading && (
-            <List
-              post={post}
-              goPage={goPage}
-              createElement={createElement}
-            ></List>
+            <List dataList={post} createElement={createElement}></List>
           )}
         </div>
       </div>

@@ -40,13 +40,15 @@ export default function Header({
         >
           {"Dynamic_Kwon"}
         </div>
+        <div
+          className={cx("userInfo")}
+          onClick={() => {
+            setShowAbout(!showAbout);
+          }}
+        >
+          <div>{"About Me"}</div>
+        </div>
         <div className={cx("innerMenu")}>
-          <UserOutlined
-            className={cx("userInfo")}
-            onClick={() => {
-              setShowAbout(!showAbout);
-            }}
-          />
           <MenuOutlined
             onClick={() => {
               setMobileHeaderHide(!mobileHeaderHide);

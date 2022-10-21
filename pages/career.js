@@ -5,8 +5,8 @@ import { setLocalData, getLocalData } from "../utils/LocalStorage";
 export default function Home({
   cachedPathState,
   menuTypeState,
+  pageViewState,
   subMenuState,
-  setHideAbout,
   post,
   loading,
   fetchPostData,
@@ -15,7 +15,7 @@ export default function Home({
 }) {
   const [menuType, setMenuType] = menuTypeState;
   const [subMenu, setSubMenu] = subMenuState;
-  const [pageView, setPageView] = useState(null);
+  const [pageView, setPageView] = pageViewState;
   const [cachedPath, setCachedPath] = cachedPathState;
   useEffect(() => {
     let page = getLocalData("page");
@@ -31,7 +31,6 @@ export default function Home({
     });
     setMenuType("career");
     setPageView("career");
-    setHideAbout(false);
   }, []);
   useEffect(() => {
     if (!subMenu) return;

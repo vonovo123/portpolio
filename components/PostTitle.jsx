@@ -19,6 +19,12 @@ export default function PostTitle({ postTitleState }) {
             <div className={cx("title")}>{postTitle.main}</div>
             <div className={cx("title")}>{">"}</div>
             <div className={cx("title")}>{postTitle.sub}</div>
+            {postTitle.title && (
+              <>
+                <div className={cx("title")}>{">"}</div>
+                <div className={cx("title")}>{postTitle.title}</div>
+              </>
+            )}
           </>
         )}
       </div>
