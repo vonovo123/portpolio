@@ -6,8 +6,8 @@ import AdTop from "../components/AdBanner/AdTop";
 export default function Home({
   cachedPathState,
   menuTypeState,
+  pageViewState,
   subMenuState,
-  setHideAbout,
   post,
   loading,
   fetchPostData,
@@ -16,7 +16,7 @@ export default function Home({
 }) {
   const [menuType, setMenuType] = menuTypeState;
   const [subMenu, setSubMenu] = subMenuState;
-  const [pageView, setPageView] = useState(null);
+  const [pageView, setPageView] = pageViewState;
   const [cachedPath, setCachedPath] = cachedPathState;
   useEffect(() => {
     let page = getLocalData("page");
@@ -32,7 +32,6 @@ export default function Home({
     });
     setMenuType("post");
     setPageView("post");
-    setHideAbout(false);
   }, []);
   useEffect(() => {
     if (!subMenu) return;
@@ -50,7 +49,7 @@ export default function Home({
         pageView={pageView}
         post={post}
         loading={loading}
-        goPage={goSlug}
+        goSlug={goSlug}
       ></Page>
     </>
   );
@@ -70,12 +69,14 @@ export async function getServerSideProps() {
     category: null,
     subCategory: null,
   });
+  const recentComment = await sanityService.getRecentComments();
   return {
     props: {
       recentPost,
       popularPost,
       profile,
       category,
+      recentComment,
     },
   };
 }

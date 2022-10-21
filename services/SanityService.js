@@ -40,9 +40,6 @@ const postInnerUrl = `
   createdAt,
   postContent,
   viewCount,
-  'review': review -> {
-    title
-  },
   'category' : category -> {
     name,
     type,
@@ -95,6 +92,37 @@ const postBySlug = `
 *[_type == 'post' && slug.current == $slug]{
   ${postInnerUrl}
 }`;
+const recentComment = `
+*[_type == 'comment'] | order(createdAt desc){
+  _id,
+  postId,
+  postSlug,
+  postTitle,
+  nickName,
+  comment,
+  replyCount,
+  createdAt
+}[0...10]`;
+const commentByPostId = `
+*[_type == 'comment' && postId == $id] | order(createdAt desc){
+  _id,
+  postId,
+  postSlug,
+  postTitle,
+  nickName,
+  comment,
+  replyCount,
+  createdAt
+}`;
+const reCommentByCommentId = `
+*[_type == 'reComment' && commentId == $id] | order(createdAt desc){
+  _id,
+  commentId,
+  nickName,
+  comment,
+  createdAt
+}`;
+
 const portpolioUrl = `
   *[_type == 'portpolio' && references(*[_type=="subCategory" && type == $subCategory]._id)]{
     'category' : category -> {
@@ -159,7 +187,6 @@ export default class SanityService {
   }
   async getDataBySlug({ slug }) {
     const result = await this._client.fetch(postBySlug, { slug });
-
     return result[0];
   }
   async getData({ type, category, subCategory }) {
@@ -168,7 +195,8 @@ export default class SanityService {
       if (!category) {
         return await this._client.fetch(postAllUrl);
       } else if (category === "home") {
-        return await this._client.fetch(postRecentUrl);
+        const result = await this._client.fetch(postRecentUrl);
+        return result;
       } else {
         if (!subCategory) {
           return await this._client.fetch(postByCategoryUrl, {
@@ -215,40 +243,38 @@ export default class SanityService {
   async upCount({ id, count }) {
     this._client.patch(id).inc({ viewCount: 1 }).commit();
   }
-  async setReview({ id, coment }) {
+  async setComment({ id, slug, title, nickName, comment, createdAt }) {
     const doc = {
-      _id: "my-review",
-      _type: "review",
-      title: "Sanity Tandem Extraordinaire",
+      _type: "comment",
+      postId: id,
+      postSlug: slug,
+      postTitle: title,
+      nickName,
+      comment,
+      createdAt,
     };
-
-    const review = await this._client.createOrReplace(doc);
-    await this._client
-      .patch(id)
-      .setIfMissing({ review: [] })
-      .append("review", [review])
-      .commit({ autoGenerateArrayKeys: true });
-    const result = await this._client.getDocument(id);
-    console.log(result);
+    await this._client.create(doc);
   }
-  async deleteReview({ id }) {
-    const reviewsToRemove = ["review[0]"];
-    await this._client.patch(id).unset(reviewsToRemove).commit();
-    const result = await this._client.getDocument(id);
+  async setReComment({ id, nickName, comment, createdAt }) {
+    const doc = {
+      _type: "reComment",
+      commentId: id,
+      nickName,
+      comment,
+      createdAt,
+    };
+    await this._client.create(doc);
+  }
+  async getCommentsById({ id }) {
+    const result = await this._client.fetch(commentByPostId, { id });
+    return result;
+  }
+  async getRecentComments() {
+    const result = await this._client.fetch(recentComment);
+    return result;
+  }
+  async getReCommentsById({ id }) {
+    const result = await this._client.fetch(reCommentByCommentId, { id });
+    return result;
   }
 }
-
-// 'content':content[]{
-//   ...,
-//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-// },
-
-// 'content':content[]{
-//   ...,
-//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-//   }
-
-// 'content':content[]{
-//   ...,
-//   ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-// },

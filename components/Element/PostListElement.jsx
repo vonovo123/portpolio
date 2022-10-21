@@ -3,13 +3,13 @@ import { Row, Col, Image } from "antd";
 import classNames from "classnames/bind";
 import { useRouter } from "next/router";
 const cx = classNames.bind(styles);
-export default function PostListElement({ element, goPage }) {
+export default function PostListElement({ element, goSlug }) {
   const router = useRouter();
   return (
     <div
       className={cx("elementWrapper")}
       onClick={() => {
-        goPage({ menu: element.category.slug, slug: element.slug });
+        goSlug({ menu: element.category.slug, slug: element.slug });
       }}
     >
       <div className={cx("element")}>

@@ -4,9 +4,9 @@ import Page from "./page/page";
 import { setLocalData, getLocalData } from "../utils/LocalStorage";
 export default function Home({
   cachedPathState,
+  pageViewState,
   menuTypeState,
   subMenuState,
-  setHideAbout,
   post,
   loading,
   goPage,
@@ -14,7 +14,7 @@ export default function Home({
 }) {
   const [menuType, setMenuType] = menuTypeState;
   const [subMenu, setSubMenu] = subMenuState;
-  const [pageView, setPageView] = useState(null);
+  const [pageView, setPageView] = pageViewState;
   const [cachedPath, setCachedPath] = cachedPathState;
   useEffect(() => {
     let page = getLocalData("page");
@@ -30,7 +30,6 @@ export default function Home({
     });
     setMenuType("portpolio");
     setPageView("portpolio");
-    setHideAbout(false);
   }, []);
   useEffect(() => {
     if (!subMenu) return;

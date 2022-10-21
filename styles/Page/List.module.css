@@ -1,3 +1,12 @@
+.list {
+  font-size: 15px;
+}
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
 .listWrapper {
+  cursor: pointer;
+  padding: 10px 0px;
   background-color: var(--background-colorA);
 }

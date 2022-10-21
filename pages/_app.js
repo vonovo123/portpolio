@@ -2,24 +2,24 @@ import "antd/dist/antd.css";
 import "../styles/reset.css";
 import "../styles/globals.css";
 import { useCallback, useEffect, useRef, useState } from "react";
-import styles from "../styles/App.module.css";
-import classNames from "classnames/bind";
+
 import RecentPosts from "../components/ThemePosts/RecentPosts";
-import DefaultPosts from "../components/ThemePosts/defaultPosts";
 import About from "../components/About";
 import { useRouter } from "next/router";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UpCircleOutlined } from "@ant-design/icons";
 import SanityService from "../services/SanityService";
-import { on, off, clear } from "../utils/Swing";
+import AdTop from "../components/AdBanner/AdTop";
 import AdBottom from "../components/AdBanner/AdBottom";
 import AdSide from "../components/AdBanner/AdSide";
 import { setLocalData } from "../utils/LocalStorage";
 import PostTitle from "../components/PostTitle";
-import AdTop from "../components/AdBanner/AdTop";
 import makeObserver from "../utils/Observer";
+import Side from "../components/Side";
 
+import classNames from "classnames/bind";
+import styles from "../styles/App.module.css";
 const cx = classNames.bind(styles);
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -28,12 +28,9 @@ export default function MyApp({ Component, pageProps }) {
   const [contentWidth, setContentWidth] = useState();
   const bodyRef = useRef(null);
   const upbtnRef = useRef(null);
-  const swing = useRef(null);
-  const aboutRef = useRef(null);
   const [upBtnHide, setUpBtnHide] = useState(true);
   const showAboutState = useState(false);
   const [showAbout, setShowAbout] = showAboutState;
-  const [hideAbout, setHideAbout] = useState(true);
   // 케시 데이터 정보
   const cachedPathState = useState(null);
   const [cachedPath, setCachedPath] = cachedPathState;
@@ -52,6 +49,10 @@ export default function MyApp({ Component, pageProps }) {
   // 선택된 매뉴 타입
   const menuTypeState = useState(null);
   const [menuType, setMenuType] = menuTypeState;
+
+  //페이지 타입
+  const pageViewState = useState(null);
+  const [pageView, setPageView] = pageViewState;
   //선택된 하위 메뉴
   const subMenuState = useState(null);
   const [subMenu, setSubMenu] = subMenuState;
@@ -100,8 +101,8 @@ export default function MyApp({ Component, pageProps }) {
     }
   }, [router, page, menu, subMenu]);
 
-  const goSlug = useCallback(({ menu, slug }) => {
-    setCachedPath({ page: "slug", menu, subMenu: null });
+  const goSlug = useCallback(({ slug }) => {
+    initState();
     router.push({ pathname: `/post/${slug}` });
   }, []);
 
@@ -122,7 +123,9 @@ export default function MyApp({ Component, pageProps }) {
       const post = await sanityService.getData(param);
       setPost(post);
       setLoading(false);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [page, menu, subMenu]);
 
   useEffect(() => {
@@ -145,16 +148,16 @@ export default function MyApp({ Component, pageProps }) {
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
 
-  useEffect(() => {
-    if (!showAbout) {
-      on(swing, aboutRef);
-    } else {
-      off(swing, aboutRef);
-    }
-    return () => {
-      clear(swing);
-    };
-  }, [showAbout]);
+  // useEffect(() => {
+  //   if (!showAbout) {
+  //     on(swing, aboutRef);
+  //   } else {
+  //     off(swing, aboutRef);
+  //   }
+  //   return () => {
+  //     clear(swing);
+  //   };
+  // }, [showAbout]);
 
   useEffect(() => {
     if (!cachedPath) return;
@@ -207,11 +210,10 @@ export default function MyApp({ Component, pageProps }) {
         <UpCircleOutlined />
       </div>
       <div
-        className={cx("about", { show: showAbout, hide: hideAbout })}
+        className={cx("about", { show: showAbout })}
         onClick={() => {
           setShowAbout(!showAbout);
         }}
-        ref={aboutRef}
       >
         <About profile={pageProps.profile && pageProps.profile[0]} />
       </div>
@@ -230,20 +232,21 @@ export default function MyApp({ Component, pageProps }) {
           ></Header>
         </div>
         <div className={cx("body")} ref={bodyRef}>
-          <div className={cx("titleWrapper")}>
-            <PostTitle postTitleState={postTitleState}></PostTitle>
-          </div>
           <div className={cx("content")}>
-            <AdTop></AdTop>
+            <div className={cx("titleWrapper")}>
+              <PostTitle postTitleState={postTitleState}></PostTitle>
+            </div>
+            {/* <AdTop></AdTop> */}
             <Component
               {...pageProps}
               cachedPathState={cachedPathState}
               pageState={pageState}
               menuState={menuState}
               menuTypeState={menuTypeState}
+              pageViewState={pageViewState}
               subMenuState={subMenuState}
               setMobileHeaderHide={setMobileHeaderHide}
-              setHideAbout={setHideAbout}
+              postTitleState={postTitleState}
               post={post}
               loading={loading}
               fetchPostData={fetchPostData}
@@ -252,23 +255,16 @@ export default function MyApp({ Component, pageProps }) {
             />
           </div>
           <div className={cx("side")}>
-            <div className={cx("themePostsWrapper", "mb50")}>
-              <DefaultPosts
-                post={pageProps.popularPost}
-                title={"많이 본 글"}
-                goSlug={goSlug}
-              ></DefaultPosts>
-            </div>
-            <AdSide></AdSide>
-            <div className={cx("themePostsWrapper", "mb50")}>
-              <DefaultPosts
-                post={pageProps.recentPost}
-                title={"같은 메뉴 다른 글"}
-                goSlug={goSlug}
-              ></DefaultPosts>
-            </div>
+            <Side
+              pageView={pageView}
+              categoryPost={pageProps.categoryPost}
+              popularPost={pageProps.popularPost}
+              recentComment={pageProps.recentComment}
+              goSlug={goSlug}
+            ></Side>
           </div>
-          <AdBottom></AdBottom>
+          {/* <AdBottom></AdBottom> */}
+
           <div className={cx("banner", "mb50")}>
             <RecentPosts
               post={pageProps.recentPost}
