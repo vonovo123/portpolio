@@ -46,7 +46,7 @@ export default function Header({
             setShowAbout(!showAbout);
           }}
         >
-          <div>{"About Me"}</div>
+          <div>{"ABOUT"}</div>
         </div>
         <div className={cx("innerMenu")}>
           <MenuOutlined
