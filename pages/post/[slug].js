@@ -37,7 +37,6 @@ export default function Post({
   const loadComments = useCallback(async () => {
     const sanityService = new SanityService();
     const result = await sanityService.getCommentsById({ id: content._id });
-    console.log(result);
     setCommentList([...result]);
   }, [content._id]);
 
@@ -166,6 +165,7 @@ export default function Post({
             slug: content.slug,
             title: content.title,
           }}
+          commentListState={commentListState}
           loadComments={loadComments}
         ></CommentInput>
         <CommentList commentListState={commentListState}></CommentList>

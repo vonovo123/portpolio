@@ -3,7 +3,8 @@ import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import SanityService from "../../services/SanityService";
 const cx = classNames.bind(styles);
-export default function ReCommentInput({ id, loadComments }) {
+export default function ReCommentInput({ id, reCommentListState }) {
+  const [reCommentList, setReCommentList] = reCommentListState;
   const [nickName, setNickName] = useState("");
   const [comment, setComment] = useState("");
   const [error, setError] = useState(null);
@@ -17,15 +18,13 @@ export default function ReCommentInput({ id, loadComments }) {
     }
     const sanityService = new SanityService();
     const now = new Date();
-    await sanityService.setReComment({
+    const recomment = await sanityService.setReComment({
       id,
       nickName: JSON.stringify(nickName),
       comment: JSON.stringify(comment),
-      createdAt: new Date(
-        now.getTime() - now.getTimezoneOffset() * 60000
-      ).toISOString(),
+      createdAt: new Date(now.getTime()).toISOString(),
     });
-    await loadComments();
+    setReCommentList([recomment, ...reCommentList]);
     setNickName("");
     setComment("");
     setError(null);
