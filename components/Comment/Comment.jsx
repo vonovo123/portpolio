@@ -14,18 +14,13 @@ export default function Comment({ comment, idx }) {
   const reCommentLoadingState = useState(false);
   const [reCommentLoading, setReCommentLoading] = reCommentLoadingState;
   const [showReComment, setShowReComment] = useState(false);
-  const loadComments = useCallback(async () => {
+  const loadReComments = useCallback(async () => {
     const sanityService = new SanityService();
     setReCommentLoading(true);
     const result = await sanityService.getReCommentsById({ id: comment._id });
     setReCommentList([...result]);
     setReCommentLoading(false);
   }, [comment._id]);
-  useEffect(() => {
-    if (!reCommentList) {
-      loadComments();
-    }
-  }, [showReComment]);
   return (
     <div className={cx("comment")}>
       <div className={cx("commentWrapper")}>
@@ -55,6 +50,9 @@ export default function Comment({ comment, idx }) {
           className={cx("commentReplyCountWrapper")}
           onClick={() => {
             setShowReComment(!showReComment);
+            if (!reCommentList) {
+              loadReComments();
+            }
           }}
         >
           <div className={cx("commentReplyCount")}>{`답글 보기`}</div>
@@ -73,7 +71,8 @@ export default function Comment({ comment, idx }) {
           ></ReCommentList>
           <ReCommentInput
             id={comment._id}
-            loadComments={loadComments}
+            reCommentListState={reCommentListState}
+            // loadComments={loadComments}
           ></ReCommentInput>
         </div>
       </div>
