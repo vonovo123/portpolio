@@ -64,24 +64,26 @@ export default function CommentInput({ postInfo, loadComments }) {
         </div>
       </div>
       <div className={cx("btnWrapper")}>
-        <button
-          className={cx("commentSubmitBtn")}
-          onClick={() => {
-            makeReview();
-          }}
-        >
-          {"등록"}
-        </button>
-        <button
-          className={cx("commentSubmitBtn")}
-          onClick={() => {
-            setNickName("");
-            setComment("");
-            setError(null);
-          }}
-        >
-          {"지우기"}
-        </button>
+        <div className={cx("btnInnerWrapper")}>
+          <button
+            className={cx("commentSubmitBtn")}
+            onClick={() => {
+              makeReview();
+            }}
+          >
+            {"등록"}
+          </button>
+          <button
+            className={cx("commentSubmitBtn")}
+            onClick={() => {
+              setNickName("");
+              setComment("");
+              setError(null);
+            }}
+          >
+            {"지우기"}
+          </button>
+        </div>
       </div>
     </div>
   );

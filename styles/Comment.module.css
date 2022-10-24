@@ -1,10 +1,9 @@
 .commentInput {
   width: 100%;
   margin-bottom: 10px;
-  display: flex;
 }
 .contentWrapper {
-  width: 80%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   margin-right: 30px;
@@ -15,7 +14,11 @@
   margin-bottom: 20px;
 }
 .btnWrapper {
-  width: 20%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.btnInnerWrapper {
 }
 .titleWrapper {
   width: 100%;
@@ -33,6 +36,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   right: 10px;
   color: grey;
 }
@@ -46,7 +50,7 @@
 }
 
 .commentSubmitBtn {
-  width: 100%;
+  width: 150px;
   height: 50px;
   padding: 10px;
   margin-bottom: 20px;
