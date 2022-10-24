@@ -253,8 +253,8 @@ export default class SanityService {
       comment,
       createdAt,
     };
-    await this._client.create(doc);
-    const result = await this._client.fetch(commentByPostId, { id });
+    const result = await this._client.create(doc);
+    //const result = await this._client.fetch(commentByPostId, { id });
     return result;
   }
   async setReComment({ id, nickName, comment, createdAt }) {
