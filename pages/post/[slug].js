@@ -40,6 +40,7 @@ export default function Post({
     console.log(result);
     setCommentList([...result]);
   }, [content._id]);
+
   useEffect(() => {
     setPageView("slug");
     setMobileHeaderHide(true);

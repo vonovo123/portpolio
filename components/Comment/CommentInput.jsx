@@ -18,7 +18,7 @@ export default function CommentInput({ postInfo, loadComments }) {
     }
     const sanityService = new SanityService();
     const now = new Date();
-    await sanityService.setComment({
+    const result = await sanityService.setComment({
       id,
       slug,
       title,
@@ -28,7 +28,7 @@ export default function CommentInput({ postInfo, loadComments }) {
         now.getTime() - now.getTimezoneOffset() * 60000
       ).toISOString(),
     });
-    await loadComments();
+    console.log(result);
     setNickName("");
     setComment("");
   }, [nickName, comment]);

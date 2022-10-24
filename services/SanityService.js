@@ -253,7 +253,8 @@ export default class SanityService {
       comment,
       createdAt,
     };
-    await this._client.create(doc);
+    const result = await this._client.create(doc);
+    return result;
   }
   async setReComment({ id, nickName, comment, createdAt }) {
     const doc = {
