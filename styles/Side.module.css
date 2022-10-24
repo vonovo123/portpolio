@@ -21,12 +21,11 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  font-size: 13px;
+  font-size: 12px;
 }
 .contentWrapper {
   width: 100%;
   display: flex;
-  margin-bottom: 10px;
 }
 .imageWrapper {
   display: flex;
@@ -51,20 +50,18 @@
 }
 .contentDate {
   width: 100%;
-  text-align: right;
   color: grey;
 }
 .postTxt {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .contentTxt {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  margin-bottom: 10px;
 }
 .postTitle {
   color: grey;

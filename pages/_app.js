@@ -265,7 +265,7 @@ export default function MyApp({ Component, pageProps }) {
           </div>
           {/* <AdBottom></AdBottom> */}
 
-          <div className={cx("banner", "mb50")}>
+          <div className={cx("banner", "mb20")}>
             <RecentPosts
               post={pageProps.recentPost}
               windowWidth={windowWidth}

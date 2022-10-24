@@ -1,14 +1,13 @@
 .menu {
-  height: 200px;
+  height: 100%;
   width: 100%;
   font-size: 16px;
   font-weight: 500;
-  background-color: var(--background-color);
   overflow: hidden;
   display: flex;
 }
 .mainMenuWrapper {
-  width: 60%;
+  width: 50%;
   padding-top: 20px;
   padding-left: 30px;
   transition: all 0.5s;
@@ -17,10 +16,10 @@
   width: 100%;
 }
 .subMenuWrapper {
-  width: 40%;
+  width: 50%;
   padding-top: 20px;
   padding-left: 30px;
-  background-color: var(--background-colorB);
+  background-color: var(--background-color-about);
   transition: all 0.5s;
 }
 .subMenuWrapper.hide {
@@ -31,17 +30,17 @@
   cursor: pointer;
   transition: all 0.5s;
   margin: 5px 0px;
-}
-.nav.sel {
-  font-size: 15px;
-  color: var(--border-color);
+  margin-bottom: 10px;
 }
 .subMenu .nav {
-  font-size: 15px;
-  color: #000000;
+  color: white;
+}
+.menu .nav.sel > .text {
+  padding-bottom: 3px;
+  border-bottom: 1px solid black;
 }
 
-.subMenu .nav.sel {
-  font-size: 15px;
-  color: var(--border-color);
+.subMenu .nav.sel > .text {
+  padding-bottom: 3px;
+  border-bottom: 1px solid white;
 }

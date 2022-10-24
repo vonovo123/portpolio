@@ -4,26 +4,31 @@
   margin-bottom: 10px;
   cursor: pointer;
 }
-.elementWrapper:last-child {
-}
 .element {
   height: 150px;
-
   display: flex;
 }
 .elementImageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 150px;
 }
 .elementImage {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
+  border-radius: 10px;
 }
 .elementContentWrapper {
   width: calc(100% - 155px);
-  padding: 20px;
+  padding: 10px;
 }
-
+.contentDate {
+  font-size: 13px;
+  width: 100%;
+  color: grey;
+}
 .title {
   font-size: 16px;
   margin-bottom: 10px;

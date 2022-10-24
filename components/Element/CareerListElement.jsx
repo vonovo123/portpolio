@@ -8,7 +8,6 @@ import dayjs from "dayjs";
 import { useState, useRef } from "react";
 const cx = classNames.bind(styles);
 export default function CareerListElement({ element }) {
-  const [hide, setHide] = useState(false);
   const nodeRef = useRef(null);
   return (
     <div className={cx("description")}>
@@ -18,30 +17,7 @@ export default function CareerListElement({ element }) {
           [{dayjs(element.from).format("YYYY.M.DD")} -
           {dayjs(element.to).format("YYYY.M.DD")}]
         </div>
-        {!hide && (
-          <CaretUpOutlined
-            className={cx("el", "arrow")}
-            onClick={() => {
-              setHide(!hide);
-            }}
-          />
-        )}
-        {hide && (
-          <CaretDownOutlined
-            className={cx("el", "arrow")}
-            onClick={() => {
-              setHide(!hide);
-            }}
-          />
-        )}
       </div>
-      {/* <CSSTransition
-        in={!hide}
-        classNames={rollTransition}
-        timeout={500}
-        mountOnEnter
-        nodeRef={nodeRef}
-      > */}
       <div className={cx("descriptionBody")} ref={nodeRef}>
         <Row className={cx("descriptionBodyHeader")}>
           <Col span={2}></Col>

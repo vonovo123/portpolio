@@ -16,7 +16,7 @@ export default function About({ profile }) {
       <div className={cx("about")}>
         <Row className={cx("profileWrapper")}>
           <Col className={cx("profileTitle")} span={24}>
-            {"🤡 WHO AM I 🤡"}
+            {" ABOUT ME "}
           </Col>
           <Col className={cx("profileDescImageWrapper")} span={24}>
             <Image

@@ -18,7 +18,7 @@ export default function TableOfContents({ outline, readKey, setFoldToc }) {
             id={heading.el._key}
           >
             <div
-              className={cx({})}
+              className={cx("listTxt")}
               onClick={() => {
                 window.scrollTo({
                   top: heading.el.offsetTop - 30,
@@ -55,7 +55,7 @@ export default function TableOfContents({ outline, readKey, setFoldToc }) {
               read: readKey === "sod",
             })}
           >
-            <div>Start of Content</div>
+            <div className={cx("listTxt")}>Start of Content</div>
           </div>
           {createOrderedList(outline)}
           <div
@@ -63,7 +63,7 @@ export default function TableOfContents({ outline, readKey, setFoldToc }) {
               read: readKey === "eod",
             })}
           >
-            <div>End of Content</div>
+            <div className={cx("listTxt")}>End of Content</div>
           </div>
         </div>
       </div>

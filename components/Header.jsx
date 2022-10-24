@@ -25,7 +25,7 @@ export default function Header({
     if (mobileHeaderHide) {
       menuRef.current.style.height = 0;
     } else {
-      menuRef.current.style.height = "200px";
+      menuRef.current.style.height = "250px";
     }
   }, [mobileHeaderHide]);
   return (

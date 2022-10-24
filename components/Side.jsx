@@ -23,11 +23,6 @@ export default function Side({
           }}
         >
           <div className={cx("contentWrapper")}>
-            <div className={cx("contentDate")}>
-              {dayjs(element.createdAt).format("MMMM DD HH:mm:ss")}
-            </div>
-          </div>
-          <div className={cx("contentWrapper")}>
             <div className={cx("imageWrapper")}>
               <Image
                 src={element.thumbnail.imageUrl}
@@ -40,7 +35,9 @@ export default function Side({
               <div className={cx("postTxt")}>
                 {`${element.category.name} / ${element.subCategory.type} / ${element.title}`}
               </div>
-              <div className={cx("postTitle")}>{`글 보러가기`}</div>
+              <div className={cx("contentDate")}>
+                {dayjs(element.createdAt).format("MMMM DD HH:mm:ss")}
+              </div>
             </div>
           </div>
         </div>

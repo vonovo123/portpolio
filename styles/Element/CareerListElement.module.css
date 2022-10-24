@@ -9,7 +9,7 @@
   display: flex;
   font-size: 17px;
   font-weight: bold;
-  padding-bottom: 15px;
+  margin-bottom: 30px;
   padding-left: 30px;
 }
 .descriptionHeader .el {
