@@ -37,11 +37,11 @@ export default function Post({
   const loadComments = useCallback(async () => {
     const sanityService = new SanityService();
     const result = await sanityService.getCommentsById({ id: content._id });
+    console.log(result);
     setCommentList([...result]);
   }, [content._id]);
   useEffect(() => {
     setPageView("slug");
-
     setMobileHeaderHide(true);
   }, []);
 
