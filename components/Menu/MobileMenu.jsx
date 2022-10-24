@@ -39,7 +39,7 @@ export default function MobileMenu({
                     setMenuType(type);
                   }}
                 >
-                  {name}
+                  <span className={cx("text")}>{name}</span>
                 </div>
               );
             })}
@@ -56,7 +56,7 @@ export default function MobileMenu({
                   setSubMenu(type);
                 }}
               >
-                <div className={cx("text")}>{name}</div>
+                <span className={cx("text")}>{name}</span>
               </div>
             ))}
         </div>

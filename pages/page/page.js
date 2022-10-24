@@ -28,7 +28,7 @@ export default function Page({ goSlug, post, loading, pageView }) {
       pageRef.current.style.transform = `translate3d(0, -50px, 0)`;
       listRef.current.style.opacity = 1;
     } else {
-      pageRef.current.style.transform = `translate3d(0, 0px, 0)`;
+      pageRef.current.style.transform = `translate3d(0, 30px, 0)`;
     }
   }, [loading]);
 

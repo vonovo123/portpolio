@@ -27,7 +27,8 @@
 .app {
   --background-colorA: #ffffff;
   --background-colorB: #f7e0e0;
-  --background-color-about: #f6f2f2;
+  --background-color-about: #e4a4a4;
+  --background-color-about-btn: #e4a4a4;
   --sel-box-color: rgb(230, 230, 230);
   --tag-color: #83878c;
   --tag-font-color: #ffffff;
@@ -70,6 +71,7 @@
 .about {
   position: fixed;
   bottom: -550px;
+  right: 0px;
   z-index: 2;
   transition: all 1s;
 }
@@ -146,6 +148,5 @@
   }
   .about {
     width: 30%;
-    padding-right: 30px;
   }
 }

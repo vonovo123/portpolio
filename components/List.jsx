@@ -7,7 +7,9 @@ export default function List({ dataList, title, createElement }) {
       <div className={cx("title")}>{title}</div>
       <div className={cx("listWrapper")}>
         {dataList && dataList.length === 0 && (
-          <div>{"표시할 내용이 없습니다."}</div>
+          <div className={cx("empty")}>
+            {"카테고리에 글이 존재하지 않습니다."}
+          </div>
         )}
         {dataList &&
           dataList.length > 0 &&
