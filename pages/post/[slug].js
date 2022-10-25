@@ -8,7 +8,7 @@ import classNames from "classnames/bind";
 import { makeHeadings } from "../../utils/Headings";
 import makeObserver from "../../utils/Observer";
 import TableOfContents from "../../components/TableOfContents";
-import { CaretLeftOutlined } from "@ant-design/icons";
+import { CaretLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import CommentInput from "../../components/Comment/CommentInput";
 import CommentList from "../../components/Comment/CommentList";
 const cx = classNames.bind(styles);
@@ -33,17 +33,42 @@ export default function Post({
   const [heading, setHeading] = useState([]);
   const [foldToc, setFoldToc] = useState(true);
   const commentListState = useState([]);
+  const commentRef = useRef(null);
+  const commentListRef = useRef(null);
+
   const [commentList, setCommentList] = commentListState;
+  const [loadComment, setLoadComment] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const loadComments = useCallback(async () => {
+    setCommentList(null);
     const sanityService = new SanityService();
+    setLoading(true);
     const result = await sanityService.getCommentsById({ id: content._id });
+    setLoading(false);
     setCommentList([...result]);
-  }, [content._id]);
+  }, [loadComment]);
 
   useEffect(() => {
     setPageView("slug");
     setMobileHeaderHide(true);
   }, []);
+
+  useEffect(() => {
+    if (loadComment) {
+      loadComments();
+    }
+  }, [loadComment]);
+  useEffect(() => {
+    if (loading === null) return;
+    if (!loading) {
+      commentRef.current.style.transform = `translate3d(0, -60px, 0)`;
+      commentListRef.current.style.opacity = 1;
+    } else {
+      commentRef.current.style.transform = `translate3d(0, 0px, 0)`;
+      commentListRef.current.style.opacity = 0;
+    }
+  }, [loading]);
 
   useEffect(() => {
     const option = {
@@ -52,6 +77,9 @@ export default function Post({
     const $contentNode = document.querySelector("#content");
     const cb = (entry) => {
       setReadkey(entry.target.dataset.idx);
+      if (entry.target.dataset.idx === "eod") {
+        setLoadComment(true);
+      }
     };
     const io = makeObserver(option, cb);
     io.observe(sod.current);
@@ -78,11 +106,10 @@ export default function Post({
       page,
       ...path,
     });
-    loadComments();
-    window.scrollTo({
-      top: sod.current.offsetTop - 120,
-      behavior: "smooth",
-    });
+    // window.scrollTo({
+    //   top: sod.current.offsetTop - 120,
+    //   behavior: "smooth",
+    // });
   }, [content]);
   useEffect(() => {
     if (!subMenu) {
@@ -159,6 +186,7 @@ export default function Post({
       )}
       <div className={cx("comment")}>
         <div className={cx("commentTitle")}>댓글</div>
+
         <CommentInput
           postInfo={{
             id: content._id,
@@ -168,7 +196,26 @@ export default function Post({
           commentListState={commentListState}
           loadComments={loadComments}
         ></CommentInput>
-        <CommentList commentListState={commentListState}></CommentList>
+        <div
+          className={cx("reloadBtnWrapper")}
+          onClick={() => {
+            loadComments();
+          }}
+        >
+          <div className={cx("reloadBtn")}>
+            <span>{"RELOAD"}</span>
+          </div>
+        </div>
+        <div className={cx("commentListWrapper")}>
+          <div className={cx("commentListInnerWrapper")} ref={commentRef}>
+            <div className={cx("loading")}>
+              <LoadingOutlined />
+            </div>
+            <div ref={commentListRef} className={cx("commentList")}>
+              <CommentList commentListState={commentListState}></CommentList>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

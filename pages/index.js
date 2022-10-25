@@ -25,7 +25,10 @@ export default function Home({
       page = "post";
       path = { menu: "home", subMenu: "recent" };
     }
-    if (!path) path = { menu: "home", subMenu: "recent" };
+    if (!path || !path.menu || !path.subMenu) {
+      path = { menu: "home", subMenu: "recent" };
+    }
+
     setCachedPath({
       page,
       ...path,

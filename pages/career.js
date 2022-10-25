@@ -24,7 +24,9 @@ export default function Home({
       page = "career";
       path = { menu: "career", subMenu: "career" };
     }
-    if (!path) path = { menu: "career", subMenu: "career" };
+    if (!path || !path.menu || !path.subMenu) {
+      path = { menu: "career", subMenu: "career" };
+    }
     setCachedPath({
       page,
       ...path,

@@ -25,7 +25,7 @@ export default function Page({ goSlug, post, loading, pageView }) {
   useEffect(() => {
     if (loading === null) return;
     if (!loading) {
-      pageRef.current.style.transform = `translate3d(0, -50px, 0)`;
+      pageRef.current.style.transform = `translate3d(0, -80px, 0)`;
       listRef.current.style.opacity = 1;
     } else {
       pageRef.current.style.transform = `translate3d(0, 30px, 0)`;
@@ -38,7 +38,6 @@ export default function Page({ goSlug, post, loading, pageView }) {
         <div className={cx("loading")}>
           <LoadingOutlined />
         </div>
-
         <div ref={listRef} className={cx("listWrapper")}>
           {!loading && (
             <List dataList={post} createElement={createElement}></List>
