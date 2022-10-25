@@ -92,13 +92,46 @@
 .editInfo {
   text-align: left;
 }
-
-.comment {
+.loading {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+}
+.commentListWrapper {
+  overflow: hidden;
+}
+.commentListInnerWrapper {
   margin-bottom: 50px;
+  transition: all 0.5s;
+}
+.commentList {
+  opacity: 0;
+  transition: all 0.5s;
 }
 .commentTitle {
   font-size: 25px;
   margin-bottom: 30px;
+}
+.reloadBtnWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin-bottom: 10px;
+}
+.reloadBtn {
+  width: 65px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  background-color: rgb(0, 72, 255);
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 1025px) {

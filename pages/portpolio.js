@@ -23,7 +23,10 @@ export default function Home({
       page = "portpolio";
       path = { menu: "portpolio", subMenu: "htmlCss" };
     }
-    if (!path) path = { menu: "portpolio", subMenu: "htmlCss" };
+    if (!path || !path.menu || !path.subMenu) {
+      path = { menu: "portpolio", subMenu: "htmlCss" };
+    }
+
     setCachedPath({
       page,
       ...path,
