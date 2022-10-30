@@ -10,7 +10,7 @@ export default function CommentList({ commentListState }) {
   return (
     <div className={cx("commentList")}>
       {commentList && commentList.length === 0 && (
-        <div>{"이 글에 대한 의견을 마음껏 작성해주세요."}</div>
+        <div>{"작성된 댓글이 없습니다."}</div>
       )}
       {commentList &&
         commentList.length > 0 &&

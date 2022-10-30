@@ -10,9 +10,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { UpCircleOutlined } from "@ant-design/icons";
 import SanityService from "../services/SanityService";
-import AdTop from "../components/AdBanner/AdTop";
-import AdBottom from "../components/AdBanner/AdBottom";
-import AdSide from "../components/AdBanner/AdSide";
 import { setLocalData } from "../utils/LocalStorage";
 import PostTitle from "../components/PostTitle";
 import makeObserver from "../utils/Observer";
@@ -132,14 +129,13 @@ export default function MyApp({ Component, pageProps }) {
     const option = {
       rootMargin: "-10% 0px -90% 0px",
     };
-    const inCb = () => {
+    const inCB = () => {
       setUpBtnHide(false);
     };
-    const outCb = () => {
+    const outCB = () => {
       setUpBtnHide(true);
     };
-    const io = makeObserver(option, inCb, outCb);
-    io.observe(bodyRef.current);
+    makeObserver({ target: [bodyRef.current], option, inCB, outCB });
   }, [bodyRef.current]);
 
   useEffect(() => {
@@ -190,6 +186,7 @@ export default function MyApp({ Component, pageProps }) {
       const main = category.find((cat) => cat.slug === menu).name;
       const sub = subCategory.find((cat) => cat.type === subMenu).name;
       const newTitle = { main, sub };
+      console.log(`newTitle: `, main, sub);
       setPostTitle(newTitle);
     }
     setLocalData("path", { menu, subMenu });

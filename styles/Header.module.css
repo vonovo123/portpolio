@@ -33,7 +33,7 @@
 .innerMenu {
   display: flex;
   justify-content: right;
-  width: 50%;
+  width: 100%;
 }
 
 .desktopMenuWrapper {

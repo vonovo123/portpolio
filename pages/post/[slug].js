@@ -2,7 +2,7 @@ import SanityService from "../../services/SanityService";
 import styles from "../../styles/Slug.module.css";
 import BlogMarkDown from "../../components/BlogMarkDown";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Col, Image, Row } from "antd";
+import { Image } from "antd";
 import dayjs from "dayjs";
 import classNames from "classnames/bind";
 import { makeHeadings } from "../../utils/Headings";
@@ -11,6 +11,7 @@ import TableOfContents from "../../components/TableOfContents";
 import { CaretLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import CommentInput from "../../components/Comment/CommentInput";
 import CommentList from "../../components/Comment/CommentList";
+import observeBottomOf from "../../utils/ObserveBottomOf";
 const cx = classNames.bind(styles);
 export default function Post({
   content,
@@ -27,27 +28,54 @@ export default function Post({
   const [subMenu, setSubMenu] = subMenuState;
   const [cachedPath, setCachedPath] = cachedPathState;
   const [postTitle, setPostTitle] = postTitleState;
-  const [readKey, setReadkey] = useState({ flag: false });
-  const sod = useRef(null);
-  const eod = useRef(null);
+  const [readKey, setReadkey] = useState(null);
   const [heading, setHeading] = useState([]);
   const [foldToc, setFoldToc] = useState(true);
-  const commentListState = useState([]);
+  const commentListState = useState(null);
+  const [commentList, setCommentList] = commentListState;
+  const commentTotalListState = useState(null);
+  const [commentTotalList, setCommentTotalList] = commentTotalListState;
+  const [loading, setLoading] = useState(false);
+  const sod = useRef(null);
+  const eod = useRef(null);
   const commentRef = useRef(null);
   const commentListRef = useRef(null);
 
-  const [commentList, setCommentList] = commentListState;
-  const [loadComment, setLoadComment] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const loadNextComments = useCallback(
+    async (id, start, end) => {
+      const sanityService = new SanityService();
+      setLoading(true);
+      const result = await sanityService.getCommentsById({
+        id,
+        start,
+        end,
+      });
+      setLoading(false);
+      setCommentList([...result]);
+      if (result.length === 0) {
+        return null;
+      }
+      return result;
+    },
+    [content]
+  );
 
-  const loadComments = useCallback(async () => {
-    setCommentList(null);
-    const sanityService = new SanityService();
-    setLoading(true);
-    const result = await sanityService.getCommentsById({ id: content._id });
-    setLoading(false);
-    setCommentList([...result]);
-  }, [loadComment]);
+  const infiniteLoadComment = (id, end) => {
+    if (!end) end = 10;
+    const option = {
+      rootMargin: "600px",
+    };
+    const onBottom = async (unobserve) => {
+      const result = await loadNextComments(id, end - 5, end);
+      unobserve();
+      if (result) {
+        setTimeout(() => {
+          infiniteLoadComment(id, end + 10);
+        }, [1000]);
+      }
+    };
+    observeBottomOf({ target: commentListRef.current, onBottom, option });
+  };
 
   useEffect(() => {
     setPageView("slug");
@@ -55,41 +83,44 @@ export default function Post({
   }, []);
 
   useEffect(() => {
-    if (loadComment) {
-      loadComments();
-    }
-  }, [loadComment]);
-  useEffect(() => {
-    if (loading === null) return;
-    if (!loading) {
-      commentRef.current.style.transform = `translate3d(0, -60px, 0)`;
-      commentListRef.current.style.opacity = 1;
+    if (!commentList) return;
+    if (!commentTotalList) {
+      setCommentTotalList([...commentList]);
     } else {
-      commentRef.current.style.transform = `translate3d(0, 0px, 0)`;
-      commentListRef.current.style.opacity = 0;
+      setCommentTotalList([...commentTotalList, ...commentList]);
     }
-  }, [loading]);
+  }, [commentList]);
 
   useEffect(() => {
+    if (!content) return;
+    setCommentTotalList(null);
+    infiniteLoadComment(content._id, 0);
     const option = {
-      rootMargin: "-10% 0% -90% 0%",
+      rootMargin: "-50%",
     };
-    const $contentNode = document.querySelector("#content");
-    const cb = (entry) => {
+    const contentStartEndIoCallBack = (entry) => {
       setReadkey(entry.target.dataset.idx);
-      if (entry.target.dataset.idx === "eod") {
-        setLoadComment(true);
-      }
     };
-    const io = makeObserver(option, cb);
-    io.observe(sod.current);
-    io.observe(eod.current);
-    const contentCb = (entry) => {
+    makeObserver({
+      target: [sod.current, eod.current],
+      option,
+      inCB: contentStartEndIoCallBack,
+      outCB: null,
+    });
+
+    const contentReadCb = (entry) => {
       setReadkey(entry.target._key);
     };
-    const contentIo = makeObserver(option, contentCb);
-    let ast = [sod.current, ...$contentNode.childNodes, eod.current];
-    const headings = makeHeadings({ ast, io: contentIo });
+    const $contentNode = document.querySelector("#content");
+    const contentReadIo = makeObserver({
+      target: [],
+      option,
+      inCB: contentReadCb,
+      outCB: null,
+    });
+    let ast = [...$contentNode.childNodes];
+    const headings = makeHeadings({ ast, io: contentReadIo });
+
     setHeading(headings);
     const page = content.category.type;
     const path = {
@@ -106,10 +137,10 @@ export default function Post({
       page,
       ...path,
     });
-    // window.scrollTo({
-    //   top: sod.current.offsetTop - 120,
-    //   behavior: "smooth",
-    // });
+    window.scrollTo({
+      top: sod.current.offsetTop - 120,
+      behavior: "smooth",
+    });
   }, [content]);
   useEffect(() => {
     if (!subMenu) {
@@ -117,7 +148,6 @@ export default function Post({
     }
     goPage();
   }, [subMenu]);
-
   return (
     <div className={cx("postWrapper")}>
       {content && (
@@ -127,6 +157,8 @@ export default function Post({
               outline={heading}
               readKey={readKey}
               setFoldToc={setFoldToc}
+              sod={sod}
+              eod={eod}
             ></TableOfContents>
           </div>
           <div
@@ -181,39 +213,33 @@ export default function Post({
           <div className={cx("contentBody")}>
             <BlogMarkDown markdown={content.postContent.markdown} />
           </div>
-          <div className={cx("eod")} ref={eod} data-idx={"eod"}></div>
         </div>
       )}
-      <div className={cx("comment")}>
+      <div className={cx("comment")} ref={eod} data-idx={"eod"}>
         <div className={cx("commentTitle")}>댓글</div>
-
-        <CommentInput
-          postInfo={{
-            id: content._id,
-            slug: content.slug,
-            title: content.title,
-          }}
-          commentListState={commentListState}
-          loadComments={loadComments}
-        ></CommentInput>
-        <div
-          className={cx("reloadBtnWrapper")}
-          onClick={() => {
-            loadComments();
-          }}
-        >
-          <div className={cx("reloadBtn")}>
-            <span>{"RELOAD"}</span>
-          </div>
+        <div className={cx("commentInput")}>
+          <CommentInput
+            postInfo={{
+              id: content._id,
+              slug: content.slug,
+              title: content.title,
+            }}
+            commentTotalListState={commentTotalListState}
+          ></CommentInput>
         </div>
+
         <div className={cx("commentListWrapper")}>
           <div className={cx("commentListInnerWrapper")} ref={commentRef}>
-            <div className={cx("loading")}>
-              <LoadingOutlined />
-            </div>
             <div ref={commentListRef} className={cx("commentList")}>
-              <CommentList commentListState={commentListState}></CommentList>
+              <CommentList
+                commentListState={commentTotalListState}
+              ></CommentList>
             </div>
+            {loading && (
+              <div className={cx("loading")}>
+                <LoadingOutlined />
+              </div>
+            )}
           </div>
         </div>
       </div>
