@@ -3,12 +3,12 @@ import classNames from "classnames/bind";
 import { useCallback, useEffect, useState } from "react";
 import SanityService from "../../services/SanityService";
 const cx = classNames.bind(styles);
-export default function CommentInput({ postInfo, commentListState }) {
+export default function CommentInput({ postInfo, commentTotalListState }) {
   const { id, slug, title } = postInfo;
   const [nickName, setNickName] = useState("");
   const [comment, setComment] = useState("");
   const [error, setError] = useState(null);
-  const [commentList, setCommentList] = commentListState;
+  const [commentTotalList, setCommentTotalList] = commentTotalListState;
   const makeReview = useCallback(async () => {
     if (nickName === "") {
       setError("nickName");
@@ -27,7 +27,7 @@ export default function CommentInput({ postInfo, commentListState }) {
       comment: JSON.stringify(comment),
       createdAt: new Date(now.getTime()).toISOString(),
     });
-    setCommentList([result, ...commentList]);
+    setCommentTotalList([result, ...commentTotalList]);
     setNickName("");
     setComment("");
   }, [nickName, comment]);

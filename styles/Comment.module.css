@@ -18,7 +18,14 @@
   display: flex;
   justify-content: center;
 }
-.btnInnerWrapper {
+.loading {
+  height: 50px;
+  margin-bottom: 10px;
+  width: 100%;
+  justify-content: center;
+  font-size: 30px;
+  transition: all 0.5s;
+  text-align: center;
 }
 .titleWrapper {
   width: 100%;
@@ -137,10 +144,32 @@
   max-height: 1000px;
   transition: all 0.5s;
 }
+
 .commentReply.hide {
   transition: all 0.5s;
   min-height: 0px;
   max-height: 0px;
+}
+.loadBtnWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin-bottom: 10px;
+}
+.loadBtnWrapper.hide {
+  display: none;
+}
+.recommentWrapper {
+  margin-bottom: 20px;
+}
+.loadBtn {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
 }
 .error {
   border-color: red;

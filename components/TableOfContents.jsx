@@ -1,11 +1,24 @@
 import styles from "../styles/TOC.module.css";
 import classNames from "classnames/bind";
 import { CaretRightOutlined } from "@ant-design/icons";
+import { useCallback } from "react";
 const cx = classNames.bind(styles);
-export default function TableOfContents({ outline, readKey, setFoldToc }) {
+export default function TableOfContents({
+  outline,
+  readKey,
+  setFoldToc,
+  sod,
+  eod,
+}) {
   const getChildrenText = (heading) => {
     return heading.el.innerText;
   };
+  const headClickEvent = useCallback((el) => {
+    window.scrollTo({
+      top: el.offsetTop - 50,
+      behavior: "smooth",
+    });
+  }, []);
   const createOrderedList = (outline) => {
     return (
       <ol className={cx("orderedList")}>
@@ -20,10 +33,7 @@ export default function TableOfContents({ outline, readKey, setFoldToc }) {
             <div
               className={cx("listTxt")}
               onClick={() => {
-                window.scrollTo({
-                  top: heading.el.offsetTop - 30,
-                  behavior: "smooth",
-                });
+                headClickEvent(heading.el);
               }}
             >
               {getChildrenText(heading)}
@@ -55,15 +65,30 @@ export default function TableOfContents({ outline, readKey, setFoldToc }) {
               read: readKey === "sod",
             })}
           >
-            <div className={cx("listTxt")}>Start of Content</div>
+            <div
+              className={cx("listTxt")}
+              onClick={() => {
+                headClickEvent(sod.current);
+              }}
+            >
+              Title
+            </div>
           </div>
+          <div className={cx("listTxt")}>Content</div>
           {createOrderedList(outline)}
           <div
             className={cx("list", `lv$1`, {
               read: readKey === "eod",
             })}
           >
-            <div className={cx("listTxt")}>End of Content</div>
+            <div
+              className={cx("listTxt")}
+              onClick={() => {
+                headClickEvent(eod.current);
+              }}
+            >
+              Comments
+            </div>
           </div>
         </div>
       </div>

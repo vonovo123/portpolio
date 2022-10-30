@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const withPlugins = require("next-compose-plugins");
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   env: {
     SANITY_PROJECT_ID: "74o9dcn8",
     SANITY_AUTH_TOKEN:

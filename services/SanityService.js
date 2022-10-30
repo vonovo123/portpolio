@@ -78,7 +78,7 @@ const postRecentUrl = `
 const postPopularUrl = `
 *[_type == 'post']  | order(viewCount desc){
   ${postInnerUrl}
-}[0...10]`;
+}[0...5]`;
 
 const postByCategoryUrl = `
 *[_type == 'post' && references(*[_type=="category" && slug == $category]._id)]{
@@ -102,7 +102,7 @@ const recentComment = `
   comment,
   replyCount,
   createdAt
-}[0...10]`;
+}[0...5]`;
 const commentByPostId = `
 *[_type == 'comment' && postId == $id] | order(createdAt desc){
   _id,
@@ -113,7 +113,7 @@ const commentByPostId = `
   comment,
   replyCount,
   createdAt
-}`;
+}[$start...$end]`;
 const reCommentByCommentId = `
 *[_type == 'reComment' && commentId == $id] | order(createdAt desc){
   _id,
@@ -121,7 +121,7 @@ const reCommentByCommentId = `
   nickName,
   comment,
   createdAt
-}`;
+}[$start...$end]`;
 
 const portpolioUrl = `
   *[_type == 'portpolio' && references(*[_type=="subCategory" && type == $subCategory]._id)]{
@@ -267,16 +267,24 @@ export default class SanityService {
     const result = await this._client.create(doc);
     return result;
   }
-  async getCommentsById({ id }) {
-    const result = await this._client.fetch(commentByPostId, { id });
+  async getCommentsById({ id, start, end }) {
+    const result = await this._client.fetch(commentByPostId, {
+      id,
+      start,
+      end,
+    });
     return result;
   }
   async getRecentComments() {
     const result = await this._client.fetch(recentComment);
     return result;
   }
-  async getReCommentsById({ id }) {
-    const result = await this._client.fetch(reCommentByCommentId, { id });
+  async getReCommentsById({ id, start, end }) {
+    const result = await this._client.fetch(reCommentByCommentId, {
+      id,
+      start,
+      end,
+    });
     return result;
   }
 }
