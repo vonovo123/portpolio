@@ -37,7 +37,7 @@ export default function Comment({ comment, idx }) {
       setRecommentIndex(recommentIndex + 5);
     }
 
-    if (!reCommentList) {
+    if (recommentIndex === 0) {
       setReCommentList([...result]);
     } else {
       setReCommentList([...reCommentList, ...result]);
