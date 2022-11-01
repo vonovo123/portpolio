@@ -186,7 +186,6 @@ export default function MyApp({ Component, pageProps }) {
       const main = category.find((cat) => cat.slug === menu).name;
       const sub = subCategory.find((cat) => cat.type === subMenu).name;
       const newTitle = { main, sub };
-      console.log(`newTitle: `, main, sub);
       setPostTitle(newTitle);
     }
     setLocalData("path", { menu, subMenu });
