@@ -144,17 +144,6 @@ export default function MyApp({ Component, pageProps }) {
     return () => window.removeEventListener("resize", handleResize);
   }, [handleResize]);
 
-  // useEffect(() => {
-  //   if (!showAbout) {
-  //     on(swing, aboutRef);
-  //   } else {
-  //     off(swing, aboutRef);
-  //   }
-  //   return () => {
-  //     clear(swing);
-  //   };
-  // }, [showAbout]);
-
   useEffect(() => {
     if (!cachedPath) return;
     const { page, menu, subMenu } = cachedPath;

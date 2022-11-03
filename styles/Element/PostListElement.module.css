@@ -1,11 +1,9 @@
 .elementWrapper {
-  height: 150px;
   border-bottom: var(--border-width) solid var(--border-color);
   margin-bottom: 10px;
   cursor: pointer;
 }
 .element {
-  height: 150px;
   display: flex;
 }
 .elementImageWrapper {
@@ -29,15 +27,21 @@
   width: 100%;
   color: grey;
 }
+.titleWrapper {
+  margin-bottom: 5px;
+}
 .title {
   font-size: 16px;
-  margin-bottom: 10px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.short {
+.subtitle {
   font-size: 15px;
+  color: #4c4b4b;
+}
+.short {
+  font-size: 14px;
   overflow: hidden;
   text-overflow: ellipsis;
   color: #666666;
