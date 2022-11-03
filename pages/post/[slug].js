@@ -12,6 +12,7 @@ import { CaretLeftOutlined, LoadingOutlined } from "@ant-design/icons";
 import CommentInput from "../../components/Comment/CommentInput";
 import CommentList from "../../components/Comment/CommentList";
 import observeBottomOf from "../../utils/ObserveBottomOf";
+import HeadMeta from "../../components/HeadMeta";
 const cx = classNames.bind(styles);
 export default function Post({
   content,
@@ -22,6 +23,7 @@ export default function Post({
   postTitleState,
   goPage,
   setMobileHeaderHide,
+  home,
 }) {
   const [menuType, setMenuType] = menuTypeState;
   const [pageView, setPageView] = pageViewState;
@@ -149,111 +151,114 @@ export default function Post({
     goPage();
   }, [subMenu]);
   return (
-    <div className={cx("postWrapper")}>
-      {content && (
-        <>
-          <div className={cx("post")}>
-            <div className={cx("tocWrapper", { fold: foldToc })}>
-              <TableOfContents
-                outline={heading}
-                readKey={readKey}
-                setFoldToc={setFoldToc}
-                sod={sod}
-                eod={eod}
-              ></TableOfContents>
-            </div>
-            <div
-              className={cx("tocFold", { fold: !foldToc })}
-              onClick={() => {
-                setFoldToc(false);
-              }}
-            >
-              <div className={cx("btn")}>
-                <CaretLeftOutlined />
+    <>
+      <HeadMeta image={home && home.thumbnail.imageUrl}></HeadMeta>
+      <div className={cx("postWrapper")}>
+        {content && (
+          <>
+            <div className={cx("post")}>
+              <div className={cx("tocWrapper", { fold: foldToc })}>
+                <TableOfContents
+                  outline={heading}
+                  readKey={readKey}
+                  setFoldToc={setFoldToc}
+                  sod={sod}
+                  eod={eod}
+                ></TableOfContents>
               </div>
-              <div className={cx("text")}>TOC</div>
-            </div>
-            <div
-              className={cx("contentHeaderWrapper")}
-              ref={sod}
-              data-idx={"sod"}
-            >
-              <div className={cx("postImageWrapper")}>
-                <Image
-                  src={content.thumbnail.imageUrl}
-                  alt={content.thumbnail.alt}
-                  className={cx("postImage")}
-                  preview={false}
-                />
-              </div>
-              <div className={cx("contentHeaderInfo")}>
-                <div className={cx("mb30")}>
-                  <div className={cx("title", "mb20")}>{content.title}</div>
-                  <div className={cx("subTitle", "mb20")}>
-                    {content.subtitle}
-                  </div>
+              <div
+                className={cx("tocFold", { fold: !foldToc })}
+                onClick={() => {
+                  setFoldToc(false);
+                }}
+              >
+                <div className={cx("btn")}>
+                  <CaretLeftOutlined />
                 </div>
-                <div className={cx("contentAuthor")}>
-                  <div className={cx("authorInfo")}>
-                    <Image
-                      src={content.author.image}
-                      alt={content.author.name}
-                      className={cx("authorImage")}
-                      preview={false}
-                    />
-                    <div className={cx("editInfo")}>
-                      <div className={cx("createdAt")}>
-                        {dayjs(content.createdAt).format("MMMM DD / YYYY ")}
+                <div className={cx("text")}>TOC</div>
+              </div>
+              <div
+                className={cx("contentHeaderWrapper")}
+                ref={sod}
+                data-idx={"sod"}
+              >
+                <div className={cx("postImageWrapper")}>
+                  <Image
+                    src={content.thumbnail.imageUrl}
+                    alt={content.thumbnail.alt}
+                    className={cx("postImage")}
+                    preview={false}
+                  />
+                </div>
+                <div className={cx("contentHeaderInfo")}>
+                  <div className={cx("mb30")}>
+                    <div className={cx("title", "mb20")}>{content.title}</div>
+                    <div className={cx("subTitle", "mb20")}>
+                      {content.subtitle}
+                    </div>
+                  </div>
+                  <div className={cx("contentAuthor")}>
+                    <div className={cx("authorInfo")}>
+                      <Image
+                        src={content.author.image}
+                        alt={content.author.name}
+                        className={cx("authorImage")}
+                        preview={false}
+                      />
+                      <div className={cx("editInfo")}>
+                        <div className={cx("createdAt")}>
+                          {dayjs(content.createdAt).format("MMMM DD / YYYY ")}
+                        </div>
+                        <div
+                          className={cx("authorName")}
+                        >{`posted by ${content.author.name}`}</div>
                       </div>
-                      <div
-                        className={cx("authorName")}
-                      >{`posted by ${content.author.name}`}</div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className={cx("contentBody")}>
-              <BlogMarkDown markdown={content.postContent.markdown} />
-            </div>
-          </div>
-
-          <div className={cx("comment")} ref={eod} data-idx={"eod"}>
-            <div className={cx("commentTitle")}>댓글</div>
-            <div className={cx("commentInput")}>
-              <CommentInput
-                postInfo={{
-                  id: content._id,
-                  slug: content.slug,
-                  title: content.title,
-                }}
-                commentTotalListState={commentTotalListState}
-              ></CommentInput>
-            </div>
-
-            <div className={cx("commentListWrapper")}>
-              <div className={cx("commentListInnerWrapper")} ref={commentRef}>
-                <div ref={commentListRef} className={cx("commentList")}>
-                  <CommentList
-                    commentListState={commentTotalListState}
-                  ></CommentList>
-                </div>
-                {loading && (
-                  <div className={cx("loading")}>
-                    <LoadingOutlined />
-                  </div>
-                )}
+              <div className={cx("contentBody")}>
+                <BlogMarkDown markdown={content.postContent.markdown} />
               </div>
             </div>
-          </div>
-        </>
-      )}
-      {!content && (
-        <>
-          <div>{"존재하지않는 포스트입니다."}</div>
-        </>
-      )}
-    </div>
+
+            <div className={cx("comment")} ref={eod} data-idx={"eod"}>
+              <div className={cx("commentTitle")}>댓글</div>
+              <div className={cx("commentInput")}>
+                <CommentInput
+                  postInfo={{
+                    id: content._id,
+                    slug: content.slug,
+                    title: content.title,
+                  }}
+                  commentTotalListState={commentTotalListState}
+                ></CommentInput>
+              </div>
+
+              <div className={cx("commentListWrapper")}>
+                <div className={cx("commentListInnerWrapper")} ref={commentRef}>
+                  <div ref={commentListRef} className={cx("commentList")}>
+                    <CommentList
+                      commentListState={commentTotalListState}
+                    ></CommentList>
+                  </div>
+                  {loading && (
+                    <div className={cx("loading")}>
+                      <LoadingOutlined />
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+        {!content && (
+          <>
+            <div>{"존재하지않는 포스트입니다."}</div>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -287,7 +292,7 @@ export async function getServerSideProps({ params }) {
     : null;
   const pageType = content ? content.category.type : null;
   if (content) sanityService.upCount({ id: content._id });
-
+  const home = await sanityService.getHome();
   return {
     props: {
       slug,
@@ -299,6 +304,7 @@ export async function getServerSideProps({ params }) {
       category,
       subCategory,
       pageType,
+      home,
     },
   };
 }

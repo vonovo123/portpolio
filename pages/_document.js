@@ -19,6 +19,13 @@ export default function Document() {
           href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Roboto:wght@400;700&display=swap"
           rel="stylesheet"
         />
+        <meta property="og:title" content={"Dynamic_Kwon Dev Blog"} />
+        <meta property="og:type" content="website" />
+        <meta
+          name="description"
+          content={"금융권 프론트엔드 개발자 권현우의 기술 블로그입니다."}
+        />
+        <meta property="og:article:author" content="dynamic_kwon" />
       </Head>
       <body>
         <Main />

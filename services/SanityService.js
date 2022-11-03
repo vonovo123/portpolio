@@ -1,7 +1,10 @@
 import sanityClient from "@sanity/client";
 const homeUrl = `*[_type == 'home']{
   title,
-  homeContent
+  'thumbnail' : {
+    'alt' : thumbnail.alt,
+    'imageUrl' : thumbnail.asset  -> url,
+  }
 }`;
 const profileUrl = `
 *[_type == 'profile']{
@@ -183,7 +186,8 @@ export default class SanityService {
     useCdn: process.env.NODE_ENV === "production",
   });
   async getHome() {
-    return await this._client.fetch(homeUrl);
+    const result = await this._client.fetch(homeUrl);
+    return result;
   }
   async getDataBySlug({ slug }) {
     const result = await this._client.fetch(postBySlug, { slug });
