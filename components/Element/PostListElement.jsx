@@ -26,7 +26,10 @@ export default function PostListElement({ element, goSlug }) {
           <div className={cx("contentDate")}>
             {dayjs(element.createdAt).format("MMMM DD HH:mm:ss")}
           </div>
-          <div className={cx("title")}>{element.title}</div>
+          <div className={cx("titleWrapper")}>
+            <div className={cx("title")}>{element.title}</div>
+            <div className={cx("subtitle")}> # {element.subtitle}</div>
+          </div>
 
           <div className={cx("short")}>{element.postContent.markdown}</div>
         </div>

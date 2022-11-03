@@ -55,7 +55,11 @@
 .postTxt {
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
+}
+.subTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .contentTxt {
   white-space: nowrap;

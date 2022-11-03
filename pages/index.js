@@ -64,7 +64,7 @@ export async function getServerSideProps() {
   const category = await sanityService.getCategory();
   const recentPost = await sanityService.getData({
     type: "post",
-    category: null,
+    category: "home",
     subCategory: null,
   });
   const popularPost = await sanityService.getData({

@@ -35,6 +35,7 @@ export default function Side({
               <div className={cx("postTxt")}>
                 {`${element.category.name} / ${element.subCategory.type} / ${element.title}`}
               </div>
+              <div className={cx("subTitle")}>{element.subtitle}</div>
               <div className={cx("contentDate")}>
                 {dayjs(element.createdAt).format("MMMM DD HH:mm:ss")}
               </div>
