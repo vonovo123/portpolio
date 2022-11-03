@@ -16,7 +16,6 @@ export default function Home({
   goSlug,
   home,
 }) {
-  console.log(home);
   const [menuType, setMenuType] = menuTypeState;
   const [subMenu, setSubMenu] = subMenuState;
   const [pageView, setPageView] = pageViewState;

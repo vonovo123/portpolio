@@ -238,7 +238,7 @@ export default function MyApp({ Component, pageProps }) {
               fetchPostData={fetchPostData}
               goPage={goPage}
               goSlug={goSlug}
-              home={pageProps.home[0]}
+              home={pageProps.home && pageProps.home[0]}
             />
           </div>
           <div className={cx("side")}>
