@@ -17,6 +17,7 @@ import Side from "../components/Side";
 
 import classNames from "classnames/bind";
 import styles from "../styles/App.module.css";
+import HeadMeta from "../components/HeadMeta";
 const cx = classNames.bind(styles);
 export default function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -237,6 +238,7 @@ export default function MyApp({ Component, pageProps }) {
               fetchPostData={fetchPostData}
               goPage={goPage}
               goSlug={goSlug}
+              home={pageProps.home[0]}
             />
           </div>
           <div className={cx("side")}>

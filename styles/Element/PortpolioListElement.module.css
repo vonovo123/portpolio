@@ -16,6 +16,8 @@
   width: 100%;
   display: flex;
   margin-bottom: 30px;
+  justify-content: center;
+  align-items: center;
 }
 .elementImage {
   width: 100%;
