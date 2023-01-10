@@ -1,4 +1,12 @@
 import sanityClient from "@sanity/client";
+const homeUrl = `*[_type == 'home']{
+  title,
+  homeContent,
+  'thumbnail' : {
+    'alt' : thumbnail.alt,
+    'imageUrl' : thumbnail.asset  -> url,
+  }
+}`;
 const profileUrl = `
 *[_type == 'profile']{
   company,
@@ -11,26 +19,40 @@ const profileUrl = `
   }
 }
 `;
-const homeUrl = `*[_type == 'home']{
-  title,
-  'content':content[]{ 
-  ...,
-  ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-  }
-}`;
 const devLogUrl = `*[_type == 'devLog']{
   name,
   createdAt
 }`;
-const postsUrl = `
-*[_type == 'post']{
+
+const categoryUrl = `*[_type == 'category']{
+  name,
+  type,
+  slug,
+  index
+}`;
+
+const subCategoryUrl = `
+*[_type == 'subCategory' && references(*[_type=="category" && slug == $category]._id)]{
+  name,
+  type
+}`;
+
+const postInnerUrl = `
+  _id,
   title,
   subtitle,
   createdAt,
-  shortContent,
-  'content':content[]{ 
-    ...,
-    ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
+  postContent,
+  blockContent,
+  viewCount,
+  'category' : category -> {
+    name,
+    type,
+    slug
+  },
+  'subCategory' : subCategory -> {
+    name,
+    type
   },
   'slug': slug.current,
   'thumbnail' : {
@@ -42,17 +64,77 @@ const postsUrl = `
     role,
     'image' : image.asset -> url  
   },
-  'tag': tag -> {
-    title,
-    'slug': slug.current
+  'tag': tag[]{
+    _type == 'reference' => @ -> {
+      title,
+      'slug': slug.current
+    }
   }
+`;
+const postAllUrl = `
+*[_type == 'post']  | order(createdAt desc){
+  ${postInnerUrl}
 }`;
+const postRecentUrl = `
+*[_type == 'post']  | order(createdAt desc){
+  ${postInnerUrl}
+}[0...10]`;
+
+const postPopularUrl = `
+*[_type == 'post']  | order(viewCount desc){
+  ${postInnerUrl}
+}[0...5]`;
+
+const postByCategoryUrl = `
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)] | order(createdAt desc){
+  ${postInnerUrl}
+}[0...5]`;
+const postByCategoryAndSubCategoryUrl = `
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)&& references(*[_type=="subCategory" && type == $subCategory]._id)] | order(createdAt desc){
+  ${postInnerUrl}
+}[0...5]`;
+const postBySlug = `
+*[_type == 'post' && slug.current == $slug]{
+  ${postInnerUrl}
+}`;
+const recentComment = `
+*[_type == 'comment'] | order(createdAt desc){
+  _id,
+  postId,
+  postSlug,
+  postTitle,
+  nickName,
+  comment,
+  replyCount,
+  createdAt
+}[0...5]`;
+const commentByPostId = `
+*[_type == 'comment' && postId == $id] | order(createdAt desc){
+  _id,
+  postId,
+  postSlug,
+  postTitle,
+  nickName,
+  comment,
+  replyCount,
+  createdAt
+}[$start...$end]`;
+const reCommentByCommentId = `
+*[_type == 'reComment' && commentId == $id] | order(createdAt desc){
+  _id,
+  commentId,
+  nickName,
+  comment,
+  createdAt
+}[$start...$end]`;
+
 const portpolioUrl = `
-  *[_type == 'portpolio']{
+  *[_type == 'portpolio' && references(*[_type=="subCategory" && type == $subCategory]._id)]{
     'category' : category -> {
       name,
       type
     },
+    shortContent,
     'skills': skills[]{
       _type == 'reference' => @ -> {
         name,
@@ -67,10 +149,7 @@ const portpolioUrl = `
     },
     repoUrl,
     demoUrl,
-    'content':content[]{ 
-      ...,
-      ...select(_type == 'imageGallery' => {'images':images[]{..., 'url' : asset -> url}})
-    },
+    portpolioContent,
     createdAt,
     'thumbnail' : {
       'alt' : thumbnail.alt,
@@ -108,16 +187,46 @@ export default class SanityService {
     token: process.env.SANITY_AUTH_TOKEN, // or leave blank for unauthenticated usage
     useCdn: process.env.NODE_ENV === "production",
   });
-
   async getHome() {
-    return await this._client.fetch(homeUrl);
+    const result = await this._client.fetch(homeUrl);
+    return result;
   }
-
-  async getPosts() {
-    return await this._client.fetch(postsUrl);
+  async getDataBySlug({ slug }) {
+    const result = await this._client.fetch(postBySlug, { slug });
+    return result[0];
   }
-  async getPortpolio() {
-    return await this._client.fetch(portpolioUrl);
+  async getData({ type, category, subCategory }) {
+    if (!type) return [];
+    if (type === "post") {
+      if (!category) {
+        return await this._client.fetch(postAllUrl);
+      } else if (category === "home") {
+        const result = await this._client.fetch(postRecentUrl);
+        return result;
+      } else {
+        if (!subCategory) {
+          return await this._client.fetch(postByCategoryUrl, {
+            category,
+          });
+        } else {
+          return await this._client.fetch(postByCategoryAndSubCategoryUrl, {
+            category,
+            subCategory,
+          });
+        }
+      }
+    } else if (type === "portpolio") {
+      return await this._client.fetch(portpolioUrl, { subCategory });
+    } else if (type === "career") {
+      return await this._client.fetch(careerUrl);
+    } else if (type === "popular") {
+      return await this._client.fetch(postPopularUrl);
+    } else {
+      return [];
+    }
+  }
+  async getPortpolio(subCategory) {
+    return await this._client.fetch(portpolioUrl, { subCategory });
   }
   async getCareer() {
     return await this._client.fetch(careerUrl);
@@ -127,5 +236,61 @@ export default class SanityService {
   }
   async getProfile() {
     return await this._client.fetch(profileUrl);
+  }
+  async getCategory() {
+    const result = await this._client.fetch(categoryUrl);
+    result.sort((a, b) => a.index - b.index);
+    return result;
+  }
+  async getSubCategory(category) {
+    const result = await this._client.fetch(subCategoryUrl, { category });
+    return result;
+  }
+  async upCount({ id, count }) {
+    this._client.patch(id).inc({ viewCount: 1 }).commit();
+  }
+  async setComment({ id, slug, title, nickName, comment, createdAt }) {
+    const doc = {
+      _type: "comment",
+      postId: id,
+      postSlug: slug,
+      postTitle: title,
+      nickName,
+      comment,
+      createdAt,
+    };
+    const result = await this._client.create(doc);
+    return result;
+  }
+  async setReComment({ id, nickName, comment, createdAt }) {
+    const doc = {
+      _type: "reComment",
+      commentId: id,
+      nickName,
+      comment,
+      createdAt,
+    };
+    const result = await this._client.create(doc);
+    return result;
+  }
+  async getCommentsById({ id, start, end }) {
+    const result = await this._client.fetch(commentByPostId, {
+      id,
+      start,
+      end,
+    });
+    return result;
+  }
+  async getRecentComments() {
+    const result = await this._client.fetch(recentComment);
+    return result;
+  }
+  async getReCommentsById({ id, start, end }) {
+    const result = await this._client.fetch(reCommentByCommentId, {
+      id,
+      start,
+      end,
+    });
+    return result;
   }
 }

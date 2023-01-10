@@ -1,6 +1,181 @@
-.contentHeader {
-  padding-top: 200px;
+.mb10 {
+  margin-bottom: 10px;
 }
-.contentMain {
-  background-color: red;
+
+.mb20 {
+  margin-bottom: 20px;
+}
+
+.mb30 {
+  margin-bottom: 30px;
+}
+
+.mb40 {
+  margin-bottom: 40px;
+}
+
+.mb50 {
+  margin-bottom: 100px;
+}
+.ad {
+  background-color: var(--border-color);
+  width: 100%;
+  padding: 10px;
+}
+.ad.h100 {
+  height: 100px;
+}
+.ad.h200 {
+  height: 200px;
+}
+.ad.h300 {
+  height: 300px;
+}
+.tocWrapper {
+  display: none;
+}
+.tocFold {
+  display: none;
+}
+.post {
+  margin-bottom: 10px;
+}
+.contentHeaderWrapper {
+  height: 100%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.sod,
+.eod {
+  height: 50px;
+}
+.postImageWrapper {
+  margin-bottom: 30px;
+}
+.postImage {
+  height: 250px;
+}
+.contentHeaderInfo {
+  width: 100%;
+  font-weight: bold;
+  text-align: center;
+}
+.contentHeaderInfo .title {
+  font-size: 30px;
+}
+
+.contentHeaderInfo .subTitle {
+  font-size: 20px;
+}
+.contentBody {
+  margin-bottom: 100px;
+}
+.contentAuthor {
+  width: 100%;
+  display: flex;
+  font-weight: bold;
+  margin-bottom: 50px;
+  color: grey;
+  justify-content: center;
+}
+.authorImage {
+  height: 40px;
+  width: 40px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+.authorInfo {
+  display: flex;
+  align-items: center;
+}
+.editInfo {
+  text-align: left;
+}
+.loading {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  transition: all 0.5s;
+}
+.commentListWrapper {
+  overflow: hidden;
+}
+.commentListInnerWrapper {
+  margin-bottom: 50px;
+  transition: all 0.5s;
+}
+.commentList {
+}
+.commentTitle {
+  font-size: 25px;
+  margin-bottom: 30px;
+}
+
+.commentInput {
+  margin-bottom: 30px;
+}
+
+.em {
+  color: orange;
+  font-style: normal;
+}
+.img-wrapper {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 10px;
+}
+.img-caption {
+  margin-bottom: 20px;
+}
+
+@media only screen and (min-width: 1025px) {
+  .tocWrapper {
+    display: block;
+    right: 0;
+    width: 280px;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    color: var(--toc-color);
+    background-color: var(--background-colorA);
+    font-weight: bold;
+    z-index: 3;
+    border: var(--border-width) solid var(--border-color);
+    transition: all 0.5s;
+  }
+  .tocWrapper.fold {
+    right: -280px;
+  }
+  .tocFold {
+    display: flex;
+    width: 100px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 50px;
+    color: var(--toc-read-color);
+    font-size: 20px;
+    align-items: center;
+    background-color: var(--background-colorA);
+    font-weight: bold;
+    z-index: 3;
+    border: var(--border-width) solid var(--border-color);
+    transition: all 1s;
+  }
+  .tocFold.fold {
+    right: -300px;
+  }
+  .btn {
+    width: 40%;
+    text-align: center;
+  }
+  .text {
+    width: 60%;
+  }
 }

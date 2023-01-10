@@ -1,0 +1,46 @@
+.menu {
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  overflow: hidden;
+  display: flex;
+}
+.mainMenuWrapper {
+  width: 50%;
+  padding-top: 20px;
+  padding-left: 30px;
+  transition: all 0.5s;
+}
+.mainMenuWrapper.hide {
+  width: 100%;
+}
+.subMenuWrapper {
+  width: 50%;
+  padding-top: 20px;
+  padding-left: 30px;
+  background-color: var(--sel-box-color);
+  transition: all 0.5s;
+}
+.subMenuWrapper.hide {
+  width: 0%;
+}
+.nav {
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.5s;
+  margin: 5px 0px;
+  margin-bottom: 10px;
+}
+.subMenu .nav {
+  color: white;
+}
+.menu .nav.sel > .text {
+  padding-bottom: 3px;
+  border-bottom: 1px solid black;
+}
+
+.subMenu .nav.sel > .text {
+  padding-bottom: 3px;
+  border-bottom: 1px solid white;
+}

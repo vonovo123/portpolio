@@ -1,0 +1,37 @@
+.mb30 {
+  margin-bottom: 30px;
+}
+.index {
+  width: 100%;
+}
+.bColorA {
+  background-color: var(--background-color);
+}
+
+.bColorB {
+  background-color: var(--background-colorB);
+}
+
+.ad {
+  background-color: var(--border-color);
+  width: 100%;
+  padding: 10px;
+}
+.ad.h100 {
+  height: 100px;
+}
+.ad.h200 {
+  height: 200px;
+}
+.ad.h300 {
+  height: 300px;
+}
+.titleWrapper {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.e404 {
+  height: 50vh;
+  font-size: 20px;
+  margin: 20px;
+}

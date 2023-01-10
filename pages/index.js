@@ -1,145 +1,90 @@
-import styles from "../styles/Home.module.css";
 import SanityService from "../services/SanityService";
-import Header from "../components/Header";
-import HeadLine from "../components/HeadLine";
-import Career from "../components/Career";
-import PortPolio from "../components/PortPolio";
-import PostList from "../components/PostList";
-import Footer from "../components/Footer";
-import About from "../components/About";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import GitProfileService from "../services/GitProfileService";
+import { useEffect, useState } from "react";
+import Page from "./page/page";
+import { setLocalData, getLocalData } from "../utils/LocalStorage";
+import AdTop from "../components/AdBanner/AdTop";
+import HeadMeta from "../components/HeadMeta";
 export default function Home({
+  cachedPathState,
+  menuTypeState,
+  pageViewState,
+  subMenuState,
+  post,
+  loading,
+  fetchPostData,
+  goPage,
+  goSlug,
   home,
-  posts,
-  devLog,
-  profile,
-  portpolios,
-  career,
 }) {
-  const [width, setWidth] = useState();
-  const handleResize = () => {
-    setWidth(window.innerWidth);
-  };
+  const [menuType, setMenuType] = menuTypeState;
+  const [subMenu, setSubMenu] = subMenuState;
+  const [pageView, setPageView] = pageViewState;
+  const [cachedPath, setCachedPath] = cachedPathState;
   useEffect(() => {
-    setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [setWidth]);
-  const [view, setView] = useState("home");
-  let html = [],
-    vanillaJs = [],
-    vueNuxt = [],
-    reactNext = [];
-  profile = profile[0];
-  portpolios.forEach((portpolio) => {
-    if (portpolio.category.type === "html/css") {
-      html.push({ ...portpolio });
-    } else if (portpolio.category.type === "vanillaJs") {
-      vanillaJs.push({ ...portpolio });
-    } else if (portpolio.category.type === "vueNuxt") {
-      vueNuxt.push({ ...portpolio });
-    } else if (portpolio.category.type === "reactNext") {
-      reactNext.push({ ...portpolio });
+    let page = getLocalData("page");
+    let path = getLocalData("path");
+    if (!page || page !== "post") {
+      page = "post";
+      path = { menu: "home", subMenu: "recent" };
     }
-  });
-  const intro = home.find((content) => content.title === "Introduction");
-  const navClickEvent = useCallback(
-    (target) => {
-      setView(target);
-      if (target === "home") {
-        window.scrollTo({ top: 0, behavior: "auto" });
-      } else {
-        window.scrollTo({
-          top: document.querySelector(`#${target}`).offsetTop - 100,
-          behavior: "auto",
-        });
-      }
-    },
-    [setView]
-  );
+    if (!path || !path.menu || !path.subMenu) {
+      path = { menu: "home", subMenu: "recent" };
+    }
 
-  useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: "-20% 0% -80% 0%",
-      threshold: 0.0,
-    };
-    const headerOption = {
-      root: null,
-      rootMargin: "-15% 0% 0% 0%",
-      threshold: 0.0,
-    };
-    const $headLine = document.querySelector("#headLine");
-    const Ho = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setView("home");
-        }
-      });
-    }, headerOption);
-    Ho.observe($headLine);
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setView(entry.target.dataset.idx);
-        }
-      });
-    }, option);
-    const $career = document.querySelector("#career");
-    const $portpolio = document.querySelector("#portpolio");
-    // const $post = document.querySelector("#post");
-    const $about = document.querySelector("#about");
-    io.observe($career);
-    io.observe($portpolio);
-    // io.observe($post);
-    io.observe($about);
+    setCachedPath({
+      page,
+      ...path,
+    });
+    setMenuType("post");
+    setPageView("post");
   }, []);
+  useEffect(() => {
+    if (!subMenu) return;
+    if (menuType === "post") {
+      fetchPostData();
+    } else {
+      goPage();
+    }
+    return;
+  }, [subMenu]);
+
   return (
-    <div className={styles.wrapper}>
-      <Header
-        view={view}
-        navClickEvent={navClickEvent}
-        type={"index"}
-        width={width}
-      />
-      <div className={styles.container} id="rootContainer">
-        <HeadLine devLog={devLog} />
-        <Career view={view} career={career} width={width} />
-        <PortPolio
-          html={html}
-          vanillaJs={vanillaJs}
-          vueNuxt={vueNuxt}
-          view={view}
-          reactNext={reactNext}
-          width={width}
-        />
-        {/* <PostList posts={posts} view={view} width={width} /> */}
-        <About view={view} profile={profile} intro={intro} width={width} />
-        <Footer />
-      </div>
-    </div>
+    <>
+      <HeadMeta image={home && home.thumbnail.imageUrl}></HeadMeta>
+      <Page
+        pageView={pageView}
+        post={post}
+        loading={loading}
+        goSlug={goSlug}
+      ></Page>
+    </>
   );
 }
 
-export async function getStaticProps() {
-  //sanity로 부터 데이터를 가져온다. getStaticProps 만 써야함
+export async function getServerSideProps() {
   const sanityService = new SanityService();
-  const gitProfileService = new GitProfileService();
-  const home = await sanityService.getHome();
-  const posts = await sanityService.getPosts();
-  const portpolios = await sanityService.getPortpolio();
-  const career = await sanityService.getCareer();
-  const devLog = await sanityService.getDevLog();
   const profile = await sanityService.getProfile();
+  const category = await sanityService.getCategory();
+  const recentPost = await sanityService.getData({
+    type: "post",
+    category: "home",
+    subCategory: null,
+  });
+  const popularPost = await sanityService.getData({
+    type: "popular",
+    category: null,
+    subCategory: null,
+  });
+  const home = await sanityService.getHome();
+  const recentComment = await sanityService.getRecentComments();
   return {
     props: {
-      home,
-      posts,
+      recentPost,
+      popularPost,
       profile,
-      portpolios,
-      career,
-      devLog,
+      home,
+      category,
+      recentComment,
     },
   };
 }

@@ -1,0 +1,54 @@
+.elementWrapper {
+  border-bottom: var(--border-width) solid var(--border-color);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+.element {
+  display: flex;
+}
+.elementImageWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+}
+.elementImage {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.elementContentWrapper {
+  width: calc(100% - 155px);
+  padding: 10px;
+}
+.contentDate {
+  font-size: 13px;
+  width: 100%;
+  color: grey;
+}
+.titleWrapper {
+  margin-bottom: 5px;
+}
+.title {
+  font-size: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.subtitle {
+  font-size: 15px;
+  color: #4c4b4b;
+}
+.short {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #666666;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  max-height: 5.1em;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

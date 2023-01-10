@@ -1,0 +1,50 @@
+.description {
+  width: 100%;
+  background-color: var(--background-colorA);
+  padding: 20px 0px 20px 0px;
+  font-size: 15px;
+  border-bottom: var(--border-width) solid var(--border-color);
+}
+.descriptionHeader {
+  display: flex;
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  padding-left: 30px;
+}
+.descriptionHeader .el {
+  margin-right: 20px;
+}
+.descriptionHeader .arrow {
+  padding-top: 3px;
+}
+.descriptionBody {
+  transition: all 1s;
+}
+.descriptionBodyHeader {
+  margin-bottom: 20px;
+}
+.descriptionCol {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.tag {
+  font-size: 10px;
+  text-align: center;
+  color: var(--tag-font-color);
+  background-color: var(--tag-color);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 4px;
+  font-weight: bold;
+}
+.hide {
+  display: none;
+}
+
+@media only screen and (max-width: 767px) {
+  .description {
+    padding: 20px 10px 20px 10px;
+  }
+}

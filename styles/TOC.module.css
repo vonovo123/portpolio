@@ -1,0 +1,71 @@
+.toc {
+  color: rgb(220, 219, 219);
+  background-color: var(--background-colorA);
+  height: 100%;
+}
+.listTxt {
+  transition: all 1s;
+  font-weight: bold;
+  color: rgb(220, 219, 219);
+}
+.read > .listTxt {
+  color: var(--toc-read-color);
+}
+
+.tocTitle {
+  border-bottom: var(--border-width) solid var(--border-color);
+  color: var(--toc-read-color);
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 20px;
+  height: 50px;
+}
+.btn {
+  width: 25%;
+  text-align: center;
+}
+.text {
+  width: 70%;
+}
+
+.tocContent {
+  height: 100%;
+  padding-top: 10px;
+  padding-bottom: 100px;
+  padding-left: 25px;
+  overflow-y: scroll;
+}
+
+.orderedList {
+  padding-left: 10px;
+}
+
+.list {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.list.lv1 {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.list.lv2 {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.list.lv3 {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.list.lv4 {
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.list.lv5 {
+  font-size: 10px;
+  font-weight: 200;
+}
