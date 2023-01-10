@@ -201,7 +201,10 @@ export default function MyApp({ Component, pageProps }) {
           setShowAbout(!showAbout);
         }}
       >
-        <About profile={pageProps.profile && pageProps.profile[0]} />
+        <About
+          profile={pageProps.profile && pageProps.profile[0]}
+          home={pageProps.home && pageProps.home[0]}
+        />
       </div>
       <div className={cx("appWrapper")}>
         <div className={cx("header")}>

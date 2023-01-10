@@ -4,7 +4,6 @@ import BlogMarkDown from "../../components/BlogMarkDown";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Image } from "antd";
 import dayjs from "dayjs";
-import classNames from "classnames/bind";
 import { makeHeadings } from "../../utils/Headings";
 import makeObserver from "../../utils/Observer";
 import TableOfContents from "../../components/TableOfContents";
@@ -13,6 +12,8 @@ import CommentInput from "../../components/Comment/CommentInput";
 import CommentList from "../../components/Comment/CommentList";
 import observeBottomOf from "../../utils/ObserveBottomOf";
 import HeadMeta from "../../components/HeadMeta";
+import BlogBlockContent from "../../components/BlogBlockContent";
+import classNames from "classnames/bind";
 const cx = classNames.bind(styles);
 export default function Post({
   content,
@@ -218,7 +219,12 @@ export default function Post({
                 </div>
               </div>
               <div className={cx("contentBody")}>
-                <BlogMarkDown markdown={content.postContent.markdown} />
+                <BlogMarkDown
+                  markdown={content.postContent && content.postContent.markdown}
+                />
+                <BlogBlockContent
+                  blocks={content.blockContent && content.blockContent}
+                />
               </div>
             </div>
 
@@ -269,7 +275,7 @@ export async function getServerSideProps({ params }) {
   const profile = await sanityService.getProfile();
   const recentPost = await sanityService.getData({
     type: "post",
-    category: null,
+    category: "home",
     subCategory: null,
   });
   const popularPost = await sanityService.getData({
