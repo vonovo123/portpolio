@@ -8,9 +8,10 @@ import {
   MessageOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
+import BlogMarkDown from "./BlogMarkDown";
 
 const cx = classNames.bind(styles);
-export default function About({ profile }) {
+export default function About({ profile, home }) {
   return (
     profile && (
       <div className={cx("about")}>
@@ -18,7 +19,7 @@ export default function About({ profile }) {
           <Col className={cx("profileTitle")} span={24}>
             {" ABOUT ME "}
           </Col>
-          <Col className={cx("profileDescImageWrapper")} span={24}>
+          <Col className={cx("profileDescImageWrapper")} span={10}>
             <Image
               src={profile.thumbnail.imageUrl}
               alt={"profile_image"}
@@ -26,7 +27,7 @@ export default function About({ profile }) {
               preview={false}
             ></Image>
           </Col>
-          <Col className={cx("profileDescInfo")} span={24}>
+          <Col className={cx("profileBref")} span={14}>
             <Row>
               <Col span={24} className={cx("profileDescInfoDetail")}>
                 <TeamOutlined />
@@ -55,6 +56,9 @@ export default function About({ profile }) {
               </Col>
             </Row>
           </Col>
+          {/* <Col span={24}>
+            <BlogMarkDown markdown={home.homeContent.markdown} />
+          </Col> */}
         </Row>
       </div>
     )

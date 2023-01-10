@@ -1,6 +1,7 @@
 import sanityClient from "@sanity/client";
 const homeUrl = `*[_type == 'home']{
   title,
+  homeContent,
   'thumbnail' : {
     'alt' : thumbnail.alt,
     'imageUrl' : thumbnail.asset  -> url,
@@ -42,6 +43,7 @@ const postInnerUrl = `
   subtitle,
   createdAt,
   postContent,
+  blockContent,
   viewCount,
   'category' : category -> {
     name,
@@ -84,13 +86,13 @@ const postPopularUrl = `
 }[0...5]`;
 
 const postByCategoryUrl = `
-*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)]{
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)] | order(createdAt desc){
   ${postInnerUrl}
-}`;
+}[0...5]`;
 const postByCategoryAndSubCategoryUrl = `
-*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)&& references(*[_type=="subCategory" && type == $subCategory]._id)]{
+*[_type == 'post' && references(*[_type=="category" && slug == $category]._id)&& references(*[_type=="subCategory" && type == $subCategory]._id)] | order(createdAt desc){
   ${postInnerUrl}
-}`;
+}[0...5]`;
 const postBySlug = `
 *[_type == 'post' && slug.current == $slug]{
   ${postInnerUrl}

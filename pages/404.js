@@ -35,7 +35,7 @@ export async function getStaticProps() {
   const category = await sanityService.getCategory();
   const recentPost = await sanityService.getData({
     type: "post",
-    category: null,
+    category: "home",
     subCategory: null,
   });
   return {

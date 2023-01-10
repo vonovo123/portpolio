@@ -121,6 +121,19 @@
   margin-bottom: 30px;
 }
 
+.em {
+  color: orange;
+  font-style: normal;
+}
+.img-wrapper {
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 10px;
+}
+.img-caption {
+  margin-bottom: 20px;
+}
+
 @media only screen and (min-width: 1025px) {
   .tocWrapper {
     display: block;
